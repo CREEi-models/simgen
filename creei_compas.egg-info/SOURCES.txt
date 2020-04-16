@@ -1,0 +1,13 @@
+MANIFEST.in
+README.md
+setup.py
+compas/__init__.py
+compas/data.py
+compas/model.py
+compas/output.py
+compas/test.py
+compas/transition.py
+creei_compas.egg-info/PKG-INFO
+creei_compas.egg-info/SOURCES.txt
+creei_compas.egg-info/dependency_links.txt
+creei_compas.egg-info/top_level.txt
