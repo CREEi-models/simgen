@@ -1,3 +1,3 @@
-# Modèle de microsimulation COMPAS
+# Modèle de microsimulation SimGen
 
-Ce package contient le modèle de microsimulation COMPAS développé par la chaire [CREEi](http://www.creei.ca). La [documentation](https://creei-compas.readthedocs.io/en/latest/) du modèle devrait être consulté concernant l'installation et l'utilisation du modèle.
+Ce package contient le modèle de microsimulation SimGen développé par la chaire [CREEi](http://www.creei.ca). La documentation du modèle devrait être consulté concernant l'installation et l'utilisation du modèle.
