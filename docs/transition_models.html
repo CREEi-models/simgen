@@ -1,0 +1,880 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Modèles de transition &mdash; Documentation SimGen </title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Documentation des fonctions de SimGen" href="code.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SimGen
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Menu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premier pas avec Compas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Exemple de mise en forme des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Documentation des fonctions de SimGen</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modèles de transition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#naissances">Naissances</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modele-econometrique">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#donnees-et-echantillon">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables-dependantes-et-variables-explicatives">Variables dépendantes et variables explicatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resultats-de-la-regression-logistique-et-implementation-dans-le-modele-demographique">Résultats de la régression logistique et implémentation dans le modèle démographique</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fin-des-etudes-et-niveau-d-etudes-associe">Fin des études et niveau d’études associé</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Variables dépendantes et variables explicatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resultats-des-regressions-logistiques-et-implementation-dans-le-modele-demographique">Résultats des régressions logistiques et implémentation dans le modèle démographique</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mises-en-couples-et-separations">Mises en couples et séparations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Variables dépendantes et variables explicatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Résultats des régressions logistiques et implémentation dans le modèle démographique</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deces">Décès</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#migrations">Migrations</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SimGen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Modèles de transition</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/transition_models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="modeles-de-transition">
+<span id="transition-models"></span><h1>Modèles de transition<a class="headerlink" href="#modeles-de-transition" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="naissances">
+<h2>Naissances<a class="headerlink" href="#naissances" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="modele-econometrique">
+<h3>Modèle économétrique<a class="headerlink" href="#modele-econometrique" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour chaque rang de naissance <em>k=1,2,3</em>  la probabilité d’avoir un enfant est estimée à l’aide d’un modèle logistique incluant trois groupes de variables explicatives liées à l’âge, au niveau d’éducation et à l’âge du dernier enfant, le cas échéant.</p>
+<div class="math notranslate nohighlight">
+\[\mu_{i,t,k} = \mu_{0,k} + \mu_{1,k} age_{i,t} + \mu_{2,k} edu_{i,t} + \mu_{3,k} lastkidage_{i,t}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(b_{i,t}=1|\mu_{i,t,k}) = \frac{\exp(\mu_{i,t,k})}{1+\exp(\mu_{i,t,k})}\]</div>
+</div>
+<div class="section" id="donnees-et-echantillon">
+<h3>Données et échantillon<a class="headerlink" href="#donnees-et-echantillon" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les effets marginaux sont calculés à partir des vagues 2006 et 2011 de <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2013001-fra.htm">l’Enquête Sociale Générale (ESG)</a> réalisée par Statistique Canada auprès des ménages.</p>
+<p>L’échantillon utilisé pour calculer les 3 régressions logistiques des transitions de naissance est défini en suivant plusieurs étapes :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Les données des vagues 2006 et 2011 de l’Enquête sociale générale (ESG) sont regroupées (<em>pooled</em>) dans une base unique.</p></li>
+<li><p>On restreint l’échantillon aux données de la province du Québec (variable <em>prv</em>).</p></li>
+<li><p>On créé un fichier de pseudo panel des répondants qui recense l’historique des transitions de naissances 1, 2 et 3
+(calcul des naissances pour chaque année à partir des variables <em>agechdc1</em>, <em>agechdc2</em> et <em>agechdc3</em> correspondant à l’âge des enfants d’ordre 1,2 et 3).</p></li>
+<li><p>On conserve seulement l’historique des transitions du pseudo panel depuis 30 années afin d’éviter les effets des cohortes les plus anciennes (<em>2006-30</em> pour la première vague ESG et <em>2011-30</em> pour la seconde vague).</p></li>
+<li><p>On restreint l’échantillon aux femmes âgées de 18 à 39 ans inclus.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="variables-dependantes-et-variables-explicatives">
+<h3>Variables dépendantes et variables explicatives<a class="headerlink" href="#variables-dependantes-et-variables-explicatives" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les variables dépendantes pour les régressions 1, 2 et 3 sont des variables indicatrices (<em>dummies</em>) égales à 1 l’année de naissance de l’enfant d’ordre <em>k=1,2,3</em> et elles sont égales
+à 0 depuis l’année de naissance du dernier enfant (pour les naissances d’ordre 2 et 3) et depuis 18 ans pour l’aîné des enfants (naissance d’ordre 1).</p>
+<p><strong>Variables explicatives d’âge (variables indicatrices) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>dage1824</em> (référence) : la femme a entre 18 et 24 ans.</p></li>
+<li><p><em>dage2529</em> : la femme a entre 25 et 29 ans.</p></li>
+<li><p><em>dage3034</em> : la femme a entre 30 et 34 ans.</p></li>
+<li><p><em>dage35+</em> : la femme a entre 35 et 39 ans.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Variables explicatives d’éducation (variables indicatrices) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>insch</em> : la femme n’a pas terminé ses études.</p></li>
+<li><p><em>inf</em> (référence) : la femme a terminé ses études, mais n’a pas accompli ses études secondaires.</p></li>
+<li><p><em>des</em> : la femme a terminé ses études &amp; a un diplôme d’études secondaires ou un diplôme d’études partielles à l’université ou au collège communautaire.</p></li>
+<li><p><em>dec</em> : la femme a terminé ses études &amp; a un diplôme d’études d’un collège communautaire.</p></li>
+<li><p><em>uni</em> : la femme a terminé ses études &amp; a un diplôme supérieur ou égal au baccaulauréat.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Variable du dernier enfant :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>lkidage</em> : âge du dernier enfant né. Cette variable est uniquement utilisée pour les naissances d’ordre 2 et 3.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="resultats-de-la-regression-logistique-et-implementation-dans-le-modele-demographique">
+<h3>Résultats de la régression logistique et implémentation dans le modèle démographique<a class="headerlink" href="#resultats-de-la-regression-logistique-et-implementation-dans-le-modele-demographique" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les résultats des régressions logistiques sont présentés dans le tableau suivant :</p>
+<table class="colwidths-given docutils align-center" id="id12">
+<caption><span class="caption-text">Logit - Coefficients des transitions de naissances</span><a class="headerlink" href="#id12" title="Lien permanent vers ce tableau">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>var</p></th>
+<th class="head"><p>kid1</p></th>
+<th class="head"><p>kid2</p></th>
+<th class="head"><p>kid3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dage2529</p></td>
+<td><p>.5116954</p></td>
+<td><p>.1964356</p></td>
+<td><p>-.1816868</p></td>
+</tr>
+<tr class="row-odd"><td><p>dage3034</p></td>
+<td><p>.0205498</p></td>
+<td><p>-.0111965</p></td>
+<td><p>-.8086911</p></td>
+</tr>
+<tr class="row-even"><td><p>dage35p</p></td>
+<td><p>-.8581867</p></td>
+<td><p>-.8530874</p></td>
+<td><p>-1.66696</p></td>
+</tr>
+<tr class="row-odd"><td><p>lkidage</p></td>
+<td><p>0</p></td>
+<td><p>-.0931124</p></td>
+<td><p>-.02877</p></td>
+</tr>
+<tr class="row-even"><td><p>insch</p></td>
+<td><p>-1.039765</p></td>
+<td><p>.1712238</p></td>
+<td><p>.4891434</p></td>
+</tr>
+<tr class="row-odd"><td><p>des</p></td>
+<td><p>-.2211994</p></td>
+<td><p>.2209443</p></td>
+<td><p>.0718346</p></td>
+</tr>
+<tr class="row-even"><td><p>dec</p></td>
+<td><p>-.1219525</p></td>
+<td><p>.2145199</p></td>
+<td><p>.2840617</p></td>
+</tr>
+<tr class="row-odd"><td><p>uni</p></td>
+<td><p>-.1757571</p></td>
+<td><p>.4607548</p></td>
+<td><p>.7828354</p></td>
+</tr>
+<tr class="row-even"><td><p>constant</p></td>
+<td><p>-2.525909</p></td>
+<td><p>-1.661527</p></td>
+<td><p>-2.308243</p></td>
+</tr>
+</tbody>
+</table>
+<p>L’implémentation dans le modèle démographique est réalisée par un tirage uniforme, indépendant par dominant, et une naissance survient quand ce tirage est inférieur à la probabilité logistique prédite.</p>
+<p>Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les dominants en union de plus de 18 ans et dont la femme à moins de 45 ans. Il faut préciser que la régression logistique est estimée jusque 39 ans (34&lt; <em>dage35+</em> &lt;40), mais que les effets marginaux de la variable <em>dage35+</em> sont appliquées aux conjointes âgées jusque 45 ans dans le modèle de microsimulation démographique.</p>
+<p>Il faut préciser que les effets marginaux obtenus pour le Logit appliqué au 3ème enfant <em>kid3</em> est utilisé dans la simulation démographique pour calculer l’occurence de la naissance du 3ème enfant, mais également des enfants suivants.</p>
+</div>
+</div>
+<div class="section" id="fin-des-etudes-et-niveau-d-etudes-associe">
+<h2>Fin des études et niveau d’études associé<a class="headerlink" href="#fin-des-etudes-et-niveau-d-etudes-associe" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Tous les enfants débutent leurs études l’année de leurs 5 ans. La présente transition calcule la probabilité de finir ses études ainsi que le niveau d’études correspondant.</p>
+<div class="section" id="id1">
+<h3>Modèle économétrique<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Deux régressions logistiques sont appliquées pour 1) calculer la probabilité de finir ses études ; 2) attribuer un niveau d’études aux individus qui ont accompli leurs études. Une régression logistique ordinaire est appliquée pour calculer la probabilité de finir ses études et un modèle logistique multinomial est utilisé pour définir le niveau d’étude correspondant.</p>
+<ol class="arabic simple">
+<li><p>probabilité <em>f</em> d’un individu <em>i</em> de finir ses études l’année <em>t</em> :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(f_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>pour chaque niveau d’éducation <em>e = 1 (inf), 2 (des) [référence], 3 (dec), 4 (uni)</em> atteint par un individu <em>i</em> l’année d’accomplissement des études en <em>t</em> :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mu e_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(e_{i,t}=1|\mu1_{i,t}) = \frac{\exp(\mu1_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(e_{i,t}=2|\mu2_{i,t}) = \frac{1}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(e_{i,t}=3|\mu3_{i,t}) = \frac{\exp(\mu3_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(e_{i,t}=4|\mu4_{i,t}) = \frac{\exp(\mu4_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+</div>
+<div class="section" id="id2">
+<h3>Données et échantillon<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les régressions logistiques sont calculées à partir des vagues 2006 et 2011 de <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2013001-fra.htm">l’Enquête Sociale Générale (ESG)</a> réalisée par Statistique Canada auprès des ménages.</p>
+<p>L’échantillon utilisé pour calculer les transitions de naissance est défini en suivant plusieurs étapes :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Les données des vagues 2006 et 2011 de l’Enquête sociale générale (ESG) sont regroupées (<em>pooled</em>) dans une base unique.</p></li>
+<li><p>On restreint l’échantillon aux données de la province du Québec.</p></li>
+<li><p>On créé un fichier de pseudo panel des individus répondants qui recense l’historique des transitions de fin d’études et le niveau d’études associé.</p></li>
+<li><p>On conserve seulement l’historique des transitions du pseudo panel depuis 30 années afin d’éviter les effets des cohortes les plus anciennes (<em>2006-30</em> pour la première vague ESG et <em>2011-30</em> pour la seconde vague).</p></li>
+<li><p>On restreint l’échantillon aux individus âgés de 17 à 35 ans inclus.</p></li>
+<li><p>On supprime les années qui suivent l’année d’accomplissement des études.</p></li>
+<li><p>Pour la régresion logistique multinomiale du niveau d’étude, l’échantillon est restreint à l’année d’accomplissement des études.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h3>Variables dépendantes et variables explicatives<a class="headerlink" href="#id4" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La variable dépendante <em>schldone</em> définissant la probabilité de finir ses études est égale à 1 lorsque l’individu a accompli ses études et elle est égale à 0 lorsque l’individu n’a pas encore accompli ses études. Cette variable indicatrice (<em>dummy</em>) est calculée à partir de la variable <em>agecmplt</em> (âge du répondant à la fin des études) de l’ESG.</p>
+<p><strong>La variable dépendante et indicatrice du niveau d’études « educ » est utilisée dans une régression logistique multinomiale. Elle inclut 4 niveaux d’éducation :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>inf</em> : n’a pas accompli ses études secondaires.</p></li>
+<li><p><em>des</em> (référence) : a obtenu un diplôme d’études secondaires ou un diplôme d’études partielles à l’université ou au collège communautaire.</p></li>
+<li><p><em>dec</em> : a obtenu un diplôme d’études d’un collège communautaire.</p></li>
+<li><p><em>uni</em> : a obtenu un diplôme supérieur ou égal au baccaulauréat.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Les variables explicatives et indicatrices de la fin des études « schldone » et du niveau d’études atteint sont les suivantes :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>male</em> : égal à 1 si le répondant est un homme et égal à 0 si le répondant est une femme.</p></li>
+<li><p><em>father</em> : égal à 1 si le répondant est un homme avec des enfants, 0 sinon.</p></li>
+<li><p><em>mother</em> : égal à 1 si le répondant est une femme avec des enfants, 0 sinon.</p></li>
+<li><p><em>agex</em> : égal à 1 si l’individu a <em>x</em> ans, 0 sinon, avec <em>x</em> = 17 à 35 ans (la référence et constituée des individus âgés de 17 ans).</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="resultats-des-regressions-logistiques-et-implementation-dans-le-modele-demographique">
+<h3>Résultats des régressions logistiques et implémentation dans le modèle démographique<a class="headerlink" href="#resultats-des-regressions-logistiques-et-implementation-dans-le-modele-demographique" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les résultats des régressions logistiques sont présentés dans le tableau suivant :</p>
+<table class="colwidths-given docutils align-center" id="id13">
+<caption><span class="caption-text">Logit - Coefficients de la transition de fin d’études (colonne 2) et d’attribution des niveaux d’études (colonne 3 à 5)</span><a class="headerlink" href="#id13" title="Lien permanent vers ce tableau">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>var</p></th>
+<th class="head"><p>schldone</p></th>
+<th class="head"><p>inf</p></th>
+<th class="head"><p>dec</p></th>
+<th class="head"><p>uni</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>.1843596</p></td>
+<td><p>.4109254</p></td>
+<td><p>-.1903194</p></td>
+<td><p>-.598743</p></td>
+</tr>
+<tr class="row-odd"><td><p>mother</p></td>
+<td><p>-.1844019</p></td>
+<td><p>.3175561</p></td>
+<td><p>.1701071</p></td>
+<td><p>-1.069101</p></td>
+</tr>
+<tr class="row-even"><td><p>father</p></td>
+<td><p>-.1823828</p></td>
+<td><p>-.609737</p></td>
+<td><p>-.4239408</p></td>
+<td><p>-.6886936</p></td>
+</tr>
+<tr class="row-odd"><td><p>age18</p></td>
+<td><p>-1.919495</p></td>
+<td><p>-3.579465</p></td>
+<td><p>2.690612</p></td>
+<td><p>1.869661</p></td>
+</tr>
+<tr class="row-even"><td><p>age19</p></td>
+<td><p>-1.434736</p></td>
+<td><p>-3.030531</p></td>
+<td><p>3.059978</p></td>
+<td><p>2.893812</p></td>
+</tr>
+<tr class="row-odd"><td><p>age20</p></td>
+<td><p>-.9784116</p></td>
+<td><p>-18.04219</p></td>
+<td><p>3.130824</p></td>
+<td><p>4.12123</p></td>
+</tr>
+<tr class="row-even"><td><p>age21</p></td>
+<td><p>-.9614558</p></td>
+<td><p>-17.39462</p></td>
+<td><p>3.511785</p></td>
+<td><p>5.735242</p></td>
+</tr>
+<tr class="row-odd"><td><p>age22</p></td>
+<td><p>-.6754257</p></td>
+<td><p>-17.02295</p></td>
+<td><p>3.371476</p></td>
+<td><p>6.746788</p></td>
+</tr>
+<tr class="row-even"><td><p>age23</p></td>
+<td><p>-.4748321</p></td>
+<td><p>-17.29215</p></td>
+<td><p>2.757136</p></td>
+<td><p>6.949233</p></td>
+</tr>
+<tr class="row-odd"><td><p>age24</p></td>
+<td><p>-.5785111</p></td>
+<td><p>-17.3182</p></td>
+<td><p>2.716295</p></td>
+<td><p>7.074749</p></td>
+</tr>
+<tr class="row-even"><td><p>age25</p></td>
+<td><p>-.7267553</p></td>
+<td><p>-17.61768</p></td>
+<td><p>2.450157</p></td>
+<td><p>6.606506</p></td>
+</tr>
+<tr class="row-odd"><td><p>age26</p></td>
+<td><p>-.8501796</p></td>
+<td><p>-17.54228</p></td>
+<td><p>2.603722</p></td>
+<td><p>6.729406</p></td>
+</tr>
+<tr class="row-even"><td><p>age27</p></td>
+<td><p>-.7437248</p></td>
+<td><p>-17.24215</p></td>
+<td><p>3.019883</p></td>
+<td><p>6.780705</p></td>
+</tr>
+<tr class="row-odd"><td><p>age28</p></td>
+<td><p>-.7879386</p></td>
+<td><p>-17.15689</p></td>
+<td><p>3.166666</p></td>
+<td><p>6.964613</p></td>
+</tr>
+<tr class="row-even"><td><p>age29</p></td>
+<td><p>-.8076774</p></td>
+<td><p>-17.36636</p></td>
+<td><p>2.611414</p></td>
+<td><p>7.116511</p></td>
+</tr>
+<tr class="row-odd"><td><p>age30</p></td>
+<td><p>-.9358158</p></td>
+<td><p>-17.80625</p></td>
+<td><p>2.164101</p></td>
+<td><p>6.389815</p></td>
+</tr>
+<tr class="row-even"><td><p>age31</p></td>
+<td><p>-.816555</p></td>
+<td><p>-17.61045</p></td>
+<td><p>2.349073</p></td>
+<td><p>6.831842</p></td>
+</tr>
+<tr class="row-odd"><td><p>age32</p></td>
+<td><p>-.4474159</p></td>
+<td><p>-17.37271</p></td>
+<td><p>2.690948</p></td>
+<td><p>6.951545</p></td>
+</tr>
+<tr class="row-even"><td><p>age33</p></td>
+<td><p>-.2910866</p></td>
+<td><p>-16.91294</p></td>
+<td><p>3.378665</p></td>
+<td><p>7.389623</p></td>
+</tr>
+<tr class="row-odd"><td><p>age34</p></td>
+<td><p>.1444826</p></td>
+<td><p>-1.566118</p></td>
+<td><p>2.703367</p></td>
+<td><p>6.273524</p></td>
+</tr>
+<tr class="row-even"><td><p>age35</p></td>
+<td><p>.5934147</p></td>
+<td><p>-2.355427</p></td>
+<td><p>2.269934</p></td>
+<td><p>6.415809</p></td>
+</tr>
+<tr class="row-odd"><td><p>constant</p></td>
+<td><p>-1.074001</p></td>
+<td><p>-.1335841</p></td>
+<td><p>-1.462504</p></td>
+<td><p>-4.397729</p></td>
+</tr>
+</tbody>
+</table>
+<p>L’implémentation dans le modèle démographique est réalisée par un tirage uniforme, indépendant par dominant, et la fin des études et le niveau d’études associé survient quand ce tirage est inférieur à la probabilité logistique prédite.</p>
+<p>Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les dominants âgés de 18 à 35 ans qui sont encore en études. Les individus âgés de 35 ans ont une probabilité de finir leurs études fixée à 100%. Avant l’année de fin des études, les individus sont considérés sans éducation (aucun niveau ne leur est attribué). Le niveau d’études obtenu l’année de fin des études est attribué aux individus jusqu’à la fin de leurs vie. Aucun retour en études n’est possible après la fin des études.</p>
+</div>
+</div>
+<div class="section" id="mises-en-couples-et-separations">
+<h2>Mises en couples et séparations<a class="headerlink" href="#mises-en-couples-et-separations" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="id5">
+<h3>Modèle économétrique<a class="headerlink" href="#id5" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Deux régressions logistiques sont appliquées pour 1) calculer la probabilité de se mettre en couple (union libre ou mariage indifféremment); 2) calculer la probabilité de se séparer. La probabilité de se mettre en couple et de se séparer dépend de variables similaires liées à l’âge du répondant, à son genre et à son niveau d’éducation. De plus, la probabilité de se séparer dépend également de la présence d’au moins un enfant âgé de moins de 18 ans.</p>
+<ol class="arabic simple">
+<li><p>probabilité <em>c</em> d’un individu <em>i</em> de se mettre en couple l’année <em>t</em> :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(c_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>probabilité <em>s</em> d’un individu <em>i</em> de se séparer l’année <em>t</em> :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t} + \mu_{4} kid_{i,t}\]</div>
+<div class="math notranslate nohighlight">
+\[\Pr(s_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+</div>
+<div class="section" id="id6">
+<h3>Données et échantillon<a class="headerlink" href="#id6" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les modèles logistiques sont calculés à partir des vagues 2006 et 2011 de <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2013001-fra.htm">l’Enquête Sociale Générale (ESG)</a> réalisée par Statistique Canada auprès des ménages.</p>
+<p>L’échantillon utilisé pour calculer les transitions de naissance est défini en suivant plusieurs étapes :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Les données des vagues 2006 et 2011 de l’Enquête sociale générale (ESG) sont regroupées (<em>pooled</em>) dans une base unique.</p></li>
+<li><p>On restreint l’échantillon aux données de la province du Québec (variable <em>prv</em>).</p></li>
+<li><p>On créé un fichier de pseudo panel des individus répondants qui recense l’historique des transitions d’unions et de séparations d’ordre 1 à 4 (jusqu’à 4 unions et séparations sont possibles tout au long de la vie).</p></li>
+<li><p>On conserve seulement l’historique des transitions du pseudo panel depuis 30 années afin d’éviter les effets des cohortes les plus anciennes (<em>2006-30</em> pour la première vague ESG et <em>2011-30</em> pour la seconde vague).</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id8">
+<h3>Variables dépendantes et variables explicatives<a class="headerlink" href="#id8" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour calculer la transition de mise en union, la variable dépendante est égale à 0 lorsque l’individu est célibataire et la variable dépendante est égale à 1 l’année de la mise en couple. Symétriquement, pour le calcul de la transition de séparation, la variable dépendante est égale à 0 lorsque l’individu est en couple et la variable dépendante est égale à 1 l’année de la séparation. Il faut préciser que le fait de devenir veuf n’est pas considéré comme une transition de séparation dans le modèle logistique.</p>
+<p><strong>1) Variables explicatives des transitions de mise en couple :</strong></p>
+<p><strong>Genre (variable indicatrice) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>male</em> : égal à 1 si le répondant est un homme et égal à 0 si le répondant est une femme.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Âge (variables indicatrices) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>age1619</em> : le répondant à entre 16 et 19 ans.</p></li>
+<li><p><em>age2024</em> : le répondant à entre 20 et 24 ans.</p></li>
+<li><p><em>age2529</em> : le répondant à entre 25 et 29 ans.</p></li>
+<li><p><em>age3034</em> (référence) : le répondant à entre 30 et 34 ans.</p></li>
+<li><p><em>age3539</em> : le répondant à entre 35 et 39 ans.</p></li>
+<li><p><em>age4044</em> : le répondant à entre 40 et 44 ans.</p></li>
+<li><p><em>age4549</em> : le répondant à entre 45 et 49 ans.</p></li>
+<li><p><em>age5054</em> : le répondant à entre 50 et 54 ans.</p></li>
+<li><p><em>age5559</em> : le répondant à entre 55 et 59 ans.</p></li>
+<li><p><em>age6065</em> : le répondant à entre 60 et 65 ans.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Education (variables indicatrices) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>insch</em> : le répondant n’a pas terminé ses études.</p></li>
+<li><p><em>inf</em> (référence) : le répondant a terminé ses études mais n’a pas accompli ses études secondaires.</p></li>
+<li><p><em>des</em> : le répondant a terminé ses études &amp; a un diplôme d’études secondaires ou un diplôme d’études partielles à l’université ou au collège communautaire.</p></li>
+<li><p><em>dec</em> : le répondant a terminé ses études &amp; a un diplôme d’études d’un collège communautaire.</p></li>
+<li><p><em>uni</em> : le répondant a terminé ses études &amp; a un diplôme supérieur ou égal au baccaulauréat.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>2) Variable explicative des transitions de séparation :</strong></p>
+<p><strong>Genre (variable indicatrice) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>male</em> : le répondant est un homme et égal à 0 si le répondant est une femme.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Âge :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>mage</em> : âge du répondant si c’est un homme, sinon 0.</p></li>
+<li><p><em>mage2</em> : âge au carré du répondant si c’est un homme, sinon 0.</p></li>
+<li><p><em>mage3</em> : âge au cube du répondant si c’est un homme, sinon 0.</p></li>
+<li><p><em>wage</em> : âge du répondant si c’est une femme, sinon 0.</p></li>
+<li><p><em>wage2</em> : âge au carré du répondant si c’est une femme, sinon 0.</p></li>
+<li><p><em>wage3</em> : âge au cube du répondant si c’est une femme, sinon 0.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Education (variables indicatrices) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>insch</em> : le répondant n’a pas terminé ses études.</p></li>
+<li><p><em>inf</em> (référence) : le répondant a terminé ses études mais n’a pas accompli ses études secondaires.</p></li>
+<li><p><em>des</em> : le répondant a terminé ses études &amp; a un diplôme d’études secondaires ou un diplôme d’études partielles à l’université ou au collège communautaire.</p></li>
+<li><p><em>dec</em> : le répondant a terminé ses études &amp; a un diplôme d’études d’un collège communautaire.</p></li>
+<li><p><em>uni</em> : le répondant a terminé ses études &amp; a un diplôme supérieur ou égal au baccaulauréat.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Enfants (variable indicatrice) :</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>kid</em> : égal à 1 si le répondant a un enfant de moins de 18 ans, 0 sinon.</p></li>
+</ul>
+</div></blockquote>
+<p>Cette variable contrôle la présence d’enfants mineurs, potentiellement résidants au domicile parental ou bien à la charge de leurs parents. La présence d’enfants majeurs ne sont pas pris en compte car ils ne sont potentiellement plus à la charge de leurs parents.</p>
+</div>
+<div class="section" id="id9">
+<h3>Résultats des régressions logistiques et implémentation dans le modèle démographique<a class="headerlink" href="#id9" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les résultats du modèle logistique de mise en couple sont présentés dans le tableau suivant :</p>
+<table class="colwidths-given docutils align-center" id="id14">
+<caption><span class="caption-text">Logit - Coefficients des transitions de mise en couple</span><a class="headerlink" href="#id14" title="Lien permanent vers ce tableau">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>var</p></th>
+<th class="head"><p>union</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>-.1837456</p></td>
+</tr>
+<tr class="row-odd"><td><p>age1619</p></td>
+<td><p>-.6663195</p></td>
+</tr>
+<tr class="row-even"><td><p>age2024</p></td>
+<td><p>.3110995</p></td>
+</tr>
+<tr class="row-odd"><td><p>age2529</p></td>
+<td><p>.4030818</p></td>
+</tr>
+<tr class="row-even"><td><p>age3539</p></td>
+<td><p>-.3277921</p></td>
+</tr>
+<tr class="row-odd"><td><p>age4044</p></td>
+<td><p>-.399524</p></td>
+</tr>
+<tr class="row-even"><td><p>age4549</p></td>
+<td><p>-.5470281</p></td>
+</tr>
+<tr class="row-odd"><td><p>age5054</p></td>
+<td><p>-.4505239</p></td>
+</tr>
+<tr class="row-even"><td><p>age5559</p></td>
+<td><p>-.8944283</p></td>
+</tr>
+<tr class="row-odd"><td><p>age6065</p></td>
+<td><p>-.8323357</p></td>
+</tr>
+<tr class="row-even"><td><p>insch</p></td>
+<td><p>-.732394</p></td>
+</tr>
+<tr class="row-odd"><td><p>des</p></td>
+<td><p>.1500707</p></td>
+</tr>
+<tr class="row-even"><td><p>dec</p></td>
+<td><p>.3124948</p></td>
+</tr>
+<tr class="row-odd"><td><p>uni</p></td>
+<td><p>.3111567</p></td>
+</tr>
+<tr class="row-even"><td><p>constant</p></td>
+<td><p>-2.408129</p></td>
+</tr>
+</tbody>
+</table>
+<p>Les résultats du modèle logistique de séparations sont présentés dans le tableau suivant :</p>
+<table class="colwidths-given docutils align-center" id="id15">
+<caption><span class="caption-text">Logit - Coefficients des transitions de séparations</span><a class="headerlink" href="#id15" title="Lien permanent vers ce tableau">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>var</p></th>
+<th class="head"><p>separation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>-.7359777</p></td>
+</tr>
+<tr class="row-odd"><td><p>mage</p></td>
+<td><p>-.277098</p></td>
+</tr>
+<tr class="row-even"><td><p>mage2</p></td>
+<td><p>.0087923</p></td>
+</tr>
+<tr class="row-odd"><td><p>mage3</p></td>
+<td><p>-.0000819</p></td>
+</tr>
+<tr class="row-even"><td><p>wage</p></td>
+<td><p>-.327683</p></td>
+</tr>
+<tr class="row-odd"><td><p>wage2</p></td>
+<td><p>.0098783</p></td>
+</tr>
+<tr class="row-even"><td><p>wage3</p></td>
+<td><p>-.0000913</p></td>
+</tr>
+<tr class="row-odd"><td><p>insch</p></td>
+<td><p>.6755069</p></td>
+</tr>
+<tr class="row-even"><td><p>des</p></td>
+<td><p>-.1025277</p></td>
+</tr>
+<tr class="row-odd"><td><p>dec</p></td>
+<td><p>-.1902154</p></td>
+</tr>
+<tr class="row-even"><td><p>uni</p></td>
+<td><p>-.4476943</p></td>
+</tr>
+<tr class="row-odd"><td><p>kid</p></td>
+<td><p>-.5016676</p></td>
+</tr>
+<tr class="row-even"><td><p>constant</p></td>
+<td><p>.2193172</p></td>
+</tr>
+</tbody>
+</table>
+<p>L’implémentation de la transition de mise en couple et de séparation dans le modèle démographique est réalisée par un tirage uniforme, indépendant par dominant, et une mise en couple ou une séparation survient quand ce tirage est inférieur à la probabilité logistique prédite.</p>
+<p>Pour le dominant <em>D1</em> nouvellement en couple, les caractéristiques du nouveau conjoint <em>C1</em> sont attribuées en tirant aléatoirement un autre individu dominant <em>D2</em> ayant le même genre et le même niveau d’éducation que <em>D1</em>. De plus, On restreint le bassin de tirage aux dominants <em>D2</em> qui ont un écart d’âge avec leur conjoint <em>C2</em> qui est inférieur à 5 ans (en valeur absolue). Si pour un dominant <em>D1</em>, aucun conjoint n’est identifié en appliquant cette restriction d’écart d’âge, alors on réalise un second tirage dans le bassin des dominants <em>D2</em> qui ont le même genre et le même niveau d’éducation que <em>D1</em>, et qui ont un écart d’âge avec leur conjoint <em>C2</em> inférieur à 20 ans (en valeur absolue). Les caractéristiques du conjoint <em>C2</em> sont alors attribuées au nouveau conjoint <em>C1</em> du dominant <em>D1</em> nouvellement en couple (âge, genre et éducation). Il faut également préciser que dans la version actuelle de SimGen, le nouveau conjoint <em>C1</em> qui est attribué au dominant <em>D1</em> est systématiquement du sexe opposé. De futures versions du modèle pourront intégrer une représentation plus diversifiée des unions matrimoniales.</p>
+</div>
+</div>
+<div class="section" id="deces">
+<h2>Décès<a class="headerlink" href="#deces" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Chaque année <em>t</em>, un individu d’âge <em>a</em> et de genre <em>g</em> a une probabilité <em>P(t,a,g)</em> de décéder. Cette probabilité, définie comme un taux de mortalité, est calculé à partir des quotients perspectifs de mortalité selon l’âge et le sexe estimés par Statistique Canada entre 2013-2014 et 2062-2063 (de juillet-juin) pour les provinces et territoires. Le <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/91-620-x/91-620-x2014001-fra.pdf">rapport technique</a> de Statistique Canada présente la méthodologie et les hypothèses de ces quotients perspectifs.</p>
+<p>L’âge, le genre et la cohorte de naissance sont donc les uniques déterminants de l’espérance de vie des individus. Notons également que les immigrants et les natifs ont des probabilités équivalentes de décès en fonction de leur âge, genre et cohorte.</p>
+</div>
+<div class="section" id="migrations">
+<h2>Migrations<a class="headerlink" href="#migrations" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les taux prospectifs d’immigration et d’émigration sont respectivement égaux à 5,35‰ et 1,16‰. Ces taux sont identiques pour toutes les années simulées. Ils sont calculés à partir du nombre de nouveaux immigrants (44 856 personnes) et du nombre de nouveaux émigrants (9 741 personnes) enregistrés au Québec pour la période 2018-2019 par Statistique Canada, ainsi que de la population Québecoise au 1er juillet 2018 calculée par Statistique Canada (8 387 632 personnes).</p>
+<ul class="simple">
+<li><p>Le nombre d’immigrants et le nombre d’émigrants en 2018-2019 sont issus du <a class="reference external" href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1710001401">tableau 17-10-0014-01 « Estimations des composantes de la migration internationale, par âge et sexe, annuelles »</a>.</p></li>
+<li><p>la population Québecoise au 1er juillet 2018 issue du <a class="reference external" href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1710000501">tableau 17-10-0005-01 « Estimations de la population au 1er juillet, par âge et sexe »</a>.</p></li>
+</ul>
+<p>Les caractéristiques socio-économiques et démographiques des nouveaux immigrants sont attribuées en fonction des immigrants récents issus de la Base de données et Modèle de simulation de politiques sociales de Statistique Canada (BD/MSPS) pour l’année 2017. Chaque année t, on tire aléatoirement 0,0535*Population(t) de nouveaux immigrants parmis ceux de l’année 2017. Les caractéristiques socio-économiques et démographiques des nouveaux immigrants sont alors celles des immigrants tirés de BD/MSPS 2017 : l’âge, le genre, le niveau d’éducation, la présence de conjoint et le nombre d’enfants.</p>
+<p>Les caractéristiques des émigrants dépendent uniquement de l’âge. A chaque âge donné, la probabilité d’émigrer est égale pour toutes les personnes dominantes. Les émigrants d’un âge donné sont tirés de manière aléatoire. De plus, on considère que le(la) conjoint(e) du dominant ainsi que tous ses enfants âgés de moins de 18 ans émigrent avec la personne dominante. Le taux d’émigration par âge est calculé à partir du nombre d’émigrants par classes d’âge en 2018-2019 du <a class="reference external" href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1710001401">tableau 17-10-0014-01 « Estimations des composantes de la migration internationale, par âge et sexe, annuelles »</a> et de la population Québecoise par classes d’âge au 1er juillet 2018 du <a class="reference external" href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1710000501">tableau 17-10-0005-01 « Estimations de la population au 1er juillet, par âge et sexe »</a>. Les taux d’émigrations par classes d’âge sont les suivants :</p>
+<table class="colwidths-given docutils align-center">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Classe d’âge</p></th>
+<th class="head"><p>Taux d’émigration (‰)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>15 à 19 ans</p></td>
+<td><p>0,53</p></td>
+</tr>
+<tr class="row-odd"><td><p>20 à 24 ans</p></td>
+<td><p>1,16</p></td>
+</tr>
+<tr class="row-even"><td><p>25 à 29 ans</p></td>
+<td><p>2,29</p></td>
+</tr>
+<tr class="row-odd"><td><p>30 à 34 ans</p></td>
+<td><p>2,64</p></td>
+</tr>
+<tr class="row-even"><td><p>35 à 39 ans</p></td>
+<td><p>2,11</p></td>
+</tr>
+<tr class="row-odd"><td><p>40 à 44 ans</p></td>
+<td><p>1,55</p></td>
+</tr>
+<tr class="row-even"><td><p>45 à 49 ans</p></td>
+<td><p>1,19</p></td>
+</tr>
+<tr class="row-odd"><td><p>50 à 54 ans</p></td>
+<td><p>0,81</p></td>
+</tr>
+<tr class="row-even"><td><p>55 à 59 ans</p></td>
+<td><p>0,55</p></td>
+</tr>
+<tr class="row-odd"><td><p>60 à 64 ans</p></td>
+<td><p>0,42</p></td>
+</tr>
+<tr class="row-even"><td><p>65 à 69 ans</p></td>
+<td><p>0,39</p></td>
+</tr>
+<tr class="row-odd"><td><p>70 à 74 ans</p></td>
+<td><p>0,28</p></td>
+</tr>
+<tr class="row-even"><td><p>75 à 79 ans</p></td>
+<td><p>0,31</p></td>
+</tr>
+<tr class="row-odd"><td><p>80 à 84 ans</p></td>
+<td><p>0,33</p></td>
+</tr>
+<tr class="row-even"><td><p>85 à 89 ans</p></td>
+<td><p>0,31</p></td>
+</tr>
+<tr class="row-odd"><td><p>90 ans et plus</p></td>
+<td><p>0,36</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="code.html" class="btn btn-neutral float-left" title="Documentation des fonctions de SimGen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Équipe CREEi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

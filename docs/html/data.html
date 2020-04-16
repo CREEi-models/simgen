@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Importer des données &mdash; Documentation Compas </title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Exemple de mise en forme des données" href="import.html" />
+    <link rel="prev" title="Premier pas avec Compas" href="premierpas.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Compas
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Menu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premier pas avec Compas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Importer des données</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#les-registres-de-donnees">Les registres de données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mettre-en-forme-des-donnees-sources">Mettre en forme des données sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#population-dans-compas">Population dans Compas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Exemple de mise en forme des données</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Compas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Importer des données</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="importer-des-donnees">
+<span id="data"></span><h1>Importer des données<a class="headerlink" href="#importer-des-donnees" title="Lien permanent vers ce titre">¶</a></h1>
+<p id="registers">Compas permet d’utiliser des données de plusieurs sources. Cependant, une mise-en-forme particulière des données est nécessaire afin de les rendre utilisable par le simulateur.</p>
+<div class="section" id="les-registres-de-donnees">
+<h2>Les registres de données<a class="headerlink" href="#les-registres-de-donnees" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Compas utilise trois registres de données:</p>
+<ul class="simple">
+<li><p>registre dominant (hh)</p></li>
+<li><p>registre conjoint (sp)</p></li>
+<li><p>registre enfants (kd)</p></li>
+</ul>
+<p>Le registre des dominants doit contenir une clé identifiante <strong>nas</strong> unique pour chaque dominant. Les conjoints des dominants sont listés dans le registre conjoint en utilisant cette même clé identifiante <strong>nas</strong>. Donc, un conjoint n’a pas son propre nas mais le <strong>nas</strong> du dominant qui est son conjoint. Dans un modèle ouvert, les conjoints, tout comme les enfants sont des acteurs fantômes. Le registre enfants doint être mis en forme de la même façon, en listant chaque enfants sur une ligne différente.  Donc, un dominant qui a un conjoint et 3 enfants aura une entrée dans le registre dominant et conjoint et trois entrées dans le registre enfants.</p>
+<p>Nous décrivons chacun des registres ici-bas:</p>
+</div>
+<div class="section" id="mettre-en-forme-des-donnees-sources">
+<h2>Mettre en forme des données sources<a class="headerlink" href="#mettre-en-forme-des-donnees-sources" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans Compas, une population est composé des trois registres ici-haut. La class</p>
+</div>
+<div class="section" id="population-dans-compas">
+<h2>Population dans Compas<a class="headerlink" href="#population-dans-compas" title="Lien permanent vers ce titre">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="import.html" class="btn btn-neutral float-right" title="Exemple de mise en forme des données" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="premierpas.html" class="btn btn-neutral float-left" title="Premier pas avec Compas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Pierre-Carl Michaud
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
