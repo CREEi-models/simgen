@@ -15,6 +15,7 @@ On peut installer facilement SimGen suivant deux étapes. La première est de t�
   git clone https://github.com/creei-models/simgen simgen 
 
 Ensuite on doit l'installer au terminal en allant a la racine du repertoire simgen ::
+
   python setup.py install
 
 Importer SimGen dans un notebook ou script
