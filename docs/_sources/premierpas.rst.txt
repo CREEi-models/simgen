@@ -10,10 +10,12 @@ Premier pas avec Compas
 Installation de SimGen
 ======================
 
-On peut installer facilement Compas en utilisant pip ::
+On peut installer facilement SimGen suivant deux étapes. La première est de télécharger de github ::
 
-  pip install creei-simgen
+  git clone https://github.com/creei-models/simgen simgen 
 
+Ensuite on doit l'installer au terminal en allant a la racine du repertoire simgen ::
+  python setup.py install
 
 Importer SimGen dans un notebook ou script
 ==========================================
