@@ -1,1 +1,1 @@
-include params/*
+recursive-include simgen *.xlsx *.csv
