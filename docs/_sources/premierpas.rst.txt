@@ -2,7 +2,7 @@
 
 
 ***********************
-Premier pas avec Compas
+Premier pas avec SimGen
 ***********************
 
 .. _installing-docdir:
@@ -18,10 +18,12 @@ Ensuite on doit l'installer au terminal en allant a la racine du repertoire simg
 
   python setup.py install
 
+Par la suite, nous ne devriez pas travailler dans ce répertoire d'installation. Pour aller chercher une nouvelle version, il suffit de répetez les étapes précédentes. 
+
 Importer SimGen dans un notebook ou script
 ==========================================
 
-Pour importer compas dans un notebook ou un script python on ajoute ::
+Pour importer SimGen dans un notebook ou un script python on ajoute ::
 
   import simgen 
 

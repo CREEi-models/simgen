@@ -83,7 +83,7 @@
             
               <p class="caption"><span class="caption-text">Menu:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premier pas avec Compas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premier pas avec SimGen</a></li>
 <li class="toctree-l1"><a class="reference internal" href="import.html">Exemple de mise en forme des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Documentation des fonctions de SimGen</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Modèles de transition</a><ul>
@@ -186,7 +186,7 @@
 <div class="math notranslate nohighlight">
 \[\mu_{i,t,k} = \mu_{0,k} + \mu_{1,k} age_{i,t} + \mu_{2,k} edu_{i,t} + \mu_{3,k} lastkidage_{i,t}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(b_{i,t}=1|\mu_{i,t,k}) = \frac{\exp(\mu_{i,t,k})}{1+\exp(\mu_{i,t,k})}\]</div>
+\[\Pr(b_{i,t}=1) = \frac{\exp(\mu_{i,t,k})}{1+\exp(\mu_{i,t,k})}\]</div>
 </div>
 <div class="section" id="donnees-et-echantillon">
 <h3>Données et échantillon<a class="headerlink" href="#donnees-et-echantillon" title="Lien permanent vers ce titre">¶</a></h3>
@@ -300,7 +300,7 @@
 </tbody>
 </table>
 <p>L’implémentation dans le modèle démographique est réalisée par un tirage uniforme, indépendant par dominant, et une naissance survient quand ce tirage est inférieur à la probabilité logistique prédite.</p>
-<p>Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les dominants en union de plus de 18 ans et dont la femme à moins de 45 ans. Il faut préciser que la régression logistique est estimée jusque 39 ans (34&lt; <em>dage35+</em> &lt;40), mais que les effets marginaux de la variable <em>dage35+</em> sont appliquées aux conjointes âgées jusque 45 ans dans le modèle de microsimulation démographique.</p>
+<p>Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les femmes en couple (qu’elles soient enregistrées comme l’individu dominant ou la conjointe dans BD/MSPS) âgées entre 18 ans et 44 ans inclus.</p>
 <p>Il faut préciser que les effets marginaux obtenus pour le Logit appliqué au 3ème enfant <em>kid3</em> est utilisé dans la simulation démographique pour calculer l’occurence de la naissance du 3ème enfant, mais également des enfants suivants.</p>
 </div>
 </div>
@@ -311,25 +311,25 @@
 <h3>Modèle économétrique<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Deux régressions logistiques sont appliquées pour 1) calculer la probabilité de finir ses études ; 2) attribuer un niveau d’études aux individus qui ont accompli leurs études. Une régression logistique ordinaire est appliquée pour calculer la probabilité de finir ses études et un modèle logistique multinomial est utilisé pour définir le niveau d’étude correspondant.</p>
 <ol class="arabic simple">
-<li><p>probabilité <em>f</em> d’un individu <em>i</em> de finir ses études l’année <em>t</em> :</p></li>
+<li><p>probabilité d’un individu <em>i</em> de finir ses études <em>f</em> l’année <em>t</em> :</p></li>
 </ol>
 <div class="math notranslate nohighlight">
 \[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(f_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+\[\Pr(f_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>pour chaque niveau d’éducation <em>e = 1 (inf), 2 (des) [référence], 3 (dec), 4 (uni)</em> atteint par un individu <em>i</em> l’année d’accomplissement des études en <em>t</em> :</p></li>
 </ol>
 <div class="math notranslate nohighlight">
-\[\mu e_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}\]</div>
+\[\mu_{e(i,t)} = \mu_{0} + \mu_{i} age_{i,t} + \mu_{j} male_{i,t} + \mu_{k} father_{i,t} + \mu_{l} mother_{i,t}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(e_{i,t}=1|\mu1_{i,t}) = \frac{\exp(\mu1_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+\[\Pr(e_{i,t}=1) = \frac{\exp(\mu_{1(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(e_{i,t}=2|\mu2_{i,t}) = \frac{1}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+\[\Pr(e_{i,t}=2) = \frac{1}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(e_{i,t}=3|\mu3_{i,t}) = \frac{\exp(\mu3_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+\[\Pr(e_{i,t}=3) = \frac{\exp(\mu_{3(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(e_{i,t}=4|\mu4_{i,t}) = \frac{\exp(\mu4_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}\]</div>
+\[\Pr(e_{i,t}=4) = \frac{\exp(\mu_{4(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}\]</div>
 </div>
 <div class="section" id="id2">
 <h3>Données et échantillon<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
@@ -539,14 +539,14 @@
 <div class="math notranslate nohighlight">
 \[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(c_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+\[\Pr(c_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>probabilité <em>s</em> d’un individu <em>i</em> de se séparer l’année <em>t</em> :</p></li>
 </ol>
 <div class="math notranslate nohighlight">
 \[\mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t} + \mu_{4} kid_{i,t}\]</div>
 <div class="math notranslate nohighlight">
-\[\Pr(s_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
+\[\Pr(s_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}\]</div>
 </div>
 <div class="section" id="id6">
 <h3>Données et échantillon<a class="headerlink" href="#id6" title="Lien permanent vers ce titre">¶</a></h3>

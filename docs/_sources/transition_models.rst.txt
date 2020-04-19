@@ -12,7 +12,7 @@ Pour chaque rang de naissance *k=1,2,3*  la probabilité d'avoir un enfant est e
 
 .. math:: \mu_{i,t,k} = \mu_{0,k} + \mu_{1,k} age_{i,t} + \mu_{2,k} edu_{i,t} + \mu_{3,k} lastkidage_{i,t}
 
-.. math:: \Pr(b_{i,t}=1|\mu_{i,t,k}) = \frac{\exp(\mu_{i,t,k})}{1+\exp(\mu_{i,t,k})}
+.. math:: \Pr(b_{i,t}=1) = \frac{\exp(\mu_{i,t,k})}{1+\exp(\mu_{i,t,k})}
 
 Données et échantillon
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -64,7 +64,7 @@ Les résultats des régressions logistiques sont présentés dans le tableau sui
 
 L'implémentation dans le modèle démographique est réalisée par un tirage uniforme, indépendant par dominant, et une naissance survient quand ce tirage est inférieur à la probabilité logistique prédite.
 
-Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les dominants en union de plus de 18 ans et dont la femme à moins de 45 ans. Il faut préciser que la régression logistique est estimée jusque 39 ans (34< *dage35+* <40), mais que les effets marginaux de la variable *dage35+* sont appliquées aux conjointes âgées jusque 45 ans dans le modèle de microsimulation démographique.
+Dans le modèle de simulation démographique, les personnes à risque pour cette transition sont les femmes en couple (qu'elles soient enregistrées comme l'individu dominant ou la conjointe dans BD/MSPS) âgées entre 18 ans et 44 ans inclus.
 
 Il faut préciser que les effets marginaux obtenus pour le Logit appliqué au 3ème enfant *kid3* est utilisé dans la simulation démographique pour calculer l'occurence de la naissance du 3ème enfant, mais également des enfants suivants.
 
@@ -78,23 +78,23 @@ Modèle économétrique
 
 Deux régressions logistiques sont appliquées pour 1) calculer la probabilité de finir ses études ; 2) attribuer un niveau d'études aux individus qui ont accompli leurs études. Une régression logistique ordinaire est appliquée pour calculer la probabilité de finir ses études et un modèle logistique multinomial est utilisé pour définir le niveau d'étude correspondant.
 
-1) probabilité *f* d'un individu *i* de finir ses études l'année *t* : 
+1) probabilité d'un individu *i* de finir ses études *f* l'année *t* : 
 
 .. math:: \mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}
 
-.. math:: \Pr(f_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
+.. math:: \Pr(f_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
 
 2) pour chaque niveau d'éducation *e = 1 (inf), 2 (des) [référence], 3 (dec), 4 (uni)* atteint par un individu *i* l'année d'accomplissement des études en *t* : 
 
-.. math:: \mu e_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} father_{i,t} + \mu_{4} mother_{i,t}
+.. math:: \mu_{e(i,t)} = \mu_{0} + \mu_{i} age_{i,t} + \mu_{j} male_{i,t} + \mu_{k} father_{i,t} + \mu_{l} mother_{i,t}
 
-.. math:: \Pr(e_{i,t}=1|\mu1_{i,t}) = \frac{\exp(\mu1_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}
+.. math:: \Pr(e_{i,t}=1) = \frac{\exp(\mu_{1(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}
 
-.. math:: \Pr(e_{i,t}=2|\mu2_{i,t}) = \frac{1}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}
+.. math:: \Pr(e_{i,t}=2) = \frac{1}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}
 
-.. math:: \Pr(e_{i,t}=3|\mu3_{i,t}) = \frac{\exp(\mu3_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}
+.. math:: \Pr(e_{i,t}=3) = \frac{\exp(\mu_{3(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}
 
-.. math:: \Pr(e_{i,t}=4|\mu4_{i,t}) = \frac{\exp(\mu4_{i,t})}{1+\exp(\mu1_{i,t})+\exp(\mu3_{i,t})+\exp(\mu4_{i,t})}
+.. math:: \Pr(e_{i,t}=4) = \frac{\exp(\mu_{4(i,t)})}{1+\exp(\mu_{1(i,t)})+\exp(\mu_{3(i,t)})+\exp(\mu_{4(i,t)})}
 
 Données et échantillon
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -156,13 +156,13 @@ Deux régressions logistiques sont appliquées pour 1) calculer la probabilité 
 
 .. math:: \mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t}
 
-.. math:: \Pr(c_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
+.. math:: \Pr(c_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
 
 2) probabilité *s* d'un individu *i* de se séparer l'année *t* : 
 
 .. math:: \mu_{i,t} = \mu_{0} + \mu_{1} age_{i,t} + \mu_{2} male_{i,t} + \mu_{3} educ_{i,t} + \mu_{4} kid_{i,t}
 
-.. math:: \Pr(s_{i,t}=1|\mu_{i,t}) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
+.. math:: \Pr(s_{i,t}=1) = \frac{\exp(\mu_{i,t})}{1+\exp(\mu_{i,t})}
 
 Données et échantillon
 ^^^^^^^^^^^^^^^^^^^^^^
