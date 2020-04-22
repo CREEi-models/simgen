@@ -46,14 +46,14 @@ On déclare une instance avec année de départ et d’arrêt.
 
     base = model(start_yr=2017,stop_yr=2040)
 
-On donne le nom du fichier pickle qui contient la base de départ
+On donne le nom du fichier pickle qui contient la base de départ (un exemple se trouve dans simgen/params). Il peut être copié dans le répertoire de travail. 
 
 .. code:: ipython3
 
     base.startpop('startpop')
 
 On donne les hypothèses d’immigration ainsi que le nom du fichier pour
-la population de nouveaux immigrants.
+la population de nouveaux immigrants. Un exemple peut être copié dans le répertoire de travail et se trouve sous simgen/params. 
 
 .. code:: ipython3
 

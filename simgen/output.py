@@ -121,6 +121,17 @@ class statistics:
             df = df.groupby(strata).sum().transpose()
             df = df.div(df.sum(axis=1),axis=0)
             return df
+    def save(self,file):
+        """
+        Fonction pour sauvegarder les fichiers de fréquences.
+
+        Parameters
+        ----------
+        file: str
+            nom du fichier de sauvegarde, incluant l'extension pkl (format pickle)
+        """
+        self.counts.to_pickle(file)
+        return 
 
 
 

@@ -39,5 +39,5 @@ Statistiques
 La classe permet de faire des statistiques dans le cadre d'une simulation. 
 
 .. autoclass:: statistics
-    :members: start, add, freq, prop
+    :members: start, add, freq, prop, save
 
