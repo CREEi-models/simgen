@@ -83,7 +83,7 @@ class model:
     def dead_assumptions(self,scenario='medium'):
         self.trans.params_dead(scenario)
         return
-    def set_statistics(self,stratas=['age','male','educ','married','nkids']):
+    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids']):
         self.stats = statistics(stratas)
         return
     def reset(self):

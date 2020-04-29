@@ -51,6 +51,7 @@ def bdsps(file,year=2017,iprint=False):
     df['educ4'] = df.idedlev.replace(educ)
     keep.append('educ4')
     df['inschool'] = df.idestat.replace({0:False,1:True,2:True,3:True})
+    df.loc[df['age']==5,'inschool'] = True
     keep.append('inschool')
     df['married'] = df['idmarst'].replace({0:True,1:True,2:False,3:False,4:False,5:False})
     keep.append('married')
