@@ -351,11 +351,14 @@ class update:
         # deal first with those entering school
         pop.hh.loc[pop.hh.age==5,'insch'] = True
         pop.kd.loc[pop.kd.age==5,'insch'] = True
+        # force quitting school after 35
+        pop.hh.loc[pop.hh.age>35,'insch'] = False
         # now those who quit (probabilistic)
         selection = (pop.hh.insch) & (pop.hh.age>=17) & (pop.hh.age<=35)
         work = pop.hh.loc[selection,['age','male','nkids']]
         work['mother'] = (work['nkids']>0)*(work['male']!=True)
         work['father'] = (work['nkids']>0)*(work['male'])
+        work['byear'] = year-work['age']
         beta = self.par_schldone 
         work['pr'] = beta['constant']
         for a in range(18,36):
@@ -363,6 +366,7 @@ class update:
         work['pr'] += beta['male']*work['male']
         work['pr'] += beta['mother']*work['mother']
         work['pr'] += beta['father']*work['father']
+        work['pr'] += beta['byear']*work['byear']
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['quit'] = np.random.uniform(size=len(work))<work['pr']
         work['quit'] = np.where(work['age']==35,True,work['quit'])

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+from itertools import product
 class statistics:
     """
     Classe pour créer les statistiques provenant d'une simulation. 
@@ -16,6 +16,7 @@ class statistics:
     def __init__(self,stratas): 
         self.stratas = stratas
         self.counts = None
+        self.mean_counts = pd.DataFrame({' ' : []})
         return 
     def start(self,pop,year):
         """
@@ -30,8 +31,15 @@ class statistics:
         year: int 
             Année de départ de la simulation
         """
-        counts = pop.hh.groupby(self.stratas).sum()['wgt']
-        self.counts = pd.DataFrame({year:counts}).fillna(0.0)
+        list_value_column = [[i for i in range(1,111)]] #start with ages
+        for col in ['male','insch','educ','married','nkids']:
+            list_value_column.append(pop.hh[col].sort_values().unique())
+        empty = pd.DataFrame(list(product(*list_value_column)),
+                             columns=['age','male','insch','educ','married','nkids']).set_index(['age','male','insch','educ','married','nkids'])
+        empty[year]=0.0
+        counts = pop.hh.groupby(self.stratas).sum()[['wgt']].fillna(0.0)
+        counts = counts.rename(columns={'wgt':year})
+        self.counts= empty.add(counts,fill_value=0.0)
         return
     def add(self,pop,year):
         """
@@ -51,6 +59,23 @@ class statistics:
         self.counts = self.counts.merge(counts,left_index=True,right_index=True,how='outer')
         self.counts = self.counts.fillna(0.0)
         return
+    def add_to_mean(self,rep):
+        """
+        Fonction pour ajouter une replication à la moyenne des distributions. 
+
+        À chaque réplication, les valeurs du DataFrame self.counts/nbr_réplication sont ajoutées à la moyenne des valeurs.
+
+        Parameters
+        ----------
+        rep: nombre de réplication de la simulation
+        """
+
+        if self.mean_counts.empty:
+            self.mean_counts = self.counts.copy()
+            self.mean_counts[:] = 0
+        self.mean_counts = self.mean_counts.add(self.counts/rep,fill_value=0)
+        return
+
     def freq(self,strata=None,bins=[0],sub=None):
         """
         Fonction de fréquences.

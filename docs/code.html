@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Modèles de transition" href="transition_models.html" />
-    <link rel="prev" title="Exemple de mise en forme des données" href="import.html" /> 
+    <link rel="prev" title="Base de départ" href="import.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,7 +85,8 @@
               <p class="caption"><span class="caption-text">Menu:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premier pas avec SimGen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="import.html">Exemple de mise en forme des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Base de départ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html#exemple-de-mise-en-forme-des-donnees">Exemple de mise en forme des données</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation des fonctions de SimGen</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#donnees">Données</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transitions">Transitions</a></li>
@@ -94,6 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="transition_models.html">Modèles de transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a></li>
 </ul>
 
             
@@ -163,9 +165,9 @@
 <div class="section" id="donnees">
 <h2>Données<a class="headerlink" href="#donnees" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Les fonctions de données permettent de préparer les données pour la simulation.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="simgen.bdsps">
-<code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">bdsps</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">year=2017</em>, <em class="sig-param">iprint=False</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.bdsps" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">bdsps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">year</span><span class="o">=</span><span class="default_value">2017</span></em>, <em class="sig-param"><span class="n">iprint</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.bdsps" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Nettoyage de la BDSPS.</p>
 <p>Fonction qui permet de mettre en forme la BDSPS.</p>
 <dl class="field-list simple">
@@ -178,9 +180,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="simgen.isq">
-<code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">isq</code><span class="sig-paren">(</span><em class="sig-param">year</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.isq" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">isq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.isq" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Population par âge de l’ISQ</p>
 <p>Fonction qui permet d’obtenir la population par âge de l’ISQ.</p>
 <dl class="field-list simple">
@@ -196,14 +198,14 @@
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="simgen.parse">
 <em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">parse</code><a class="headerlink" href="#simgen.parse" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Mise en forme des variables pour référence SimGen</p>
 <p>Classe qui permet de prendre un dataframe provenant d’une base de donnée particulière et retourner un dataframe propre interpretable par SimGen. Les noms de variables peuvent être matché avec initialisation de la classe en utilisant les dictionnaires map_hh, map_sp et map_kd pour les trois registres.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.parse.dominants">
-<code class="sig-name descname">dominants</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.dominants" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">dominants</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.dominants" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Mise en forme des dominants</p>
 <p>Fonction membre qui permet de prendre un dataframe dominant et d’appliquer les dictionnaires map_hh pour les noms de variables qui match avec SimGen.</p>
 <dl class="field-list simple">
@@ -219,9 +221,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.parse.kids">
-<code class="sig-name descname">kids</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.kids" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">kids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.kids" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Mise en forme des enfants</p>
 <p>Fonction membre qui permet de prendre un dataframe enfants et d’appliquer les dictionnaires map_kd pour les noms de variables qui match avec SimGen.</p>
 <dl class="field-list simple">
@@ -237,9 +239,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.parse.spouses">
-<code class="sig-name descname">spouses</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.spouses" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">spouses</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.parse.spouses" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Mise en forme des conjoints</p>
 <p>Fonction membre qui permet de prendre un dataframe conjoint et d’appliquer les dictionnaires map_sp pour les noms de variables qui match avec SimGen.</p>
 <dl class="field-list simple">
@@ -257,14 +259,14 @@
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="simgen.population">
 <em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">population</code><a class="headerlink" href="#simgen.population" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Structure de population.</p>
 <p>Cette classe permet d’abriter sous un seul toit les dominants, conjoints et enfants et de permettre certaines opérations.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.population.input">
-<code class="sig-name descname">input</code><span class="sig-paren">(</span><em class="sig-param">hh</em>, <em class="sig-param">sp</em>, <em class="sig-param">kd</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.population.input" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hh</span></em>, <em class="sig-param"><span class="n">sp</span></em>, <em class="sig-param"><span class="n">kd</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.population.input" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction pour entrer les registres.</p>
 <p>Fonction qui permet d’entrer les registres dominants, conjoints et enfants qui ont été préalablement passé dans parse().</p>
 <dl class="field-list simple">
@@ -283,14 +285,14 @@
 </div>
 <div class="section" id="transitions">
 <h2>Transitions<a class="headerlink" href="#transitions" title="Lien permanent vers ce titre">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="simgen.update">
 <em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">update</code><a class="headerlink" href="#simgen.update" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Classe pour les transitions.</p>
 <p>Classe permettant d’effectuer différentes transitions d’une année à l’autre.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.update.birth">
-<code class="sig-name descname">birth</code><span class="sig-paren">(</span><em class="sig-param">pop</em>, <em class="sig-param">year</em>, <em class="sig-param">ntarget</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.update.birth" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">birth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em>, <em class="sig-param"><span class="n">year</span></em>, <em class="sig-param"><span class="n">ntarget</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.update.birth" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction de transition naissance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -309,7 +311,7 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.update.params_birth">
 <code class="sig-name descname">params_birth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simgen.update.params_birth" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Chargement des paramètres pour transition de naissances.</p>
@@ -322,9 +324,9 @@
 <div class="section" id="simulation">
 <h2>Simulation<a class="headerlink" href="#simulation" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La classe permetant de faire les simulations est model. Voici sa descriptions.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="simgen.model">
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start_yr</span><span class="o">=</span><span class="default_value">2017</span></em>, <em class="sig-param"><span class="n">stop_yr</span><span class="o">=</span><span class="default_value">2100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Modèle de simulation SimGen.</p>
 <p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
 <dl class="field-list simple">
@@ -335,25 +337,25 @@
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.model.immig_assumptions">
-<code class="sig-name descname">immig_assumptions</code><span class="sig-paren">(</span><em class="sig-param">allow=True</em>, <em class="sig-param">rate=0.0053478</em>, <em class="sig-param">init=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.immig_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">immig_assumptions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">allow</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">num</span><span class="o">=</span><span class="default_value">55000.0</span></em>, <em class="sig-param"><span class="n">init</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.immig_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Hypothèses d’immigration.</p>
 <p>Fonction membre qui permet de spécifier les hypothèses d’immigration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>allow</strong> (<em>boolean</em>) – switch pour aligner le nombre d’immigrants sur ISQ</p></li>
-<li><p><strong>rate</strong> (<em>float</em>) – taux d’immigration (par 100 personne). Par défaut, scénario de référence de l’ISQ.</p></li>
+<li><p><strong>num</strong> (<em>float</em>) – total d’immigration (nombre). Par défaut, scénario de référence de l’ISQ.</p></li>
 <li><p><strong>init</strong> (<em>str</em>) – nom du fichier contenant la population d’immigrants</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.model.startpop">
-<code class="sig-name descname">startpop</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.startpop" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">startpop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.startpop" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Charger une population de départ.</p>
 <p>Fonction membre qui permet de charger une population de départ.</p>
 <dl class="field-list simple">
@@ -369,9 +371,9 @@
 <div class="section" id="statistiques">
 <h2>Statistiques<a class="headerlink" href="#statistiques" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La classe permet de faire des statistiques dans le cadre d’une simulation.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="simgen.statistics">
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stratas</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
 <p>Cette classe permet de capturer la distribution de la population par strata durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
 <dl class="field-list simple">
@@ -379,9 +381,9 @@
 <dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers dominants afin de stratifier la population et collecter les fréquences (pondérées)</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.statistics.add">
-<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">pop</em>, <em class="sig-param">year</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.add" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em>, <em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.add" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction pour ajouté une année à la distribution.</p>
 <p>À chaque année d’une simulation, cette fonction est invoquée afin de collecter la distribution par strata dans l’année en cours. Cette population est ajoutée à counts.</p>
 <dl class="field-list simple">
@@ -394,9 +396,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.statistics.freq">
-<code class="sig-name descname">freq</code><span class="sig-paren">(</span><em class="sig-param">strata=None, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.freq" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">freq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">strata</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">[0]</span></em>, <em class="sig-param"><span class="n">sub</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.freq" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction de fréquences.</p>
 <p>Fonction qui permet, à l’aide de counts, de calculer les fréquences pondérés pour une strata donnée. Deux options sont disponibles: l’une, bins, permet de modifier les catégories de la strata (par exemple groupe d’âge), tandis que sub permet de définir un critère de sélection particulier pour le calcul des fréquence (en str).</p>
 <dl class="field-list simple">
@@ -416,9 +418,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.statistics.prop">
-<code class="sig-name descname">prop</code><span class="sig-paren">(</span><em class="sig-param">strata, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.prop" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">prop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">strata</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">[0]</span></em>, <em class="sig-param"><span class="n">sub</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.prop" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction de proportion.</p>
 <p>Fonction qui permet, à l’aide de counts, de calculer les proportions pondérés pour une strata donnée. Deux options sont disponibles: l’une, bins, permet de modifier les catégories de la strata (par exemple groupe d’âge), tandis que sub permet de définir un critère de sélection particulier pour le calcul des proportions (en str).</p>
 <dl class="field-list simple">
@@ -438,9 +440,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.statistics.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.save" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.save" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction pour sauvegarder les fichiers de fréquences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres</dt>
@@ -449,9 +451,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="simgen.statistics.start">
-<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">pop</em>, <em class="sig-param">year</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.start" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em>, <em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.start" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Initialisation de la distribution sur année de départ.</p>
 <p>Le membre de la class qui contient les fréquences (counts) est populé pour l’année de départ.</p>
 <dl class="field-list simple">
@@ -480,7 +482,7 @@
         <a href="transition_models.html" class="btn btn-neutral float-right" title="Modèles de transition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="import.html" class="btn btn-neutral float-left" title="Exemple de mise en forme des données" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="import.html" class="btn btn-neutral float-left" title="Base de départ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

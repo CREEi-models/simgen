@@ -47,11 +47,12 @@ def bdsps(file,year=2017,iprint=False):
     keep.append('newimm')
     keep.append('yrsimm')
     educ = {0:'none',1:'none',2:'none',3:'none',4:'none',5:'none',6:'des',
-            7:'des',8:'des',9:'dec',10:'dec',11:'uni',12:'uni'}
+            7:'des',8:'dec',9:'dec',10:'uni',11:'uni',12:'uni'}
     df['educ4'] = df.idedlev.replace(educ)
     keep.append('educ4')
     df['inschool'] = df.idestat.replace({0:False,1:True,2:True,3:True})
     df.loc[df['age']==5,'inschool'] = True
+    df.loc[df['age']>35,'inschool'] = False
     keep.append('inschool')
     df['married'] = df['idmarst'].replace({0:True,1:True,2:False,3:False,4:False,5:False})
     keep.append('married')

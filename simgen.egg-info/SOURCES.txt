@@ -22,21 +22,3 @@ simgen/params/trans_mortality_medium.csv
 simgen/params/trans_schldone.csv
 simgen/params/trans_unions.csv
 simgen/params/tx_em_age.csv
-simgen/params/copie/trans_births.csv
-simgen/params/copie/trans_degree.csv
-simgen/params/copie/trans_divorces.csv
-simgen/params/copie/trans_mortality_high.csv
-simgen/params/copie/trans_mortality_low.csv
-simgen/params/copie/trans_mortality_medium.csv
-simgen/params/copie/trans_schldone.csv
-simgen/params/copie/trans_unions.csv
-simgen/params/copie/tx_em_age.csv
-simgen/params/copie HS et Partielle/trans_births.csv
-simgen/params/copie HS et Partielle/trans_degree.csv
-simgen/params/copie HS et Partielle/trans_divorces.csv
-simgen/params/copie HS et Partielle/trans_mortality_high.csv
-simgen/params/copie HS et Partielle/trans_mortality_low.csv
-simgen/params/copie HS et Partielle/trans_mortality_medium.csv
-simgen/params/copie HS et Partielle/trans_schldone.csv
-simgen/params/copie HS et Partielle/trans_unions.csv
-simgen/params/copie HS et Partielle/tx_em_age.csv

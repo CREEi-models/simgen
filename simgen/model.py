@@ -44,7 +44,7 @@ class model:
         self.ipop = population()
         self.ipop = self.ipop.load(file)
         return
-    def immig_assumptions(self,allow=True,rate=0.0053478,init=None):
+    def immig_assumptions(self,allow=True,num=55e3,init=None):
         """
         Hypothèses d'immigration.
 
@@ -54,24 +54,24 @@ class model:
         ----------
         allow : boolean
             switch pour aligner le nombre d'immigrants sur ISQ
-        rate : float
-            taux d'immigration (par 100 personne). Par défaut, scénario de référence de l'ISQ. 
+        num : float
+            total d'immigration (nombre). Par défaut, scénario de référence de l'ISQ. 
         init : str 
             nom du fichier contenant la population d'immigrants
         """
         # the 0.005 rate is from Statcan
         self.immig_allow = allow
         if allow:
-            self.immig_rate = rate
+            self.immig_total = num
             # this should be a population structure with new immigrants
             self.imm = population()
             self.imm = self.imm.load(init)
         else :
-            self.immig_rate = 0.0 
+            self.immig_total = 0.0 
             self.imm = None
         return
     def birth_assumptions(self,scenario='reference',align=True):
-        isq = pd.read_excel(params_dir+'naissance_ed2019.xlsx',sheet_name='rates')
+        isq = pd.read_excel(params_dir+'naissance_ed2019.xlsx',sheet_name='numbers')
         isq = isq.set_index('year')
         maxyr = isq.index.max()
         if maxyr<self.stop_yr:
@@ -104,28 +104,33 @@ class model:
             pop = trans.divorce(pop,yr)
             pop = trans.marriage(pop,yr)
             if yr>self.start_yr:
-                pop = trans.birth(pop,yr,self.adjust_births[yr]*pop.size())
+                pop = trans.birth(pop,yr,self.adjust_births[yr])
             pop = trans.dead(pop,yr)
             pop = trans.kids_dead(pop,yr)
             pop = trans.sp_dead(pop,yr)
             pop = trans.moveout(pop,yr)
             pop = trans.emig(pop,yr)
+            
             if self.immig_allow:
                 newimm = deepcopy(self.imm) 
                 newimm.hh.byr += (yr - self.start_yr)
                 newimm.sp.byr += (yr - self.start_yr)
                 newimm.kd.byr += (yr - self.start_yr)
-                pop.enter(newimm,self.immig_rate*pop.size())
+                pop.enter(newimm,self.immig_total)
                 pop.ages(yr)
                 pop.nkids()
                 pop.kagemin()
+        
             self.pop = pop
         return 
-    def simulate(self):
-        self.reset()
-        self.stats.start(self.pop,self.year)
-        while self.year <= self.stop_yr:
-            print(self.year,end='\r')
-            self.next()
-            self.stats.add(self.pop,self.year)
+    def simulate(self,rep = 1):
+        
+        for _ in range(rep):
+            self.reset()
+            while self.year <= self.stop_yr:
+                print(self.year,end='\r')
+                self.next()
+                self.stats.add(self.pop,self.year)
+            self.stats.add_to_mean(rep)
+        self.stats.counts = self.stats.mean_counts #À la fin on remet la moyenne dans stats.counts.
         return 

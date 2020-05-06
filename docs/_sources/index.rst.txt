@@ -16,6 +16,7 @@ Le modèle de microsimulation SimGen permet de faire des simulations démographi
    import.rst
    code.rst
    transition_models.rst
+   resultats.rst
 
 
 
