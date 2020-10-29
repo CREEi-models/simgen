@@ -3,3 +3,4 @@ tests/*.pkl
 *.pyc
 *.pyc
 tests/.ipynb_checkpoints/
+tests/.DS_Store

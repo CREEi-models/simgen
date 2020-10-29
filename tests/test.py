@@ -1,10 +1,10 @@
+"""
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+
 Created on Sat Mar 21 19:23:29 2020
 
 @author: loulou
-"""
 import pandas as pd
 import numpy as np 
 from random import choices
@@ -80,4 +80,22 @@ check = doms.merge(kids.groupby('nas').min()['age'],left_index=True,right_index=
 pop = population(doms,sps,kids)
 newimm = population(imm)        
         
+"""
 
+import sys
+import warnings
+import pandas as pd 
+import numpy as np
+from matplotlib import pyplot as plt
+warnings.filterwarnings("ignore")
+
+sys.path.append('/Users/ydecarie/Dropbox (CEDIA)/OLG_CAN/simgen/')
+path_data = '/Users/ydecarie/Dropbox (CEDIA)/OLG_CAN/Benchmark/'
+
+from simgen import model
+base = model(start_yr=2017,stop_yr=2025)
+base.startpop('/Users/ydecarie/Dropbox (CEDIA)/OLG_CAN/simgen/tests/startpopchsld')
+base.immig_assumptions(init='/Users/ydecarie/Dropbox (CEDIA)/OLG_CAN/simgen/tests/newimmpopchsld')
+base.birth_assumptions(scenario='reference')
+base.dead_assumptions(scenario='low')
+base.simulate(rep=1)

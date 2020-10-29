@@ -14,6 +14,8 @@ simgen.egg-info/top_level.txt
 simgen/params/QC-age-sexe.xlsx
 simgen/params/naissance_ed2019.xlsx
 simgen/params/trans_births.csv
+simgen/params/trans_death_chsld.csv
+simgen/params/trans_death_home.csv
 simgen/params/trans_degree.csv
 simgen/params/trans_divorces.csv
 simgen/params/trans_mortality_high.csv
