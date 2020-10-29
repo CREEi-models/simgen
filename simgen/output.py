@@ -32,10 +32,10 @@ class statistics:
             Année de départ de la simulation
         """
         list_value_column = [[i for i in range(1,111)]] #start with ages
-        for col in ['male','insch','educ','married','nkids']:
+        for col in ['male','insch','educ','married','nkids','chsld']:
             list_value_column.append(pop.hh[col].sort_values().unique())
         empty = pd.DataFrame(list(product(*list_value_column)),
-                             columns=['age','male','insch','educ','married','nkids']).set_index(['age','male','insch','educ','married','nkids'])
+                             columns=['age','male','insch','educ','married','nkids','chsld']).set_index(['age','male','insch','educ','married','nkids','chsld'])
         empty[year]=0.0
         counts = pop.hh.groupby(self.stratas).sum()[['wgt']].fillna(0.0)
         counts = counts.rename(columns={'wgt':year})
@@ -155,7 +155,7 @@ class statistics:
         file: str
             nom du fichier de sauvegarde, incluant l'extension pkl (format pickle)
         """
-        self.counts.to_pickle(file)
+        self.counts.to_pickle(file,protocol=4)
         return 
 
 

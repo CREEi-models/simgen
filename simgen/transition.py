@@ -1,19 +1,19 @@
-import numpy as np 
+import numpy as np
 from numba import njit,int64,float64
 from simgen import population
 import pandas as pd
-from multiprocessing import Pool 
+from multiprocessing import Pool
 from multiprocessing import cpu_count
 from random import choices
 from functools import partial
 from os import path
 params_dir = path.join(path.dirname(__file__), 'params/')
 
-class update: 
+class update:
     """
     Classe pour les transitions.
 
-    Classe permettant d'effectuer différentes transitions d'une année à l'autre. 
+    Classe permettant d'effectuer différentes transitions d'une année à l'autre.
 
     """
     def __init__(self):
@@ -26,6 +26,7 @@ class update:
         self.params_schldone()
         self.params_educ()
         self.params_emig()
+        self.params_chsld()
         return
     def params_birth(self):
         """
@@ -82,6 +83,18 @@ class update:
         df.name = 'rate'
         df = df.to_frame()
         self.mx = df
+        df2 = pd.read_csv(params_dir+'trans_death_chsld.csv',sep=',')
+        df2.columns = ['var','value']
+        df2['var'] = df2['var'].apply(str)
+        df2 = df2.set_index('var')
+        df2.name='chsld'
+        self.par_chsld = df2
+        df3 = pd.read_csv(params_dir+'trans_death_home.csv',sep=',')
+        df3.columns = ['var','value']
+        df3['var'] = df3['var'].apply(str)
+        df3 = df3.set_index('var')
+        df3.name='home'
+        self.par_home = df3
         return
     def params_schldone(self):
         """
@@ -121,6 +134,22 @@ class update:
         df['value'] = df['value']*1e-3
         self.par_emig = df.loc[:,'value']
         return
+    def params_chsld(self):
+        """
+        Chargement des paramètres pour transition chsld
+
+        Le chargement est fait automatiquement avec création instance de la classe.
+
+        """
+        df = pd.read_csv(params_dir+'chsld_in.csv',sep=';')
+        df.columns = ['var','value']
+        df = df.set_index('var')
+        self.par_chsld_in = df.loc[:,'value']
+        df = pd.read_csv(params_dir+'chsld_out.csv',sep=';')
+        df.columns = ['var','value']
+        df = df.set_index('var')
+        self.par_chsld_out = df.loc[:,'value']
+        return
     def birth(self,pop,year,ntarget):
         """
         Fonction de transition naissance
@@ -133,7 +162,7 @@ class update:
             année de la transition
         ntarget: int
             nombre de naissance visé (si alignement)
-        
+
         Returns
         -------
         population
@@ -161,10 +190,10 @@ class update:
         work['uni'] = work['educ']=='uni'
         work['dage2529'] = (work['age']>=25) & (work['age']<=29)
         work['dage3034'] = (work['age']>=30) & (work['age']<=34)
-        work['dage35p'] = (work['age']>=35) 
+        work['dage35p'] = (work['age']>=35)
         work['lkidage'] = work['agemin']
         work['constant'] = 1
-        # compute probability 
+        # compute probability
         work['pr'] = 0.0
         for v in covars:
             work['pr'] += work[v].multiply(self.par_birth.loc[work['rank'],v].values)
@@ -184,7 +213,7 @@ class update:
         # append kids to kids dataset and update globals for dominants
         pop.kd = pop.kd.append(newkids)
         pop.nkids()
-        pop.kagemin() 
+        pop.kagemin()
         # create dominants
         maxnas = pop.hh.index.max()
         newnas = [a for a in range(maxnas+1,maxnas+1+nbirths)]
@@ -199,6 +228,7 @@ class update:
         newdoms['married'] = False
         newdoms['age'] = 0
         newdoms['agemin'] = 0
+        newdoms['chsld'] = False
         pop.hh = pop.hh.append(newdoms)
         return pop
     def match(self,grooms,pop):
@@ -217,7 +247,52 @@ class update:
                 nas_pick = choices(nas_pool,k=1)
                 bride = pop.sp.loc[nas_pick[0],:]
             newsp.loc[i,:] = bride.to_list()
-        return newsp        
+        return newsp
+
+    def chsld_in(self,pop,year):
+        pop.ages(year)
+        cond = (pop.hh.age>=65) & (pop.hh.chsld==False)
+        work = pop.hh.loc[cond,['age']]
+        work['6569'] = (work['age']>=65) & (work['age']<=69)
+        work['7074'] = (work['age']>=70) & (work['age']<=74)
+        work['7579'] = (work['age']>=75) & (work['age']<=79)
+        work['8084'] = (work['age']>=80) & (work['age']<=84)
+        work['8589'] = (work['age']>=85) & (work['age']<=89)
+        work['90']   = (work['age']>=90)
+        work['pr'] = 0
+        work['pr'] += work['6569']*self.par_chsld_in.age6569
+        work['pr'] += work['7074']*self.par_chsld_in.age7074
+        work['pr'] += work['7579']*self.par_chsld_in.age7579
+        work['pr'] += work['8084']*self.par_chsld_in.age8084
+        work['pr'] += work['8589']*self.par_chsld_in.age8589
+        work['pr'] += work['90']*self.par_chsld_in.age90p
+        work['inst'] = np.random.uniform(size=len(work))<work['pr']
+        nas_inst = work[work['inst']].index.to_list()
+        pop.hh.loc[nas_inst,'chsld'] = True
+        return pop
+
+    def chsld_out(self,pop,year):
+        pop.ages(year)
+        cond = (pop.hh.age>=65) & (pop.hh.chsld==True)
+        work = pop.hh.loc[cond,['age']]
+        work['6569'] = (work['age']>=65) & (work['age']<=69)
+        work['7074'] = (work['age']>=70) & (work['age']<=74)
+        work['7579'] = (work['age']>=75) & (work['age']<=79)
+        work['8084'] = (work['age']>=80) & (work['age']<=84)
+        work['8589'] = (work['age']>=85) & (work['age']<=89)
+        work['90']   = (work['age']>=90)
+        work['pr'] = 0
+        work['pr'] += work['6569']*self.par_chsld_out.age6569
+        work['pr'] += work['7074']*self.par_chsld_out.age7074
+        work['pr'] += work['7579']*self.par_chsld_out.age7579
+        work['pr'] += work['8084']*self.par_chsld_out.age8084
+        work['pr'] += work['8589']*self.par_chsld_out.age8589
+        work['pr'] += work['90']*self.par_chsld_out.age90p
+        work['inst'] = np.random.uniform(size=len(work))<work['pr']
+        nas_inst = work[work['inst']].index.to_list()
+        pop.hh.loc[nas_inst,'chsld'] = False
+        return pop
+
     def marriage(self,pop,year):
         pop.ages(year)
         cond = (pop.hh.married==False) & (pop.hh.age<=65) & (pop.hh.age>=18)
@@ -239,7 +314,7 @@ class update:
             'age3539','age4044','age4549','age5054','age5559','insch',
             'des','dec','uni','constant']
         work['pr'] = 0
-        for v in covars: 
+        for v in covars:
             work['pr'] += work[v]*self.par_union[v]
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['wedding'] = np.random.uniform(size=len(work))<work['pr']
@@ -258,7 +333,7 @@ class update:
         # brides added to pool of spouses
         pop.sp = pop.sp.append(newsp)
         return pop
-    
+
     def divorce(self,pop,year):
         pop.ages(year)
         pop.nkids()
@@ -278,7 +353,7 @@ class update:
         work['constant'] = 1
         covars = ['male','mage','mage2','mage3','wage','wage2','wage3','des','dec','uni','insch','kid','constant']
         work['pr'] = 0
-        for v in covars: 
+        for v in covars:
             work['pr'] += work[v]*self.par_divorce[v]
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['divorce'] = np.random.uniform(size=len(work))<work['pr']
@@ -288,13 +363,98 @@ class update:
         # drop spouses
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_divorced)]
         return pop
+
+    def dead_chsld_ajust(self,pop,year):
+        pop.ages(year)
+        work = pop.hh.loc[:,['wgt','male','age','chsld']]
+        work['year'] = year
+        work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
+        labels=['6569','7074','7579','8084','8589','90']
+        work['6569'] = (work['age']>=65) & (work['age']<=69)
+        work['7074'] = (work['age']>=70) & (work['age']<=74)
+        work['7579'] = (work['age']>=75) & (work['age']<=79)
+        work['8084'] = (work['age']>=80) & (work['age']<=84)
+        work['8589'] = (work['age']>=85) & (work['age']<=89)
+        work['90']   = (work['age']>=90)
+
+        tot6569 = work.loc[work['6569']==True,['wgt']].sum(axis=0)
+        tot7074 = work.loc[work['7074']==True,['wgt']].sum(axis=0)
+        tot7579 = work.loc[work['7579']==True,['wgt']].sum(axis=0)
+        tot8084 = work.loc[work['8084']==True,['wgt']].sum(axis=0)
+        tot8589 = work.loc[work['8589']==True,['wgt']].sum(axis=0)
+        tot90 = work.loc[work['90']==True,['wgt']].sum(axis=0)
+
+        tot6569chsld = work.loc[np.logical_and(work['6569']==True,work['chsld']==True),['wgt']].sum(axis=0)
+        tot7074chsld = work.loc[np.logical_and(work['7074']==True,work['chsld']==True),['wgt']].sum(axis=0)
+        tot7579chsld = work.loc[np.logical_and(work['7579']==True,work['chsld']==True),['wgt']].sum(axis=0)
+        tot8084chsld = work.loc[np.logical_and(work['8084']==True,work['chsld']==True),['wgt']].sum(axis=0)
+        tot8589chsld = work.loc[np.logical_and(work['8589']==True,work['chsld']==True),['wgt']].sum(axis=0)
+        tot90chsld = work.loc[np.logical_and(work['90']==True,work['chsld']==True),['wgt']].sum(axis=0)
+
+        dead_ajust =pd.DataFrame(columns=('age','home','chsld','pop'))
+        dead_ajust['age']=np.arange(65,111,1)
+        bins=[64,69,74,79,84,89,111]
+        dead_ajust['agegr']=pd.cut(dead_ajust.age,bins, labels=labels)
+        for v in labels:
+            dead_ajust['chsld']=np.where(dead_ajust['agegr']==v,self.par_chsld.loc[v],dead_ajust['chsld'])
+
+        for a in list(np.arange(65,111,1)):
+            valm=self.mx.query('year ==@year and male==True and age==@a').values
+            valf=self.mx.query('year ==@year and male==False and age==@a').values
+            cond_male_home = np.logical_and(work['male']==True,work['chsld']==False)
+            cond_female_home = np.logical_and(work['male']==False,work['chsld']==False)
+            popm = work.loc[np.logical_and(work['age']==a,cond_male_home),['wgt']].sum(axis=0)
+            popf = work.loc[np.logical_and(work['age']==a,cond_female_home),['wgt']].sum(axis=0)
+            pop=popm+popf
+            val= (valm[0]*popm[0]  + valf[0] * popf[0])/(popm[0]+popf[0])
+            dead_ajust['home']= np.where(dead_ajust['age']==a,val[0],dead_ajust['home'])
+            dead_ajust['pop']= np.where(dead_ajust['age']==a,pop[0],dead_ajust['pop'])
+
+        #dead_ajust=dead_ajust.set_index('age')
+        dead_ajust['shome'] = 1-dead_ajust['home']
+        dead_ajust['homegr'] =None
+        dead_ajust['factor_chsld']=None
+        dead_ajust['factor_home']=None
+        for v in labels:
+            sur = dead_ajust.loc[dead_ajust['agegr']==v,['shome']].product()
+            dead_ajust['homegr'] = np.where(dead_ajust['agegr']==v,1-sur[0],dead_ajust['homegr'])
+            dead_ajust['factor_chsld'] = np.where(dead_ajust['agegr']==v,dead_ajust['chsld']/dead_ajust['homegr'],dead_ajust['factor_chsld'])
+            totagegr = work.loc[work[v]==True,['wgt']].sum(axis=0)
+            totagegrchsld = work.loc[np.logical_and(work[v]==True,work['chsld']==True),['wgt']].sum(axis=0)
+            num=totagegr[0] * dead_ajust.loc[dead_ajust['agegr']==v,['homegr']].mean()
+            num = num[0]- totagegrchsld[0] * dead_ajust.loc[dead_ajust['agegr']==v,['chsld']].mean()
+            num = num[0] /(totagegr-totagegrchsld)
+            num = num[0] /  dead_ajust.loc[dead_ajust['agegr']==v,['homegr']].mean()
+            dead_ajust['factor_home'] = np.where(dead_ajust['agegr']==v,num[0],dead_ajust['factor_home'])
+        dead_ajust['factor_chsld'] = np.where(dead_ajust['agegr']=='90',1,dead_ajust['factor_chsld'])
+        dead_ajust['factor_home'] = np.where(dead_ajust['agegr']=='90',1,dead_ajust['factor_home'])
+        self.par_ajust_chsld= dead_ajust[['age','factor_home','factor_chsld']]
+        #self.par_ajust_chsld= self.par_ajust_chsld.set_index('age')
+        return
+
     def dead(self,pop,year):
         # make sure year up to date
         pop.ages(year)
-        work = pop.hh.loc[:,['male','age']]
+        work = pop.hh.loc[:,['male','age','chsld']]
         work['year'] = year
+        #work = work.merge(self.par_ajust_chsld,on=['age'],how='left')
+        work['factor_home']=1
+        work['factor_chsld']=1
+        for a in list(np.arange(65,111,1)):
+            valh=self.par_ajust_chsld.loc[self.par_ajust_chsld['age']==a,['factor_home']].values
+            valc=self.par_ajust_chsld.loc[self.par_ajust_chsld['age']==a,['factor_chsld']].values
+            work['factor_home']= (np.where(np.logical_and(work['chsld']==False,work['age']==a),
+                                            valh[0],work['factor_home']))
+            work['factor_chsld']= (np.where(np.logical_and(work['chsld']==True,work['age']==a),
+                                            valc[0],work['factor_chsld']))
         work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
-        work['dead'] = np.random.uniform(size=len(work))<work['rate']
+        #na_val = {'factor_home':1,'factor_chsld':1}
+        #work = work.fillna(value=na_val)
+        work['factor']=1
+        work['factor'] = np.where(np.logical_and(work['age']>=65,work['chsld']==False),work['factor_home'],work['factor'])
+        work['factor'] = np.where(np.logical_and(work['age']>=65,work['chsld']==True),work['factor_chsld'],work['factor'])
+        work['dead'] = np.random.uniform(size=len(work))<(work['rate']*work['factor'])
+        #work['test_rate'] = (work['rate']*work['factor'])
         nas_dead = work[work['dead']].index.to_list()
         pop.hh = pop.hh[~pop.hh.index.isin(nas_dead)]
         pop.sp = pop.sp[~pop.sp.index.isin(nas_dead)]
@@ -309,7 +469,7 @@ class update:
         nas_dead = work[work['dead']].index.to_list()
         pop.sp = pop.sp[~pop.sp.index.isin(nas_dead)]
         pop.hh.loc[nas_dead,'married'] = False
-        return pop  
+        return pop
     def kids_dead(self,pop,year):
         pop.ages(year)
         work = pop.kd.loc[:,['male','age']]
@@ -325,7 +485,7 @@ class update:
         pop.ages(year)
         pop.kd = pop.kd[pop.kd.age<18]
         pop.nkids()
-        pop.kagemin()         
+        pop.kagemin()
         return pop
     def emig(self,pop,year):
         pop.ages(year)
@@ -341,12 +501,14 @@ class update:
         u = np.random.uniform(size=len(work))
         work['emig'] = u<work['pr']
         nas_emig = work[work['emig']].index.to_list()
+        popemmig=  pop.hh.loc[pop.hh.index.isin(nas_emig)]
+        tot = popemmig.sum()
         pop.hh = pop.hh.loc[~pop.hh.index.isin(nas_emig)]
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_emig)]
         pop.kd = pop.kd.loc[~pop.kd.index.isin(nas_emig)]
         return pop
     def educ(self,pop,year):
-        pop.ages(year) 
+        pop.ages(year)
         pop.nkids()
         # deal first with those entering school
         pop.hh.loc[pop.hh.age==5,'insch'] = True
@@ -358,15 +520,15 @@ class update:
         work = pop.hh.loc[selection,['age','male','nkids']]
         work['mother'] = (work['nkids']>0)*(work['male']!=True)
         work['father'] = (work['nkids']>0)*(work['male'])
-        work['byear'] = year-work['age']
-        beta = self.par_schldone 
+        #work['byear'] = year-work['age']
+        beta = self.par_schldone
         work['pr'] = beta['constant']
         for a in range(18,36):
             work['pr'] += np.where(work['age']==a,beta['age'+str(a)],0.0)
         work['pr'] += beta['male']*work['male']
         work['pr'] += beta['mother']*work['mother']
         work['pr'] += beta['father']*work['father']
-        work['pr'] += beta['byear']*work['byear']
+        #work['pr'] += beta['byear']*work['byear']
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['quit'] = np.random.uniform(size=len(work))<work['pr']
         work['quit'] = np.where(work['age']==35,True,work['quit'])
@@ -418,8 +580,8 @@ class update:
 #		- dage35+  : de 35 à 39 ans
 #
 #	Education du répondant (dummies) :
-#		- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires 
-#		- insch : Personne n'ayant pas terminé ses études 
+#		- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
+#		- insch : Personne n'ayant pas terminé ses études
 #		- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #		- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
 #		- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
@@ -429,7 +591,7 @@ class update:
 #	Régression pour le 1er (sans lastkidage), 2nd,et 3ème enfant noté i
 #	logit kid(i) dage2529 dage3034 dage35+ lkidage insch hs college university
 
-    
+
 #@njit
 #def pbirth(age,sp_age,male,educ,educ_sp,nkids):
 #    return 0.0
@@ -437,11 +599,11 @@ class update:
 @njit
 def pbirth(age,educ,agemin,beta):
     base = 0.0
-    if age>=25 and age<=29: 
+    if age>=25 and age<=29:
         base += beta[0]
-    if age>=30 and age<=34: 
+    if age>=30 and age<=34:
         base += beta[1]
-    if age>=35: 
+    if age>=35:
         base += beta[2]
     base += agemin*beta[3]
     if educ==1:
@@ -480,20 +642,20 @@ def pbirth(age,educ,agemin,beta):
 #	- wage3 : âge au cube du répondant si c'est une femme, sinon 0
 #
 #	unions : dummies d'âge du répondant par classes d'âge
-#	- age1619 
-# 	- age2024 
-#	- age2529 
-#	- age3034 : référence 
+#	- age1619
+# 	- age2024
+#	- age2529
+#	- age3034 : référence
 #	- age3539
-#	- age4044 
-#	- age4549 
-#	- age5054 
-#	- age5559 
+#	- age4044
+#	- age4549
+#	- age5054
+#	- age5559
 #	- age6065
 #
 #	Education du répondant (dummies) :
-#	- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires 
-#	- insch : Personne n'ayant pas terminé ses études 
+#	- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
+#	- insch : Personne n'ayant pas terminé ses études
 #	- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #	- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
 #	- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
@@ -501,7 +663,7 @@ def pbirth(age,educ,agemin,beta):
 #	Enfant de moins de 18 ans (dummy) :
 #	- kid : L'individu a un enfant de moins de 18 ans
 #
-#Régressions logistiques : 
+#Régressions logistiques :
 #logit m male age1619 age2024 age2529 /*age3034*/ age3539 age4044 age4549 age5054 age5559 age6065 insch educ_2 educ_3 educ_4
 #logit d male mage mage2 mage3 wage wage2 wage3 insch educ_2 educ_3 educ_4 kid
 
@@ -515,7 +677,7 @@ def find_spouse(age,male,educ):
     sp_educ = educ
     return sp_age, sp_educ
 
-@njit 
+@njit
 def pdiv(age,sp_age,male,educ,sp_educ,nkids):
     return 0.0
 
@@ -534,11 +696,11 @@ def pdiv(age,sp_age,male,educ,sp_educ,nkids):
 #	- précision : les données initialement en quotients de mortalité sont transformés en taux de mortalité.
 
 
-@njit 
+@njit
 def pdead(age,male):
     return 0.0
 
-@njit 
+@njit
 def pemig(age,male):
     return 0.0
 
@@ -563,32 +725,32 @@ def enroll(age,male):
 #	- mother=1 si l'individu est une mère, 0 sinon
 #	- father=1 si l'individu est un père, 0 sinon
 #	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans 
+#		L'âge de référence est 17 ans
 #
 #Description des variables pour attribuer le niveau d'éducation atteind :
 #	Soit "educ4" les niveaux d'éducation :
-#		less_than_des=1 si l'individu n'a pas accompli ses études secondaires 
+#		less_than_des=1 si l'individu n'a pas accompli ses études secondaires
 #		Référence : = Diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #		dec : = Diplôme d'études d'un collège communautaire
 #		uni : Supérieur ou égal au baccalauréat
-# 
+#
 #	Soit les variables indépendantes :
 #	- male : est égal à 1 si le répondant est un homme, sinon 0 (dummy)
 #	- mother=1 si l'individu est une mère, 0 sinon
 #	- father=1 si l'individu est un père, 0 sinon
 #	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans 
+#		L'âge de référence est 17 ans
 #
 #Régressions :
 #logit schldone male mother father age*
 #mlogit educ4 male mother father age*  if(schldone==1), base(2)
 
-@njit 
+@njit
 def pdes(age,male):
     return 0.0
-@njit 
+@njit
 def pdec(age,male):
     return 0.0
-@njit 
+@njit
 def puni(age,male):
     return 0.0

@@ -1,0 +1,4 @@
+raw
+tests/*.pkl
+*.pyc
+*.pyc
