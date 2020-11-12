@@ -10,7 +10,7 @@ from pandas.core.common import SettingWithCopyError
 params_dir = path.join(path.dirname(__file__), 'params/')
 
 def bdsps(file,year=2017,iprint=False):
-    
+
     """
     Nettoyage de la BDSPS.
 
@@ -19,9 +19,9 @@ def bdsps(file,year=2017,iprint=False):
     Parameters
     ----------
     year: int
-        Année de la base de départ
+        année de la base de départ (défaut=2017)
     iprint: boolean
-        Switch pour imprimer ou non des outputs intermédiaires de cette fonction
+        switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)
     """
     df = pd.read_stata(file,convert_categoricals=False)
     df = df[df.hdprov==4]
@@ -162,7 +162,7 @@ def bdsps(file,year=2017,iprint=False):
 
 def isq(year):
     """
-    Population par âge de l'ISQ
+    Population par âge de l'ISQ.
 
     Fonction qui permet d'obtenir la population par âge de l'ISQ.
 
@@ -172,8 +172,8 @@ def isq(year):
         année pour la population
     Returns
     -------
-    Dataframe
-        Dataframe pandas contenant la population par âge (hommes et femmes)
+    dataframe
+        dataframe *pandas* contenant la population par âge (hommes et femmes)
     """
     df = pd.read_excel(params_dir+'QC-age-sexe.xlsx',sheet_name='age',header=None,na_values='..')
     columns = ['year','niv','sex','total']
@@ -191,9 +191,9 @@ def isq(year):
 
 class parse:
     """
-    Mise en forme des variables pour référence SimGen
+    Mise en forme des variables pour référence de SimGen.
 
-    Classe qui permet de prendre un dataframe provenant d'une base de donnée particulière et retourner un dataframe propre interpretable par SimGen. Les noms de variables peuvent être matché avec initialisation de la classe en utilisant les dictionnaires map_hh, map_sp et map_kd pour les trois registres.
+    Classe qui permet de prendre un dataframe provenant d'une base de données particulière et retourner un dataframe propre interprétable par SimGen. On peut faire correspondre les noms de variables avec l'initialisation de la classe en utilisant les dictionnaires *map_hh*, *map_sp* et *map_kd* pour les trois registres.
 
     """
     def __init__(self):
@@ -206,9 +206,9 @@ class parse:
         return
     def dominants(self,data):
         """
-        Mise en forme des dominants
+        Mise en forme des dominants.
 
-        Fonction membre qui permet de prendre un dataframe dominant et d'appliquer les dictionnaires map_hh pour les noms de variables qui match avec SimGen.
+        Fonction membre qui permet de prendre un dataframe dominant et d'appliquer les dictionnaires *map_hh* pour les noms de variables qui concordent avec SimGen.
 
         Parameters
         ----------
@@ -230,9 +230,9 @@ class parse:
         return hh
     def spouses(self,data):
         """
-        Mise en forme des conjoints
+        Mise en forme des conjoints.
 
-        Fonction membre qui permet de prendre un dataframe conjoint et d'appliquer les dictionnaires map_sp pour les noms de variables qui match avec SimGen.
+        Fonction membre qui permet de prendre un dataframe conjoint et d'appliquer les dictionnaires *map_sp* pour les noms de variables qui concordent avec SimGen.
 
         Parameters
         ----------
@@ -257,9 +257,9 @@ class parse:
             return None
     def kids(self,data):
         """
-        Mise en forme des enfants
+        Mise en forme des enfants.
 
-        Fonction membre qui permet de prendre un dataframe enfants et d'appliquer les dictionnaires map_kd pour les noms de variables qui match avec SimGen.
+        Fonction membre qui permet de prendre un dataframe enfants et d'appliquer les dictionnaires *map_kd* pour les noms de variables qui concordent avec SimGen.
 
         Parameters
         ----------
@@ -288,7 +288,7 @@ class population:
     """
     Structure de population.
 
-    Cette classe permet d'abriter sous un seul toit les dominants, conjoints et enfants et de permettre certaines opérations.
+    Cette classe permet d'abriter sous un seul toit les dominants, conjoints et enfants et permet certaines opérations.
 
     """
     def __init__(self):
@@ -297,16 +297,16 @@ class population:
         """
         Fonction pour entrer les registres.
 
-        Fonction qui permet d'entrer les registres dominants, conjoints et enfants qui ont été préalablement passé dans parse().
+        Fonction qui permet d'entrer les registres dominants, conjoints et enfants qui ont été préalablement passés dans *parse()*.
 
         Parameters
         ----------
         hh: dataframe
-            Dataframe des dominants
+            dataframe des dominants
         sp: dataframe
-            Dataframe des conjoints
+            dataframe des conjoints
         kd: dataframe
-            Dataframe des enfants
+            dataframe des enfants
         """
         self.hh = hh
         self.sp = sp

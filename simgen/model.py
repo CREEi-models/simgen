@@ -1,5 +1,5 @@
-import numpy as np 
-from numba import njit 
+import numpy as np
+from numba import njit
 from multiprocessing import Pool as pool
 from multiprocessing import cpu_count
 from functools import partial
@@ -11,17 +11,17 @@ from os import path
 params_dir = path.join(path.dirname(__file__), 'params/')
 
 class model:
-    """ 
+    """
     Modèle de simulation SimGen.
 
     Cette classe permet de créer une instance d'un modèle de microsimulation.
 
     Parameters
     ----------
-    start_yr : int 
-        starting year of simulation
+    start_yr : int
+        année de départ de la simulation (défaut=2017)
     stop_yr : int
-        last year of simulation
+        dernière année de la simulation (défaut=2100)
     """
     def __init__(self,start_yr=2017,stop_yr=2100):
         self.start_yr = start_yr
@@ -34,7 +34,7 @@ class model:
         """
         Charger une population de départ.
 
-        Fonction membre qui permet de charger une population de départ. 
+        Fonction membre qui permet de charger une population de départ.
 
         Parameters
         ----------
@@ -54,10 +54,10 @@ class model:
         Parameters
         ----------
         allow : boolean
-            switch pour aligner le nombre d'immigrants sur ISQ
+            switch pour aligner le nombre d'immigrants sur l'ISQ
         num : float
-            total d'immigration (nombre). Par défaut, scénario de référence de l'ISQ. 
-        init : str 
+            immigration totale (nombre); par défaut, scénario de référence de l'ISQ
+        init : str
             nom du fichier contenant la population d'immigrants
         """
         # the 0.005 rate is from Statcan
@@ -68,7 +68,7 @@ class model:
             self.imm = population()
             self.imm = self.imm.load(init)
         else :
-            self.immig_total = 0.0 
+            self.immig_total = 0.0
             self.imm = None
         return
     def birth_assumptions(self,scenario='reference',align=True):
@@ -80,7 +80,7 @@ class model:
                 isq.loc[i,:] = isq.loc[maxyr,:]
         self.align_births = align
         self.adjust_births = isq[scenario]
-        return 
+        return
     def dead_assumptions(self,scenario='medium'):
         self.trans.params_dead(scenario)
         return
@@ -94,7 +94,7 @@ class model:
         self.pop.nkids()
         self.pop.kagemin()
         self.stats.start(self.pop,self.year)
-        return 
+        return
     def next(self):
         self.year +=1
         if len(self.pop.hh)>0:
@@ -112,7 +112,7 @@ class model:
             pop = trans.kids_dead(pop,yr)
             pop = trans.sp_dead(pop,yr)
             pop = trans.moveout(pop,yr)
-            
+
             if self.immig_allow:
                 newimm = deepcopy(self.imm)
                 #newimm.hh = newimm.hh.sample(frac=.7, replace=False)
@@ -129,9 +129,9 @@ class model:
                 pop.nkids()
                 pop.kagemin()
             pop = trans.emig(pop,yr)
-        
+
             self.pop = pop
-        return 
+        return
     def simulate(self,rep = 1):
         for _ in range(rep):
             self.reset()
@@ -141,4 +141,4 @@ class model:
                 self.stats.add(self.pop,self.year)
             self.stats.add_to_mean(rep)
         self.stats.counts = self.stats.mean_counts #À la fin on remet la moyenne dans stats.counts.
-        return 
+        return

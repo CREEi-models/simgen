@@ -180,7 +180,7 @@ class update:
         work = work.loc[work.index.isin(elig),
                         ['age','age_sp','educ','educ_sp','male','insch','nkids','agemin']]
         # create covariates
-        covars = ['dage2529','dage3034','dage3539','dage40p','lkidage','insch','des','dec','uni','constant']
+        covars = ['dage2529','dage3034','dage35p','lkidage','insch','des','dec','uni','constant']
         work['rank'] = work['nkids']+1
         work['rank'] = np.where(work['rank']>3,3,work['rank'])
         work['age'] = np.where(work.male,work.age_sp,work.age)
@@ -190,8 +190,7 @@ class update:
         work['uni'] = work['educ']=='uni'
         work['dage2529'] = (work['age']>=25) & (work['age']<=29)
         work['dage3034'] = (work['age']>=30) & (work['age']<=34)
-        work['dage3539'] = (work['age']>=35) & (work['age']<=39)
-        work['dage40p'] = (work['age']>=40)
+        work['dage35p'] = (work['age']>=35)
         work['lkidage'] = work['agemin']
         work['constant'] = 1
         # compute probability
