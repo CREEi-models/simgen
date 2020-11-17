@@ -27,6 +27,7 @@ class update:
         self.params_educ()
         self.params_emig()
         self.params_chsld()
+        self.params_iso_smaf()
         return
     def params_birth(self):
         """
@@ -150,6 +151,19 @@ class update:
         df = df.set_index('var')
         self.par_chsld_out = df.loc[:,'value']
         return
+    def params_iso_smaf(self):
+        """
+        Chargement des paramètres pour transitions CHSLD.
+
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
+
+        """
+        df = pd.read_csv(params_dir+'trans_iso_smaf.csv',sep=';')
+        df.columns = ['var','val_men','val_women']
+        df = df.set_index('var')
+        self.par_iso_smaf_men = df.loc[:,'val_men']
+        self.par_iso_smaf_women = df.loc[:,'val_women']
+        return
     def birth(self,pop,year,ntarget):
         """
         Fonction de transitions pour les naissances.
@@ -229,7 +243,7 @@ class update:
         newdoms['married'] = False
         newdoms['age'] = 0
         newdoms['agemin'] = 0
-        newdoms['chsld'] = False
+        newdoms['iso_smaf'] = -1
         pop.hh = pop.hh.append(newdoms)
         return pop
     def match(self,grooms,pop):
@@ -249,50 +263,6 @@ class update:
                 bride = pop.sp.loc[nas_pick[0],:]
             newsp.loc[i,:] = bride.to_list()
         return newsp
-
-    def chsld_in(self,pop,year):
-        pop.ages(year)
-        cond = (pop.hh.age>=65) & (pop.hh.chsld==False)
-        work = pop.hh.loc[cond,['age']]
-        work['6569'] = (work['age']>=65) & (work['age']<=69)
-        work['7074'] = (work['age']>=70) & (work['age']<=74)
-        work['7579'] = (work['age']>=75) & (work['age']<=79)
-        work['8084'] = (work['age']>=80) & (work['age']<=84)
-        work['8589'] = (work['age']>=85) & (work['age']<=89)
-        work['90']   = (work['age']>=90)
-        work['pr'] = 0
-        work['pr'] += work['6569']*self.par_chsld_in.age6569
-        work['pr'] += work['7074']*self.par_chsld_in.age7074
-        work['pr'] += work['7579']*self.par_chsld_in.age7579
-        work['pr'] += work['8084']*self.par_chsld_in.age8084
-        work['pr'] += work['8589']*self.par_chsld_in.age8589
-        work['pr'] += work['90']*self.par_chsld_in.age90p
-        work['inst'] = np.random.uniform(size=len(work))<work['pr']
-        nas_inst = work[work['inst']].index.to_list()
-        pop.hh.loc[nas_inst,'chsld'] = True
-        return pop
-
-    def chsld_out(self,pop,year):
-        pop.ages(year)
-        cond = (pop.hh.age>=65) & (pop.hh.chsld==True)
-        work = pop.hh.loc[cond,['age']]
-        work['6569'] = (work['age']>=65) & (work['age']<=69)
-        work['7074'] = (work['age']>=70) & (work['age']<=74)
-        work['7579'] = (work['age']>=75) & (work['age']<=79)
-        work['8084'] = (work['age']>=80) & (work['age']<=84)
-        work['8589'] = (work['age']>=85) & (work['age']<=89)
-        work['90']   = (work['age']>=90)
-        work['pr'] = 0
-        work['pr'] += work['6569']*self.par_chsld_out.age6569
-        work['pr'] += work['7074']*self.par_chsld_out.age7074
-        work['pr'] += work['7579']*self.par_chsld_out.age7579
-        work['pr'] += work['8084']*self.par_chsld_out.age8084
-        work['pr'] += work['8589']*self.par_chsld_out.age8589
-        work['pr'] += work['90']*self.par_chsld_out.age90p
-        work['inst'] = np.random.uniform(size=len(work))<work['pr']
-        nas_inst = work[work['inst']].index.to_list()
-        pop.hh.loc[nas_inst,'chsld'] = False
-        return pop
 
     def marriage(self,pop,year):
         pop.ages(year)
@@ -364,96 +334,43 @@ class update:
         # drop spouses
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_divorced)]
         return pop
-
-    def dead_chsld_ajust(self,pop,year):
+    
+    def iso_smaf(self,pop,year):
         pop.ages(year)
-        work = pop.hh.loc[:,['wgt','male','age','chsld']]
-        work['year'] = year
-        work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
-        labels=['6569','7074','7579','8084','8589','90']
-        work['6569'] = (work['age']>=65) & (work['age']<=69)
-        work['7074'] = (work['age']>=70) & (work['age']<=74)
-        work['7579'] = (work['age']>=75) & (work['age']<=79)
-        work['8084'] = (work['age']>=80) & (work['age']<=84)
-        work['8589'] = (work['age']>=85) & (work['age']<=89)
-        work['90']   = (work['age']>=90)
-
-        tot6569 = work.loc[work['6569']==True,['wgt']].sum(axis=0)
-        tot7074 = work.loc[work['7074']==True,['wgt']].sum(axis=0)
-        tot7579 = work.loc[work['7579']==True,['wgt']].sum(axis=0)
-        tot8084 = work.loc[work['8084']==True,['wgt']].sum(axis=0)
-        tot8589 = work.loc[work['8589']==True,['wgt']].sum(axis=0)
-        tot90 = work.loc[work['90']==True,['wgt']].sum(axis=0)
-
-        tot6569chsld = work.loc[np.logical_and(work['6569']==True,work['chsld']==True),['wgt']].sum(axis=0)
-        tot7074chsld = work.loc[np.logical_and(work['7074']==True,work['chsld']==True),['wgt']].sum(axis=0)
-        tot7579chsld = work.loc[np.logical_and(work['7579']==True,work['chsld']==True),['wgt']].sum(axis=0)
-        tot8084chsld = work.loc[np.logical_and(work['8084']==True,work['chsld']==True),['wgt']].sum(axis=0)
-        tot8589chsld = work.loc[np.logical_and(work['8589']==True,work['chsld']==True),['wgt']].sum(axis=0)
-        tot90chsld = work.loc[np.logical_and(work['90']==True,work['chsld']==True),['wgt']].sum(axis=0)
-
-        dead_ajust =pd.DataFrame(columns=('age','home','chsld','pop'))
-        dead_ajust['age']=np.arange(65,111,1)
-        bins=[64,69,74,79,84,89,111]
-        dead_ajust['agegr']=pd.cut(dead_ajust.age,bins, labels=labels)
-        for v in labels:
-            dead_ajust['chsld']=np.where(dead_ajust['agegr']==v,self.par_chsld.loc[v],dead_ajust['chsld'])
-
-        for a in list(np.arange(65,111,1)):
-            valm=self.mx.query('year ==@year and male==True and age==@a').values
-            valf=self.mx.query('year ==@year and male==False and age==@a').values
-            cond_male_home = np.logical_and(work['male']==True,work['chsld']==False)
-            cond_female_home = np.logical_and(work['male']==False,work['chsld']==False)
-            popm = work.loc[np.logical_and(work['age']==a,cond_male_home),['wgt']].sum(axis=0)
-            popf = work.loc[np.logical_and(work['age']==a,cond_female_home),['wgt']].sum(axis=0)
-            pop=popm+popf
-            val= (valm[0]*popm[0]  + valf[0] * popf[0])/(popm[0]+popf[0])
-            dead_ajust['home']= np.where(dead_ajust['age']==a,val[0],dead_ajust['home'])
-            dead_ajust['pop']= np.where(dead_ajust['age']==a,pop[0],dead_ajust['pop'])
-
-        #dead_ajust=dead_ajust.set_index('age')
-        dead_ajust['shome'] = 1-dead_ajust['home']
-        dead_ajust['homegr'] =None
-        dead_ajust['factor_chsld']=None
-        dead_ajust['factor_home']=None
-        for v in labels:
-            sur = dead_ajust.loc[dead_ajust['agegr']==v,['shome']].product()
-            dead_ajust['homegr'] = np.where(dead_ajust['agegr']==v,1-sur[0],dead_ajust['homegr'])
-            dead_ajust['factor_chsld'] = np.where(dead_ajust['agegr']==v,dead_ajust['chsld']/dead_ajust['homegr'],dead_ajust['factor_chsld'])
-            totagegr = work.loc[work[v]==True,['wgt']].sum(axis=0)
-            totagegrchsld = work.loc[np.logical_and(work[v]==True,work['chsld']==True),['wgt']].sum(axis=0)
-            num=totagegr[0] * dead_ajust.loc[dead_ajust['agegr']==v,['homegr']].mean()
-            num = num[0]- totagegrchsld[0] * dead_ajust.loc[dead_ajust['agegr']==v,['chsld']].mean()
-            num = num[0] /(totagegr-totagegrchsld)
-            num = num[0] /  dead_ajust.loc[dead_ajust['agegr']==v,['homegr']].mean()
-            dead_ajust['factor_home'] = np.where(dead_ajust['agegr']==v,num[0],dead_ajust['factor_home'])
-        dead_ajust['factor_chsld'] = np.where(dead_ajust['agegr']=='90',1,dead_ajust['factor_chsld'])
-        dead_ajust['factor_home'] = np.where(dead_ajust['agegr']=='90',1,dead_ajust['factor_home'])
-        self.par_ajust_chsld= dead_ajust[['age','factor_home','factor_chsld']]
-        #self.par_ajust_chsld= self.par_ajust_chsld.set_index('age')
-        return
+        cond =  pop.hh.age>=65
+        work = pop.hh.loc[cond,['male','age', 'iso_smaf']]
+        work['iso_smaf']==-1
+        work['dmale'] = np.where(work['male'],1,0)
+        work['age2'] = (work['age'].astype('float64')**2)
+        work['age3'] = (work['age'].astype('float64')**3)
+        work['cut'] = 0
+        work['cut'] = work['dmale']*self.par_iso_smaf_men.male
+        work['cut'] += work['dmale']*work['age']*self.par_iso_smaf_men.age
+        work['cut'] += work['dmale']*work['age2']*self.par_iso_smaf_men.age_p2
+        work['cut'] += work['dmale']*work['age3']*self.par_iso_smaf_men.age_p3
+        work['cut'] += (1-work['dmale'])*work['age']*self.par_iso_smaf_women.age
+        work['cut'] += (1-work['dmale'])*work['age2']*self.par_iso_smaf_women.age_p2
+        work['cut'] += (1-work['dmale'])*work['age3']*self.par_iso_smaf_women.age_p3
+        for i in np.arange(1,11):
+            cond = ((work['cut']+np.random.uniform(size=len(work))<= 
+                    self.par_iso_smaf_men["cut"+str(i)]) & (work['iso_smaf']==-1))
+            work.loc[cond,'iso_smaf']=i
+        nas_iso = work.index.to_list()
+        pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']
+        return pop
 
     def dead(self,pop,year):
         # make sure year up to date
         pop.ages(year)
-        work = pop.hh.loc[:,['male','age','chsld']]
+        work = pop.hh.loc[:,['male','age']]
         work['year'] = year
         #work = work.merge(self.par_ajust_chsld,on=['age'],how='left')
         work['factor_home']=1
         work['factor_chsld']=1
-        for a in list(np.arange(65,111,1)):
-            valh=self.par_ajust_chsld.loc[self.par_ajust_chsld['age']==a,['factor_home']].values
-            valc=self.par_ajust_chsld.loc[self.par_ajust_chsld['age']==a,['factor_chsld']].values
-            work['factor_home']= (np.where(np.logical_and(work['chsld']==False,work['age']==a),
-                                            valh[0],work['factor_home']))
-            work['factor_chsld']= (np.where(np.logical_and(work['chsld']==True,work['age']==a),
-                                            valc[0],work['factor_chsld']))
         work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
         #na_val = {'factor_home':1,'factor_chsld':1}
         #work = work.fillna(value=na_val)
         work['factor']=1
-        work['factor'] = np.where(np.logical_and(work['age']>=65,work['chsld']==False),work['factor_home'],work['factor'])
-        work['factor'] = np.where(np.logical_and(work['age']>=65,work['chsld']==True),work['factor_chsld'],work['factor'])
         work['dead'] = np.random.uniform(size=len(work))<(work['rate']*work['factor'])
         #work['test_rate'] = (work['rate']*work['factor'])
         nas_dead = work[work['dead']].index.to_list()

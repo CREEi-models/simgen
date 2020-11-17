@@ -43,7 +43,7 @@ class model:
         """
         self.ipop = population()
         self.ipop = self.ipop.load(file)
-        self.trans.dead_chsld_ajust(self.ipop,self.start_yr)
+        #self.trans.dead_chsld_ajust(self.ipop,self.start_yr)
         return
     def immig_assumptions(self,allow=True,num=0.0066,init=None):
         """
@@ -84,7 +84,7 @@ class model:
     def dead_assumptions(self,scenario='medium'):
         self.trans.params_dead(scenario)
         return
-    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','chsld']):
+    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','iso_smaf']):
         self.stats = statistics(stratas)
         return
     def reset(self):
@@ -104,24 +104,16 @@ class model:
             pop = trans.educ(pop,yr)
             pop = trans.divorce(pop,yr)
             pop = trans.marriage(pop,yr)
-            pop = trans.chsld_in(pop,yr)
-            pop = trans.chsld_out(pop,yr)
             if yr>self.start_yr:
                 pop = trans.birth(pop,yr,self.adjust_births[yr])
             pop = trans.dead(pop,yr)
             pop = trans.kids_dead(pop,yr)
             pop = trans.sp_dead(pop,yr)
             pop = trans.moveout(pop,yr)
-
+            pop = trans.iso_smaf(pop,yr)
             if self.immig_allow:
                 newimm = deepcopy(self.imm)
-                #newimm.hh = newimm.hh.sample(frac=.7, replace=False)
-                #lnas = newimm.hh.index.to_list()
-                #newimm.sp = newimm.sp[newimm.sp.index.isin(lnas)]
-                #newimm.kd = newimm.kd[newimm.kd.index.isin(lnas)]
                 newimm.hh.byr += (yr - self.start_yr)
-                #newimm.hh.byr += np.random.randint(-3,4,size=len(newimm.hh))
-                #newimm.hh.byr = np.where(newimm.hh.byr>yr,yr,newimm.hh.byr)
                 newimm.sp.byr += (yr - self.start_yr)
                 newimm.kd.byr += (yr - self.start_yr)
                 pop.enter(newimm,self.year,self.immig_total)

@@ -26,7 +26,7 @@ def bdsps(file,year=2017,iprint=False):
     df = pd.read_stata(file,convert_categoricals=False)
     df = df[df.hdprov==4]
     df = df[['hdseqhh','hdwgthh','hdwgthhs','idefseq','idefrh','hhnef','idage','idspoflg',
-        'idimmi','idedlev','idestat','idmarst','efnkids','imqndc','hdnkids','idsex', 'chsld']]
+        'idimmi','idedlev','idestat','idmarst','efnkids','imqndc','hdnkids','idsex']]
     keep = []
     keys = df.groupby(['hdseqhh','idefseq']).count()['hdwgthh'].to_frame()
     keys.columns = ['ncount']
@@ -69,8 +69,8 @@ def bdsps(file,year=2017,iprint=False):
     df['nas'] = np.arange(len(df))
     df['nas'] = df['nas'].astype('Int64')
     keep.append('nas')
-    df['chsld'] = df.chsld.replace({1:True,0:False})
-    keep.append('chsld')
+    df['iso_smaf']=-1
+    keep.append('iso_smaf')
     # for each nas in df (dominant), drop adults in households, including chidlren
     # older than 18.
     pop = df.loc[df['pn']!=3,keep]
@@ -197,7 +197,7 @@ class parse:
 
     """
     def __init__(self):
-        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married','chsld']
+        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married', 'iso_smaf']
         self.map_hh = dict(zip(self.vars_hh,self.vars_hh))
         self.vars_sp = ['byr','male','educ','insch']
         self.map_sp = dict(zip(self.vars_sp,self.vars_sp))
