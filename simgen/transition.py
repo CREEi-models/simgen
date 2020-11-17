@@ -343,7 +343,7 @@ class update:
         work['dmale'] = np.where(work['male'],1,0)
         work['age2'] = (work['age'].astype('float64')**2)
         work['age3'] = (work['age'].astype('float64')**3)
-        work['cut'] = 0
+        work['cut'] = 0.0
         work['cut'] = work['dmale']*self.par_iso_smaf_men.male
         work['cut'] += work['dmale']*work['age']*self.par_iso_smaf_men.age
         work['cut'] += work['dmale']*work['age2']*self.par_iso_smaf_men.age_p2
@@ -351,12 +351,18 @@ class update:
         work['cut'] += (1-work['dmale'])*work['age']*self.par_iso_smaf_women.age
         work['cut'] += (1-work['dmale'])*work['age2']*self.par_iso_smaf_women.age_p2
         work['cut'] += (1-work['dmale'])*work['age3']*self.par_iso_smaf_women.age_p3
+        work['pr'] = 0.0
+        
+        
+        work['pr'] = 1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
+        work['pr2'] =1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut2'])) -1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
+        #cut représente Bx 1/(1+exp(Bx-cut))
         for i in np.arange(1,11):
-            cond = ((work['cut']+np.random.uniform(size=len(work))<= 
-                    self.par_iso_smaf_men["cut"+str(i)]) & (work['iso_smaf']==-1))
+            cond = ((work['cut']<= self.par_iso_smaf_men["cut"+str(i)]) & (work['iso_smaf']==-1))
             work.loc[cond,'iso_smaf']=i
+        
         nas_iso = work.index.to_list()
-        pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']
+        pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']        
         return pop
 
     def dead(self,pop,year):
