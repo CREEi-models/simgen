@@ -334,12 +334,12 @@ class update:
         # drop spouses
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_divorced)]
         return pop
-    
+
     def iso_smaf(self,pop,year):
         pop.ages(year)
         cond =  pop.hh.age>=65
         work = pop.hh.loc[cond,['male','age', 'iso_smaf']]
-        work['iso_smaf']==-1
+        work['iso_smaf']=-1
         work['dmale'] = np.where(work['male'],1,0)
         work['age2'] = (work['age'].astype('float64')**2)
         work['age3'] = (work['age'].astype('float64')**3)
@@ -351,18 +351,20 @@ class update:
         work['cut'] += (1-work['dmale'])*work['age']*self.par_iso_smaf_women.age
         work['cut'] += (1-work['dmale'])*work['age2']*self.par_iso_smaf_women.age_p2
         work['cut'] += (1-work['dmale'])*work['age3']*self.par_iso_smaf_women.age_p3
-        work['pr'] = 0.0
-        
-        
-        work['pr'] = 1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
-        work['pr2'] =1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut2'])) -1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
-        #cut représente Bx 1/(1+exp(Bx-cut))
+        work['pr1'] = 1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
+        for i in np.arange(2,11):
+            work['pr'+str(i)] =(1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut'+str(i)])) 
+                                -1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut'+str(i-1)])))
+        work['rand']= np.random.uniform(size=len(work))
+        work['pr_sum']=0
         for i in np.arange(1,11):
-            cond = ((work['cut']<= self.par_iso_smaf_men["cut"+str(i)]) & (work['iso_smaf']==-1))
+            work['pr_sum']+=work['pr'+str(i)]
+            cond=((np.less_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
             work.loc[cond,'iso_smaf']=i
-        
+        cond=((np.greater_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
+        work.loc[cond,'iso_smaf']=11
         nas_iso = work.index.to_list()
-        pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']        
+        pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']
         return pop
 
     def dead(self,pop,year):
