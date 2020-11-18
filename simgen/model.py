@@ -84,7 +84,10 @@ class model:
     def dead_assumptions(self,scenario='medium'):
         self.trans.params_dead(scenario)
         return
-    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','iso_smaf']):
+    def risk_iso_assumtions(self,params_set=1):
+        self.trans.params_risk_iso(params_set)
+        return
+    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','iso_smaf','risk_iso']):
         self.stats = statistics(stratas)
         return
     def reset(self):
@@ -110,6 +113,7 @@ class model:
             pop = trans.kids_dead(pop,yr)
             pop = trans.sp_dead(pop,yr)
             pop = trans.moveout(pop,yr)
+            pop= trans.risk_iso(pop,yr)
             pop = trans.iso_smaf(pop,yr)
             if self.immig_allow:
                 newimm = deepcopy(self.imm)

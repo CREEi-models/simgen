@@ -50,14 +50,14 @@ kd_imm = parsing.kids(kd_imm)
 # encapsulating into a population structure
 pop = data.population()
 pop.input(hh,sp,kd)
-pop.save('startpopiso')
+pop.save('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/startpopiso')
 
 pop = data.population()
-pop.load('/Users/ydecarie/Dropbox (CEDIA)/simgem/startpopiso')
+pop.load('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/startpopiso')
 
 newimm = data.population()
 newimm.input(imm,sp_imm,kd_imm)
-newimm.save('newimmpopiso')
+newimm.save('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/newimmpopiso')
 """
 import sys
 import warnings
@@ -73,7 +73,7 @@ sys.path.append('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen')
 path_data = '/Users/ydecarie/Dropbox (CEDIA)/simgem/Benchmark/'
 from simgen import model
 yr_debut=2017
-yr_fin=2025
+yr_fin=2020
 base = model(start_yr=yr_debut,stop_yr=yr_fin)
 base = model(start_yr=yr_debut,stop_yr=yr_fin)
 base.startpop('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/startpopiso')
@@ -81,3 +81,5 @@ base.immig_assumptions(init='newimmpopiso')
 base.birth_assumptions(scenario='reference')
 base.dead_assumptions(scenario='low')
 base.simulate(rep=1)
+donnees=base.stats.counts
+print('aaa')

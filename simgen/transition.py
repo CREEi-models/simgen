@@ -28,6 +28,7 @@ class update:
         self.params_emig()
         self.params_chsld()
         self.params_iso_smaf()
+        self.params_risk_iso(params_set=1)
         return
     def params_birth(self):
         """
@@ -151,6 +152,7 @@ class update:
         df = df.set_index('var')
         self.par_chsld_out = df.loc[:,'value']
         return
+
     def params_iso_smaf(self):
         """
         Chargement des paramètres pour transitions CHSLD.
@@ -164,6 +166,22 @@ class update:
         self.par_iso_smaf_men = df.loc[:,'val_men']
         self.par_iso_smaf_women = df.loc[:,'val_women']
         return
+
+
+    def params_risk_iso(self,params_set=1):
+        """
+        Chargement des paramètres pour le risque d'être dans la population iso'.
+
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
+
+        """
+        df = pd.read_csv(params_dir+'risk_iso.csv',sep=';')
+        df.columns = ['var','risk_iso1','risk_iso2']
+        df = df.set_index('var')
+        self.par_risk_iso = df.loc[:,'risk_iso'+str(params_set)]
+        #self.par_risk_iso_2 = df.loc[:,'risk_iso2']
+        return
+
     def birth(self,pop,year,ntarget):
         """
         Fonction de transitions pour les naissances.
@@ -335,9 +353,38 @@ class update:
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_divorced)]
         return pop
 
+    def risk_iso(self,pop,year):
+        pop.ages(year)
+        cond = pop.hh.age>=65
+        pop.hh.loc[cond,'risk_iso']=False
+        work = pop.hh.loc[cond,['male','age','educ','risk_iso']]
+        work['risk_iso']=False
+        work['1.male'] = np.where(work['male'],1,0)
+        work['1.male_7074.age']  = work['male']*work['age'] & (work['age']>=70) & (work['age']<=74)
+        work['1.male_7579.age']  = work['male']*work['age'] & (work['age']>=75) & (work['age']<=79)
+        work['1.male_80p.age']  = work['male']*work['age'] & (work['age']>=80)
+        work['0.male_7074.age']  = (1-work['male'])*work['age'] & (work['age']>=70) & (work['age']<=74)
+        work['0.male_7579.age']  = (1-work['male'])*work['age'] & (work['age']>=75) & (work['age']<=79)
+        work['0.male_80p.age']  = (1-work['male'])*work['age'] & (work['age']>=80)
+        work['constant'] = 1
+        work['des'] = work['educ']=='des'
+        work['decuni'] = np.logical_or(work['educ']=='dec',work['educ']=='uni')
+        covars = ['1.male','1.male_7074.age','1.male_7579.age','1.male_80p.age','1.male_7074.age','1.male_7579.age','1.male_80p.age','des','decuni','constant']
+        work['pr'] = 0.0
+        for v in covars:
+            work['pr'] += work[v]*self.par_risk_iso[v]
+        work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
+        work['rand']= np.random.uniform(size=len(work))
+        cond = work['rand']<work['pr']
+        work.loc[cond,'risk_iso']=True 
+        nas_risk_iso = work[work['risk_iso']==True].index.to_list()
+        pop.hh.loc[nas_risk_iso,'risk_iso'] = True
+        return pop
+
     def iso_smaf(self,pop,year):
         pop.ages(year)
         cond =  pop.hh.age>=65
+        pop.hh.loc[cond,'iso_smaf']=-1
         work = pop.hh.loc[cond,['male','age', 'iso_smaf']]
         work['iso_smaf']=-1
         work['dmale'] = np.where(work['male'],1,0)
@@ -353,7 +400,7 @@ class update:
         work['cut'] += (1-work['dmale'])*work['age3']*self.par_iso_smaf_women.age_p3
         work['pr1'] = 1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut1']))
         for i in np.arange(2,11):
-            work['pr'+str(i)] =(1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut'+str(i)])) 
+            work['pr'+str(i)] =(1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut'+str(i)]))
                                 -1/(1+np.exp(work['cut']-self.par_iso_smaf_men['cut'+str(i-1)])))
         work['rand']= np.random.uniform(size=len(work))
         work['pr_sum']=0
