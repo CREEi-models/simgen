@@ -176,7 +176,7 @@ class update:
 
         """
         df = pd.read_csv(params_dir+'risk_iso.csv',sep=';')
-        df.columns = ['var','risk_iso1','risk_iso2']
+        df.columns = ['var','risk_iso1','risk_iso2','risk_iso3']
         df = df.set_index('var')
         self.par_risk_iso = df.loc[:,'risk_iso'+str(params_set)]
         #self.par_risk_iso_2 = df.loc[:,'risk_iso2']
@@ -383,7 +383,7 @@ class update:
 
     def iso_smaf(self,pop,year):
         pop.ages(year)
-        cond =  pop.hh.age>=65
+        cond =  np.logical_and(pop.hh.age>=65, pop.hh.risk_iso==True)
         pop.hh.loc[cond,'iso_smaf']=-1
         work = pop.hh.loc[cond,['male','age', 'iso_smaf']]
         work['iso_smaf']=-1
