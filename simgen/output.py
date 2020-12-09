@@ -32,10 +32,10 @@ class statistics:
             année de départ de la simulation
         """
         list_value_column = [[i for i in range(1,111)]] #start with ages
-        for col in ['male','insch','educ','married','nkids','iso_smaf','risk_iso']:
+        for col in ['male','insch','educ','married','nkids','risk_iso']:
             list_value_column.append(pop.hh[col].sort_values().unique())
         empty = pd.DataFrame(list(product(*list_value_column)),
-                             columns=['age','male','insch','educ','married','nkids','iso_smaf','risk_iso']).set_index(['age','male','insch','educ','married','nkids','iso_smaf','risk_iso'])
+                             columns=['age','male','insch','educ','married','nkids','risk_iso']).set_index(['age','male','insch','educ','married','nkids','risk_iso'])
         empty[year]=0.0
         counts = pop.hh.groupby(self.stratas).sum()[['wgt']].fillna(0.0)
         counts = counts.rename(columns={'wgt':year})

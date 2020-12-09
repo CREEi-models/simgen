@@ -69,8 +69,8 @@ def bdsps(file,year=2017,iprint=False):
     df['nas'] = np.arange(len(df))
     df['nas'] = df['nas'].astype('Int64')
     keep.append('nas')
-    df['iso_smaf']=-1
-    keep.append('iso_smaf')
+    #df['iso_smaf']=-1
+    #keep.append('iso_smaf')
     df['risk_iso']=False
     keep.append('risk_iso')
     # for each nas in df (dominant), drop adults in households, including chidlren
@@ -199,7 +199,8 @@ class parse:
 
     """
     def __init__(self):
-        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married', 'iso_smaf', 'risk_iso']
+        # Add iso_smaf if included in transitions
+        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married','risk_iso']
         self.map_hh = dict(zip(self.vars_hh,self.vars_hh))
         self.vars_sp = ['byr','male','educ','insch']
         self.map_sp = dict(zip(self.vars_sp,self.vars_sp))
