@@ -6,7 +6,7 @@
 Documentation de SimGen
 =======================
 
-Le modèle de microsimulation SimGen permet de faire des simulations démographiques pour le Québec en prenant en compte les naissances, les unions et les divorces, la scolarité, l'immigration et finalement la mortalité. Il peut être utilisé afin de produire des distributions démographiques qui peuvent servir à faire des analyses économiques. Il a été développé par l'équipe de la `chaire sur les enjeux économiques intergénérationnels <https://www.creei.ca>`_ , une chaire conjointe ESG-UQAM et HEC Montréal avec le soutien du CIRANO et de Retraite Québec. 
+Le modèle de microsimulation SimGen permet de faire des simulations démographiques pour le Québec en prenant en compte les naissances, les unions et les divorces, la scolarité, l'immigration et finalement la mortalité. Il peut être utilisé afin de produire des distributions démographiques qui peuvent servir à faire des analyses économiques. Il a été développé par l'équipe de la `Chaire de recherche sur les enjeux économiques intergénérationnels <https://www.creei.ca>`_, une chaire conjointe `ESG UQAM <https://esg.uqam.ca/>`_ et `HEC Montréal <https://www.hec.ca/>`_ soutenue par le `CIRANO <https://cirano.qc.ca/>`_ et `Retraite Québec <https://www.retraitequebec.gouv.qc.ca/fr/Pages/accueil.aspx>`_.
 
 .. toctree::
    :maxdepth: 2
