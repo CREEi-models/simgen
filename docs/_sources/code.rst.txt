@@ -5,10 +5,9 @@ Documentation des fonctions de SimGen
 
 Données
 -------
+Les fonctions de données permettent de préparer les données pour la simulation.
 
-Les fonctions de données permettent de préparer les données pour la simulation. 
-
-.. currentmodule:: simgen 
+.. currentmodule:: simgen
 
 .. autofunction:: bdsps
 
@@ -27,17 +26,14 @@ Transitions
 
 Simulation
 ----------
-
-La classe permetant de faire les simulations est model. Voici sa descriptions.
+La classe permettant de réaliser les simulations est *model*. Voici sa description.
 
 .. autoclass:: model
     :members: startpop, immig_assumptions, birth_assumptions, dead_assumptions, set_statistics, reset, next, simulate
 
 Statistiques
 ------------
-
-La classe permet de faire des statistiques dans le cadre d'une simulation. 
+Cette classe permet de produire des statistiques dans le cadre d'une simulation.
 
 .. autoclass:: statistics
     :members: start, add, freq, prop, save
-
