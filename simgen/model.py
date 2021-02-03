@@ -43,7 +43,6 @@ class model:
         """
         self.ipop = population()
         self.ipop = self.ipop.load(file)
-        #self.trans.dead_chsld_ajust(self.ipop,self.start_yr)
         return
     def immig_assumptions(self,allow=True,num=0.0066,init=None):
         """

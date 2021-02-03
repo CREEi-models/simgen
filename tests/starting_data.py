@@ -1,4 +1,3 @@
-"""
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # import basic libraries
@@ -12,17 +11,16 @@ warnings.filterwarnings("ignore")
 # load tools
 
 import sys
-sys.path.append('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/simgen')
+sys.path.append('/Users/ydecarie/Documents/GitHub/simgen')
 
-import data
+from simgen import bdsps, parse, population
 
 # reload libraries 
 
 
 # main population
 
-hh,sp,kd = data.bdsps('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/raw/bdsps2017.dta')
-
+hh,sp,kd = bdsps('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/bdsps2017_slice.csv', file_format='.csv')
 # new immigrants
 imm = hh[hh.newimm]
 imm_nas = imm.index
@@ -30,7 +28,7 @@ sp_imm = sp.loc[sp.index.isin(imm_nas),:]
 kd_imm = kd.loc[kd.index.isin(imm_nas),:]
 
 # parsing for variable names
-parsing = data.parse()
+parsing = parse()
 parsing.map_hh['educ'] = 'educ4'
 parsing.map_hh['insch'] = 'inschool'
 parsing.map_sp['educ'] = 'educ4'
@@ -48,16 +46,17 @@ sp_imm = parsing.spouses(sp_imm)
 kd_imm = parsing.kids(kd_imm)
 
 # encapsulating into a population structure
-pop = data.population()
+pop = population()
 pop.input(hh,sp,kd)
-pop.save('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/startpopiso')
+pop.save('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/startpopiso')
 
-pop = data.population()
-pop.load('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/startpopiso')
+pop = population()
+pop.load('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/startpopiso')
 
-newimm = data.population()
+newimm = population()
 newimm.input(imm,sp_imm,kd_imm)
-newimm.save('/Users/ydecarie/Dropbox (CEDIA)/simgem/simgen/tests/newimmpopiso')
+newimm.save('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/newimmpopiso')
+
 """
 import sys
 import warnings
@@ -83,3 +82,4 @@ base.dead_assumptions(scenario='low')
 base.simulate(rep=1)
 donnees=base.stats.counts
 print('aaa')
+"""
