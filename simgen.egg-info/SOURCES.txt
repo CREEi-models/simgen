@@ -9,6 +9,7 @@ simgen/transition.py
 simgen.egg-info/PKG-INFO
 simgen.egg-info/SOURCES.txt
 simgen.egg-info/dependency_links.txt
+simgen.egg-info/requires.txt
 simgen.egg-info/top_level.txt
 simgen/params/QC-age-sexe.xlsx
 simgen/params/chsld_in.csv
