@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="simgen", # Replace with your own username
-    version="0.0.4",
+    version="0.0.5",
     author="Équipe CREEi",
     author_email="yann.decarie@hec.ca",
     description="Modele de microsimulation SimGen",
