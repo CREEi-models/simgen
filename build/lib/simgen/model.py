@@ -130,6 +130,7 @@ class model:
     def simulate(self,rep = 1):
         for _ in range(rep):
             self.reset()
+            print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
             while self.year <= self.stop_yr:
                 print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
                 self.next()
