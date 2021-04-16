@@ -381,3 +381,39 @@ class population:
             self.hh['agemin'] = 0
             self.hh.loc[am.index,'agemin'] = am
         return
+
+class formating:
+    """
+    Organisation de la base de données.
+
+    Cette classe permet de créer les fichiers nécessaires à la 
+    simulation avec la base de départ BDSPS_ 2017.
+
+    """
+
+    def __init__(self):
+        return
+    def bdsps_format(self, data):
+        hh,sp,kd = bdsps(data, file_format='.csv')
+        imm = hh[hh.newimm]
+        imm_nas = imm.index
+        sp_imm = sp.loc[sp.index.isin(imm_nas),:]
+        kd_imm = kd.loc[kd.index.isin(imm_nas),:]
+        parsing = parse()
+        parsing.map_hh['educ'] = 'educ4'
+        parsing.map_sp['educ'] = 'educ4'
+        parsing.map_hh['insch'] = 'inschool'
+        parsing.map_sp['insch'] = 'inschool'
+        parsing.map_kd['insch'] = 'inschool'
+        hh = parsing.dominants(hh)
+        sp = parsing.spouses(sp)
+        kd = parsing.kids(kd)
+        imm = parsing.dominants(imm)
+        sp_imm = parsing.spouses(sp_imm)
+        kd_imm = parsing.kids(kd_imm)
+        pop = population()
+        pop.input(hh,sp,kd)
+        imm_pop = population()
+        imm_pop.input(imm,sp_imm,kd_imm)
+        pop.save('start_pop')
+        imm_pop.save('imm_pop')
