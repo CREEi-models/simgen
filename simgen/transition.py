@@ -136,36 +136,7 @@ class update:
         df['value'] = df['value']*1e-3
         self.par_emig = df.loc[:,'value']
         return
-    def params_chsld(self):
-        """
-        Chargement des paramètres pour transitions CHSLD.
-
-        Le chargement est fait automatiquement avec la création d'une instance de la classe.
-
-        """
-        df = pd.read_csv(params_dir+'chsld_in.csv',sep=';')
-        df.columns = ['var','value']
-        df = df.set_index('var')
-        self.par_chsld_in = df.loc[:,'value']
-        df = pd.read_csv(params_dir+'chsld_out.csv',sep=';')
-        df.columns = ['var','value']
-        df = df.set_index('var')
-        self.par_chsld_out = df.loc[:,'value']
-        return
-
-    #def params_iso_smaf(self):
-    #    """
-    #    Chargement des paramètres pour transitions CHSLD.
-    #
-    #    Le chargement est fait automatiquement avec la création d'une instance de la classe.
-    #
-    #    """
-    #    df = pd.read_csv(params_dir+'iso_smaf_matrix.csv',sep=';')
-    #    df.columns = ['age','iso0','iso1','iso2','iso3','iso4','iso5','iso6','iso7','iso8','iso9','iso10','iso11']
-    #    df = df.set_index('age')
-    #    self.par_iso_smaf = df
-    #    return
-
+    
 
     def params_risk_iso(self,params_set=1):
         """
@@ -283,6 +254,21 @@ class update:
         return newsp
 
     def marriage(self,pop,year):
+        """
+        Fonction de transitions pour les formations d'unions.
+
+        Parameters
+        ----------
+        pop: population
+            population (instance de la classe population)
+        year: int
+            année de la transition
+
+        Returns
+        -------
+        population
+            instance de la classe population
+        """
         pop.ages(year)
         cond = (pop.hh.married==False) & (pop.hh.age<=65) & (pop.hh.age>=18)
         work = pop.hh.loc[cond,['male','age','educ','insch','byr']]
