@@ -1,7 +1,5 @@
-.. _code:
-
-Dictionnaire (classes et des fonctions)
-========================================
+Documentation des fonctions de SimGen
+=====================================
 
 .. automodule:: simgen
 
@@ -24,7 +22,7 @@ Les fonctions de données permettent de préparer les données pour la simulatio
 Transitions
 -----------
 .. autoclass:: update
-    :members:  birth, marriage, divorce, dead, emig, educ
+    :members: params_birth, birth
 
 Simulation
 ----------
@@ -32,7 +30,6 @@ La classe permettant de réaliser les simulations est *model*. Voici sa descript
 
 .. autoclass:: model
     :members: startpop, immig_assumptions, birth_assumptions, dead_assumptions, set_statistics, reset, next, simulate
-
 
 Statistiques
 ------------

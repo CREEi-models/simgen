@@ -43,7 +43,6 @@ class model:
         """
         self.ipop = population()
         self.ipop = self.ipop.load(file)
-        #self.trans.dead_chsld_ajust(self.ipop,self.start_yr)
         return
     def immig_assumptions(self,allow=True,num=0.0066,init=None):
         """
@@ -161,6 +160,7 @@ class model:
     def simulate(self,rep = 1):
         for _ in range(rep):
             self.reset()
+            print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
             while self.year <= self.stop_yr:
                 print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
                 self.next()

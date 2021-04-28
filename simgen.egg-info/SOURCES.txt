@@ -5,22 +5,31 @@ simgen/__init__.py
 simgen/data.py
 simgen/model.py
 simgen/output.py
-simgen/test.py
 simgen/transition.py
 simgen.egg-info/PKG-INFO
 simgen.egg-info/SOURCES.txt
 simgen.egg-info/dependency_links.txt
+simgen.egg-info/requires.txt
 simgen.egg-info/top_level.txt
 simgen/params/QC-age-sexe.xlsx
+simgen/params/chsld_in.csv
+simgen/params/chsld_out.csv
+simgen/params/iso_smaf_matrix.csv
 simgen/params/naissance_ed2019.xlsx
+simgen/params/risk_iso.csv
+simgen/params/trans_births copie.csv
 simgen/params/trans_births.csv
 simgen/params/trans_death_chsld.csv
 simgen/params/trans_death_home.csv
 simgen/params/trans_degree.csv
 simgen/params/trans_divorces.csv
+simgen/params/trans_iso_smaf copie.csv
+simgen/params/trans_iso_smaf copie2.csv
+simgen/params/trans_iso_smaf.csv
 simgen/params/trans_mortality_high.csv
 simgen/params/trans_mortality_low.csv
 simgen/params/trans_mortality_medium.csv
 simgen/params/trans_schldone.csv
 simgen/params/trans_unions.csv
 simgen/params/tx_em_age.csv
+simgen/start_pop/bdsps2017_slice.csv
