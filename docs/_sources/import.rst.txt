@@ -4,32 +4,20 @@ Base de départ
 ==============
 
 Exemple de mise en forme des données
-====================================
-Il est important de noter que les données populationnelles de base pour ce modèle provienennt de la Base de données de simulation de politiques sociales (BDSPS)
-qui est produite par Statistiques Canada (https://www.statcan.gc.ca/fra/microsimulation/bdmsps/bdmsps). La BDSPS est une base non confidentielle, statistiquement 
-représentative, de données sur des particuliers canadiens dans leur contexte familial, contenant suffisamment de renseignements sur chaque particulier pour calculer 
+------------------------------------
+Il est important de noter que les données populationnelles de base pour SimGen proviennent de la `Base de données de simulation de politiques sociales (BDSPS) <https://www.statcan.gc.ca/fra/microsimulation/bdmsps/bdmsps>`_ qui est produite par Statistique Canada. La BDSPS est une base de données non confidentielle et statistiquement représentative de particuliers canadiens dans leur contexte familial, contenant suffisamment de renseignements sur chaque particulier pour calculer
 les impôts payés au gouvernement et les transferts de fonds versés par ce dernier.
 
-La Base de données de simulation de politiques sociales (BDSPS) est disponible au moyen L'Initiative de démocratisation des données (IDD). 
-Les professeurs et étudiants dans les établissements postsecondaires participants peuvent accéder au modèle par l'entremise de leurs contacts avec l'IDD.
+La BDSPS est disponible par l'entremise de l'Initiative de démocratisation des données (IDD). Les professeurs et étudiants des établissements postsecondaires participants peuvent accéder au modèle par l'entremise de leur contact auprès de l'IDD. Pour plus de renseignements sur le programme de l’IDD, consulter `son site Web <https://www.statcan.gc.ca/fra/idd/idd>`_.
 
-Pour plus de renseignements sur le programme de l’IDD, consultez le site Web de l'Initiative de démocratisation des données (https://www.statcan.gc.ca/fra/idd/idd).
+Dans cette section, on illustre comment effectuer la mise en forme des données provenant de la BDSPS. Toutefois, le modèle pourrait fonctionner avec une base de données différentes permettant une mise en forme identique.
 
-Dans cette section, on illustre comment effectuer la mise en forme des données provenant de la BDSPS, par contre le modèle pourrait fonctionner
-avec une base de données différentes permettant une mise en forme identiques.
+Une version de base des fichiers de départ est fournie dans le répertoire params, soit *startpop.pkl* et *newimmpop.pkl*, tous deux en format \"pickle\".
 
-Une version de base des fichiers de départ est fournie dans le répertoire params, soit startpop.pkl et newimmpop.pkl, tous deux en format pickle. 
-
-
-
-On utilise trois fonctions de simgen: 
-* bdsps: manipule la base BDSPS
-de Statistiques Canada pour mettre en forme certaines variables et créer
-les registres avec NAS de dominants. 
-* parse: reformule les noms de
-variables à l’aide de dictionnaires 
-* population: crée la structure de
-population
+On utilise trois fonctions de SimGen.
+    - *bdsps*: manipule la BDSPS de Statistique Canada pour mettre en forme certaines variables et créer les registres avec NAS d'individus dominants.
+    - *parse*: reformule les noms de variables à l’aide de dictionnaires.
+    - *population*: crée la structure de population.
 
 .. code:: ipython3
 
@@ -37,25 +25,17 @@ population
 
 Nettoyage de la BDSPS
 ---------------------
-
-SimGen vient avec une fonction, bdsps qui nettoie les données de la
-BDSPS, crée les NAS et les trois registres. Cette fonction peut être
-adapté pour d’autres bases de données. Fait important à noter, la
-fonction BDSPS calibre aussi les poids des répondants, par âge et sexe
-pour s’arrimer sur la population québécoise de 2017, selon l’ISQ.
+SimGen vient avec une fonction, *bdsps*, qui nettoie les données de la BDSPS, crée les NAS et les trois registres. Cette fonction peut être adaptée pour d’autres bases de données. Fait important à noter, la fonction *bdsps* calibre aussi les poids des répondants, par âge et sexe, pour s’arrimer sur la population québécoise de 2017, selon l’ISQ.
 
 .. code:: ipython3
 
     hh,sp,kd = bdsps('../raw/bdsps2017.dta')
 
-Voici ce à quoi ressemble les registres des dominants, conjoints et
-enfants avant la mise en forme finale.
+Voici à quoi ressemblent les registres des indvidus dominants, conjoints et enfants avant la mise en forme finale.
 
 .. code:: ipython3
 
     hh.head()
-
-
 
 
 .. raw:: html
@@ -65,11 +45,11 @@ enfants avant la mise en forme finale.
         .dataframe tbody tr th:only-of-type {
             vertical-align: middle;
         }
-    
+
         .dataframe tbody tr th {
             vertical-align: top;
         }
-    
+
         .dataframe thead th {
             text-align: right;
         }
@@ -217,11 +197,11 @@ enfants avant la mise en forme finale.
         .dataframe tbody tr th:only-of-type {
             vertical-align: middle;
         }
-    
+
         .dataframe tbody tr th {
             vertical-align: top;
         }
-    
+
         .dataframe thead th {
             text-align: right;
         }
@@ -362,11 +342,11 @@ enfants avant la mise en forme finale.
         .dataframe tbody tr th:only-of-type {
             vertical-align: middle;
         }
-    
+
         .dataframe tbody tr th {
             vertical-align: top;
         }
-    
+
         .dataframe thead th {
             text-align: right;
         }
@@ -500,8 +480,7 @@ enfants avant la mise en forme finale.
 
 
 
-On partitionne pour obtenir seulement les nouveaux immigrants dans des
-registres différents.
+On partitionne pour obtenir seulement les nouveaux immigrants dans des registres différents.
 
 .. code:: ipython3
 
@@ -512,12 +491,7 @@ registres différents.
 
 Adapter les noms de variables pour SimGen
 -----------------------------------------
-
-Une étape importante est de faire la correspondance entre les noms de
-variables des registres de la BDSPS et ceux dans SimGen. Pour ce faire,
-nous avons la classe parse(). Cette classe permet, à l’aide d’un
-dictionnaire de faire cette correspondance, pour chaque registre. Par
-défaut, parse() suppose les mêmes noms de variables que dans SimGen.
+Une étape importante consiste à faire la correspondance entre les noms de variables des registres de la BDSPS et ceux dans SimGen. Pour ce faire, nous avons la classe *parse()*. Cette classe permet, à l’aide d’un dictionnaire, de faire cette correspondance pour chaque registre. Par défaut, *parse()* suppose les mêmes noms de variables que dans SimGen.
 
 .. code:: ipython3
 
@@ -549,7 +523,7 @@ On fait ensuite notre correspondance propre à la BDSPS.
     parsing.map_sp['insch'] = 'inschool'
     parsing.map_kd['insch'] = 'inschool'
 
-On ajuste ensuite à l’aide de ces dictionnaires les trois registres.
+On ajuste ensuite les trois registres à l’aide de ces dictionnaires.
 
 .. code:: ipython3
 
@@ -571,11 +545,11 @@ On ajuste ensuite à l’aide de ces dictionnaires les trois registres.
         .dataframe tbody tr th:only-of-type {
             vertical-align: middle;
         }
-    
+
         .dataframe tbody tr th {
             vertical-align: top;
         }
-    
+
         .dataframe thead th {
             text-align: right;
         }
@@ -668,11 +642,7 @@ On ajuste ensuite à l’aide de ces dictionnaires les trois registres.
 
 Création des structures de population et sauvegarde des données
 ---------------------------------------------------------------
-
-Après avoir ajusté les registres, on peut les introduire dans des
-structures de population. La classe population permet de faire ceci. On
-peut ensuite sauvegarder les objets en format pickle en donnant le nom
-du fichier.
+Après avoir ajusté les registres, on peut les introduire dans des structures de population. La classe *population* permet de le faire. On peut ensuite sauvegarder les objets en format \"pickle\" en donnant le nom du fichier.
 
 .. code:: ipython3
 
