@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="simgen", # Replace with your own username
-    version="0.0.1",
+    version="0.0.8",
     author="Équipe CREEi",
-    author_email="pierre-carl.michaud@hec.ca",
+    author_email="yann.decarie@hec.ca",
     description="Modele de microsimulation SimGen",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -18,6 +18,11 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+   'pandas',
+   'numpy',
+   'numba'
     ],
     python_requires='>=3.6',
 )

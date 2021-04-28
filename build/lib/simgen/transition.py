@@ -1,19 +1,19 @@
-import numpy as np 
+import numpy as np
 from numba import njit,int64,float64
 from simgen import population
 import pandas as pd
-from multiprocessing import Pool 
+from multiprocessing import Pool
 from multiprocessing import cpu_count
 from random import choices
 from functools import partial
 from os import path
 params_dir = path.join(path.dirname(__file__), 'params/')
 
-class update: 
+class update:
     """
     Classe pour les transitions.
 
-    Classe permettant d'effectuer différentes transitions d'une année à l'autre. 
+    Classe permettant d'effectuer différentes transitions d'une année à l'autre.
 
     """
     def __init__(self):
@@ -26,12 +26,15 @@ class update:
         self.params_schldone()
         self.params_educ()
         self.params_emig()
+        self.params_chsld()
+        #self.params_iso_smaf()
+        self.params_risk_iso(params_set=1)
         return
     def params_birth(self):
         """
-        Chargement des paramètres pour transition de naissances.
+        Chargement des paramètres pour transitions de naissances.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_births.csv',sep=';')
@@ -41,9 +44,9 @@ class update:
         return
     def params_union(self):
         """
-        Chargement des paramètres pour transition d'unions
+        Chargement des paramètres pour transitions d'unions.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_unions.csv',sep=';')
@@ -52,9 +55,9 @@ class update:
         return
     def params_divorce(self):
         """
-        Chargement des paramètres pour transition de divorces
+        Chargement des paramètres pour transitions de séparations.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_divorces.csv',sep=';')
@@ -63,9 +66,9 @@ class update:
         return
     def params_dead(self,scn):
         """
-        Chargement des paramètres pour transition de mortalité
+        Chargement des paramètres pour transitions de mortalité.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_mortality_'+scn+'.csv',sep=';')
@@ -82,12 +85,24 @@ class update:
         df.name = 'rate'
         df = df.to_frame()
         self.mx = df
+        df2 = pd.read_csv(params_dir+'trans_death_chsld.csv',sep=',')
+        df2.columns = ['var','value']
+        df2['var'] = df2['var'].apply(str)
+        df2 = df2.set_index('var')
+        df2.name='chsld'
+        self.par_chsld = df2
+        df3 = pd.read_csv(params_dir+'trans_death_home.csv',sep=',')
+        df3.columns = ['var','value']
+        df3['var'] = df3['var'].apply(str)
+        df3 = df3.set_index('var')
+        df3.name='home'
+        self.par_home = df3
         return
     def params_schldone(self):
         """
-        Chargement des paramètres pour transition fin de scolarité
+        Chargement des paramètres pour transitions de fin de scolarité.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_schldone.csv',sep=';')
@@ -97,9 +112,9 @@ class update:
         return
     def params_educ(self):
         """
-        Chargement des paramètres pour transition diplomation
+        Chargement des paramètres pour transitions de fin d'études.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'trans_degree.csv',sep=';')
@@ -110,9 +125,9 @@ class update:
         return
     def params_emig(self):
         """
-        Chargement des paramètres pour transition émigration
+        Chargement des paramètres pour transitions d'émigration.
 
-        Le chargement est fait automatiquement avec création instance de la classe.
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
 
         """
         df = pd.read_csv(params_dir+'tx_em_age.csv',sep=';')
@@ -121,9 +136,53 @@ class update:
         df['value'] = df['value']*1e-3
         self.par_emig = df.loc[:,'value']
         return
+    def params_chsld(self):
+        """
+        Chargement des paramètres pour transitions CHSLD.
+
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
+
+        """
+        df = pd.read_csv(params_dir+'chsld_in.csv',sep=';')
+        df.columns = ['var','value']
+        df = df.set_index('var')
+        self.par_chsld_in = df.loc[:,'value']
+        df = pd.read_csv(params_dir+'chsld_out.csv',sep=';')
+        df.columns = ['var','value']
+        df = df.set_index('var')
+        self.par_chsld_out = df.loc[:,'value']
+        return
+
+    #def params_iso_smaf(self):
+    #    """
+    #    Chargement des paramètres pour transitions CHSLD.
+    #
+    #    Le chargement est fait automatiquement avec la création d'une instance de la classe.
+    #
+    #    """
+    #    df = pd.read_csv(params_dir+'iso_smaf_matrix.csv',sep=';')
+    #    df.columns = ['age','iso0','iso1','iso2','iso3','iso4','iso5','iso6','iso7','iso8','iso9','iso10','iso11']
+    #    df = df.set_index('age')
+    #    self.par_iso_smaf = df
+    #    return
+
+
+    def params_risk_iso(self,params_set=1):
+        """
+        Chargement des paramètres pour le risque d'être dans la population iso'.
+
+        Le chargement est fait automatiquement avec la création d'une instance de la classe.
+
+        """
+        df = pd.read_csv(params_dir+'risk_iso.csv',sep=';')
+        df.columns = ['var','risk_iso1','risk_iso2','risk_iso3']
+        df = df.set_index('var')
+        self.par_risk_iso = df.loc[:,'risk_iso'+str(params_set)]
+        return
+
     def birth(self,pop,year,ntarget):
         """
-        Fonction de transition naissance
+        Fonction de transitions pour les naissances.
 
         Parameters
         ----------
@@ -132,8 +191,8 @@ class update:
         year: int
             année de la transition
         ntarget: int
-            nombre de naissance visé (si alignement)
-        
+            nombre de naissances visé (si alignement)
+
         Returns
         -------
         population
@@ -151,7 +210,7 @@ class update:
         work = work.loc[work.index.isin(elig),
                         ['age','age_sp','educ','educ_sp','male','insch','nkids','agemin']]
         # create covariates
-        covars = ['dage2529','dage3034','dage35p','lkidage','insch','des','dec','uni','constant']
+        covars = ['dage2529','dage3034','dage3539','dage40p','lkidage','insch','des','dec','uni','constant']
         work['rank'] = work['nkids']+1
         work['rank'] = np.where(work['rank']>3,3,work['rank'])
         work['age'] = np.where(work.male,work.age_sp,work.age)
@@ -161,10 +220,11 @@ class update:
         work['uni'] = work['educ']=='uni'
         work['dage2529'] = (work['age']>=25) & (work['age']<=29)
         work['dage3034'] = (work['age']>=30) & (work['age']<=34)
-        work['dage35p'] = (work['age']>=35) 
+        work['dage3539'] = (work['age']>=35) & (work['age']<=39)
+        work['dage40p'] = (work['age']>=40)
         work['lkidage'] = work['agemin']
         work['constant'] = 1
-        # compute probability 
+        # compute probability
         work['pr'] = 0.0
         for v in covars:
             work['pr'] += work[v].multiply(self.par_birth.loc[work['rank'],v].values)
@@ -178,13 +238,13 @@ class update:
         newkids = pd.DataFrame(index=nas_newparents,columns=pop.kd.columns)
         newkids.index.name = 'nas'
         newkids['byr'] = year
-        newkids['male'] = np.random.uniform(size=nbirths)<0.5
+        newkids['male'] = np.random.uniform(size=nbirths)<0.512
         newkids['insch'] = False
         newkids['age'] = 0
         # append kids to kids dataset and update globals for dominants
         pop.kd = pop.kd.append(newkids)
         pop.nkids()
-        pop.kagemin() 
+        pop.kagemin()
         # create dominants
         maxnas = pop.hh.index.max()
         newnas = [a for a in range(maxnas+1,maxnas+1+nbirths)]
@@ -199,8 +259,11 @@ class update:
         newdoms['married'] = False
         newdoms['age'] = 0
         newdoms['agemin'] = 0
+        newdoms['risk_iso'] = False
+        #newdoms['iso_smaf'] = -1
         pop.hh = pop.hh.append(newdoms)
         return pop
+
     def match(self,grooms,pop):
         nas_grooms = grooms.index.to_list()
         newsp = pd.DataFrame(index=nas_grooms,columns=pop.sp.columns)
@@ -217,7 +280,8 @@ class update:
                 nas_pick = choices(nas_pool,k=1)
                 bride = pop.sp.loc[nas_pick[0],:]
             newsp.loc[i,:] = bride.to_list()
-        return newsp        
+        return newsp
+
     def marriage(self,pop,year):
         pop.ages(year)
         cond = (pop.hh.married==False) & (pop.hh.age<=65) & (pop.hh.age>=18)
@@ -239,7 +303,7 @@ class update:
             'age3539','age4044','age4549','age5054','age5559','insch',
             'des','dec','uni','constant']
         work['pr'] = 0
-        for v in covars: 
+        for v in covars:
             work['pr'] += work[v]*self.par_union[v]
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['wedding'] = np.random.uniform(size=len(work))<work['pr']
@@ -258,7 +322,7 @@ class update:
         # brides added to pool of spouses
         pop.sp = pop.sp.append(newsp)
         return pop
-    
+
     def divorce(self,pop,year):
         pop.ages(year)
         pop.nkids()
@@ -278,7 +342,7 @@ class update:
         work['constant'] = 1
         covars = ['male','mage','mage2','mage3','wage','wage2','wage3','des','dec','uni','insch','kid','constant']
         work['pr'] = 0
-        for v in covars: 
+        for v in covars:
             work['pr'] += work[v]*self.par_divorce[v]
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['divorce'] = np.random.uniform(size=len(work))<work['pr']
@@ -288,13 +352,65 @@ class update:
         # drop spouses
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_divorced)]
         return pop
+
+    def risk_iso(self,pop,year):
+        pop.ages(year)
+        cond = pop.hh.age>=65
+        pop.hh.loc[cond,'risk_iso']=False
+        work = pop.hh.loc[cond,['male','age','risk_iso']]
+        work['risk_iso']=False
+        work['male_6569'] = (work['male']==True) & (work['age']>=65) & (work['age']<=69)
+        work['male_7074']  = (work['male']==True) & (work['age']>=70) & (work['age']<=74)
+        work['male_7579']  = (work['male']==True) & (work['age']>=75) & (work['age']<=79)
+        work['male_80p']  = (work['male']==True) & (work['age']>=80)
+        work['female_6569']  = (work['male']==False) & (work['age']>=65) & (work['age']<=69)
+        work['female_7074']  = (work['male']==False) & (work['age']>=70) & (work['age']<=74)
+        work['female_7579']  = (work['male']==False) & (work['age']>=75) & (work['age']<=79)
+        work['female_80p']  = (work['male']==False) & (work['age']>=80)
+        covars = ['male_6569','male_7074','male_7579','male_80p','female_6569','female_7074','female_7579','female_80p']
+        work['pr'] = 0.0
+        for v in covars:
+            work['pr'] += work[v]*self.par_risk_iso[v] 
+        work['rand']= np.random.uniform(size=len(work))
+        cond = work['rand']<work['pr']
+        work.loc[cond,'risk_iso']=True
+        nas_risk_iso = work[work['risk_iso']==True].index.to_list()
+        pop.hh.loc[nas_risk_iso,'risk_iso'] = True
+        return pop
+
+    #def iso_smaf(self,pop,year):
+    #    pop.ages(year)
+    #    cond =  pop.hh.age>=65
+    #    pop.hh.loc[cond,'iso_smaf']=-1
+    #    work = pop.hh.loc[cond,['age','iso_smaf']]
+    #    work['rand']= np.random.uniform(size=len(work))
+    #    for i in np.arange(1,12):
+    #        work['par_iso'+str(i)] = self.par_iso_smaf[work.age,'iso'+str(i)]
+    #        cond=(np.less_equal(work['rand'],1) & (work['iso_smaf']==-1))
+    #    for i in np.arange(1,11):
+    #        work['pr_sum']+=work['pr'+str(i)]
+    #        cond=((np.less_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
+    #        work.loc[cond,'iso_smaf']=i
+    #    cond=((np.greater_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
+    #    work.loc[cond,'iso_smaf']=11
+    #    nas_iso = work.index.to_list()
+    #    pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']
+    #    return pop
+
     def dead(self,pop,year):
         # make sure year up to date
         pop.ages(year)
         work = pop.hh.loc[:,['male','age']]
         work['year'] = year
+        #work = work.merge(self.par_ajust_chsld,on=['age'],how='left')
+        work['factor_home']=1
+        work['factor_chsld']=1
         work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
-        work['dead'] = np.random.uniform(size=len(work))<work['rate']
+        #na_val = {'factor_home':1,'factor_chsld':1}
+        #work = work.fillna(value=na_val)
+        work['factor']=1
+        work['dead'] = np.random.uniform(size=len(work))<(work['rate']*work['factor'])
+        #work['test_rate'] = (work['rate']*work['factor'])
         nas_dead = work[work['dead']].index.to_list()
         pop.hh = pop.hh[~pop.hh.index.isin(nas_dead)]
         pop.sp = pop.sp[~pop.sp.index.isin(nas_dead)]
@@ -309,7 +425,7 @@ class update:
         nas_dead = work[work['dead']].index.to_list()
         pop.sp = pop.sp[~pop.sp.index.isin(nas_dead)]
         pop.hh.loc[nas_dead,'married'] = False
-        return pop  
+        return pop
     def kids_dead(self,pop,year):
         pop.ages(year)
         work = pop.kd.loc[:,['male','age']]
@@ -325,7 +441,7 @@ class update:
         pop.ages(year)
         pop.kd = pop.kd[pop.kd.age<18]
         pop.nkids()
-        pop.kagemin()         
+        pop.kagemin()
         return pop
     def emig(self,pop,year):
         pop.ages(year)
@@ -341,28 +457,34 @@ class update:
         u = np.random.uniform(size=len(work))
         work['emig'] = u<work['pr']
         nas_emig = work[work['emig']].index.to_list()
+        popemmig=  pop.hh.loc[pop.hh.index.isin(nas_emig)]
+        tot = popemmig.sum()
         pop.hh = pop.hh.loc[~pop.hh.index.isin(nas_emig)]
         pop.sp = pop.sp.loc[~pop.sp.index.isin(nas_emig)]
         pop.kd = pop.kd.loc[~pop.kd.index.isin(nas_emig)]
         return pop
     def educ(self,pop,year):
-        pop.ages(year) 
+        pop.ages(year)
         pop.nkids()
         # deal first with those entering school
         pop.hh.loc[pop.hh.age==5,'insch'] = True
         pop.kd.loc[pop.kd.age==5,'insch'] = True
+        # force quitting school after 35
+        pop.hh.loc[pop.hh.age>35,'insch'] = False
         # now those who quit (probabilistic)
         selection = (pop.hh.insch) & (pop.hh.age>=17) & (pop.hh.age<=35)
         work = pop.hh.loc[selection,['age','male','nkids']]
         work['mother'] = (work['nkids']>0)*(work['male']!=True)
         work['father'] = (work['nkids']>0)*(work['male'])
-        beta = self.par_schldone 
+        #work['byear'] = year-work['age']
+        beta = self.par_schldone
         work['pr'] = beta['constant']
         for a in range(18,36):
             work['pr'] += np.where(work['age']==a,beta['age'+str(a)],0.0)
         work['pr'] += beta['male']*work['male']
         work['pr'] += beta['mother']*work['mother']
         work['pr'] += beta['father']*work['father']
+        #work['pr'] += beta['byear']*work['byear']
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['quit'] = np.random.uniform(size=len(work))<work['pr']
         work['quit'] = np.where(work['age']==35,True,work['quit'])
@@ -414,8 +536,8 @@ class update:
 #		- dage35+  : de 35 à 39 ans
 #
 #	Education du répondant (dummies) :
-#		- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires 
-#		- insch : Personne n'ayant pas terminé ses études 
+#		- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
+#		- insch : Personne n'ayant pas terminé ses études
 #		- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #		- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
 #		- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
@@ -425,7 +547,7 @@ class update:
 #	Régression pour le 1er (sans lastkidage), 2nd,et 3ème enfant noté i
 #	logit kid(i) dage2529 dage3034 dage35+ lkidage insch hs college university
 
-    
+
 #@njit
 #def pbirth(age,sp_age,male,educ,educ_sp,nkids):
 #    return 0.0
@@ -433,11 +555,11 @@ class update:
 @njit
 def pbirth(age,educ,agemin,beta):
     base = 0.0
-    if age>=25 and age<=29: 
+    if age>=25 and age<=29:
         base += beta[0]
-    if age>=30 and age<=34: 
+    if age>=30 and age<=34:
         base += beta[1]
-    if age>=35: 
+    if age>=35:
         base += beta[2]
     base += agemin*beta[3]
     if educ==1:
@@ -476,20 +598,20 @@ def pbirth(age,educ,agemin,beta):
 #	- wage3 : âge au cube du répondant si c'est une femme, sinon 0
 #
 #	unions : dummies d'âge du répondant par classes d'âge
-#	- age1619 
-# 	- age2024 
-#	- age2529 
-#	- age3034 : référence 
+#	- age1619
+# 	- age2024
+#	- age2529
+#	- age3034 : référence
 #	- age3539
-#	- age4044 
-#	- age4549 
-#	- age5054 
-#	- age5559 
+#	- age4044
+#	- age4549
+#	- age5054
+#	- age5559
 #	- age6065
 #
 #	Education du répondant (dummies) :
-#	- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires 
-#	- insch : Personne n'ayant pas terminé ses études 
+#	- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
+#	- insch : Personne n'ayant pas terminé ses études
 #	- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #	- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
 #	- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
@@ -497,7 +619,7 @@ def pbirth(age,educ,agemin,beta):
 #	Enfant de moins de 18 ans (dummy) :
 #	- kid : L'individu a un enfant de moins de 18 ans
 #
-#Régressions logistiques : 
+#Régressions logistiques :
 #logit m male age1619 age2024 age2529 /*age3034*/ age3539 age4044 age4549 age5054 age5559 age6065 insch educ_2 educ_3 educ_4
 #logit d male mage mage2 mage3 wage wage2 wage3 insch educ_2 educ_3 educ_4 kid
 
@@ -511,7 +633,7 @@ def find_spouse(age,male,educ):
     sp_educ = educ
     return sp_age, sp_educ
 
-@njit 
+@njit
 def pdiv(age,sp_age,male,educ,sp_educ,nkids):
     return 0.0
 
@@ -530,11 +652,11 @@ def pdiv(age,sp_age,male,educ,sp_educ,nkids):
 #	- précision : les données initialement en quotients de mortalité sont transformés en taux de mortalité.
 
 
-@njit 
+@njit
 def pdead(age,male):
     return 0.0
 
-@njit 
+@njit
 def pemig(age,male):
     return 0.0
 
@@ -559,32 +681,32 @@ def enroll(age,male):
 #	- mother=1 si l'individu est une mère, 0 sinon
 #	- father=1 si l'individu est un père, 0 sinon
 #	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans 
+#		L'âge de référence est 17 ans
 #
 #Description des variables pour attribuer le niveau d'éducation atteind :
 #	Soit "educ4" les niveaux d'éducation :
-#		less_than_des=1 si l'individu n'a pas accompli ses études secondaires 
+#		less_than_des=1 si l'individu n'a pas accompli ses études secondaires
 #		Référence : = Diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
 #		dec : = Diplôme d'études d'un collège communautaire
 #		uni : Supérieur ou égal au baccalauréat
-# 
+#
 #	Soit les variables indépendantes :
 #	- male : est égal à 1 si le répondant est un homme, sinon 0 (dummy)
 #	- mother=1 si l'individu est une mère, 0 sinon
 #	- father=1 si l'individu est un père, 0 sinon
 #	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans 
+#		L'âge de référence est 17 ans
 #
 #Régressions :
 #logit schldone male mother father age*
 #mlogit educ4 male mother father age*  if(schldone==1), base(2)
 
-@njit 
+@njit
 def pdes(age,male):
     return 0.0
-@njit 
+@njit
 def pdec(age,male):
     return 0.0
-@njit 
+@njit
 def puni(age,male):
     return 0.0

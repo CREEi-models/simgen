@@ -1,49 +1,43 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="fr" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Documentation de SimGen &mdash; Documentation SimGen </title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/contentui.css" type="text/css" />
-
+  
   
   
 
   
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="_static/contentui.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Installation" href="installation.html" /> 
+    <link rel="next" title="Premiers pas avec SimGen" href="premierpas.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -71,7 +65,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -80,7 +74,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -88,19 +81,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Menu :</span></p>
+              <p class="caption"><span class="caption-text">Menu:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utilisation.html">Utilisation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="methodologie.html">Méthodologie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premiers pas avec SimGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Base de départ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Documentation des fonctions de SimGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transition_models.html">Modèles de transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="code.html">Dictionnaire (classes et des fonctions)</a></li>
 </ul>
 
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -135,21 +127,19 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="#">Docs</a> &raquo;</li>
         
       <li>Documentation de SimGen</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -164,59 +154,53 @@
             
   <div class="section" id="documentation-de-simgen">
 <h1>Documentation de SimGen<a class="headerlink" href="#documentation-de-simgen" title="Lien permanent vers ce titre">¶</a></h1>
-<p>SimGen est un modèle de microsimulation effectuant des projections démographiques de long terme (jusqu’en 2100) pour le Québec.
-Ce modèle prend en compte la fécondité (naissances), le statut conjugal (formation d’unions et séparations), la scolarité, l’immigration, l’émigration
-et finalement la mortalité (décès).</p>
-<p>SimGen peut être utilisé afin de produire des distributions démographiques très utiles dans le cadre de recherches et d’enseignements.
-Les résultats des simulations permettent notamment d’analyser les conséquences économiques de la taille et de la structure de la population québécoise.</p>
-<p>SimGen a été développé par l’équipe
-de la <a class="reference external" href="https://www.creei.ca">Chaire de recherche sur les enjeux économiques intergénérationnels</a>,
-une chaire conjointe <a class="reference external" href="https://esg.uqam.ca/">ESG UQAM</a> et <a class="reference external" href="https://www.hec.ca/">HEC Montréal</a>
-soutenue par le <a class="reference external" href="https://cirano.qc.ca/">CIRANO</a> et
-<a class="reference external" href="https://www.retraitequebec.gouv.qc.ca/fr/Pages/accueil.aspx">Retraite Québec</a>.
-Pour rester informé.e des mises à jour de SimGen, inscrivez-vous à notre <a class="reference external" href="http://eepurl.com/hs0YED">liste d’envoi dédiée</a>.</p>
+<p>Le modèle de microsimulation SimGen permet de faire des simulations démographiques pour le Québec en prenant en compte les naissances, les unions et les divorces, la scolarité, l’immigration et finalement la mortalité. Il peut être utilisé afin de produire des distributions démographiques qui peuvent servir à faire des analyses économiques. Il a été développé par l’équipe de la <a class="reference external" href="https://www.creei.ca">Chaire de recherche sur les enjeux économiques intergénérationnels</a>, une chaire conjointe <a class="reference external" href="https://esg.uqam.ca/">ESG UQAM</a> et <a class="reference external" href="https://www.hec.ca/">HEC Montréal</a> soutenue par le <a class="reference external" href="https://cirano.qc.ca/">CIRANO</a> et <a class="reference external" href="https://www.retraitequebec.gouv.qc.ca/fr/Pages/accueil.aspx">Retraite Québec</a>.</p>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Menu :</span></p>
+<p class="caption"><span class="caption-text">Menu:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-automatisee">Installation automatisée</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-manuelle">Installation manuelle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#acces-a-distance">Accès à distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="premierpas.html">Premiers pas avec SimGen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="premierpas.html#installation-de-simgen">Installation de SimGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premierpas.html#importer-simgen-dans-un-notebook-ou-un-script">Importer SimGen dans un notebook ou un script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="premierpas.html#rouler-une-premiere-simulation">Rouler une première simulation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utilisation.html">Utilisation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utilisation.html#etapes">Étapes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilisation.html#exemple">Exemple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Base de départ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="import.html#exemple-de-mise-en-forme-des-donnees">Exemple de mise en forme des données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="import.html#nettoyage-de-la-bdsps">Nettoyage de la BDSPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="import.html#adapter-les-noms-de-variables-pour-simgen">Adapter les noms de variables pour SimGen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="import.html#creation-des-structures-de-population-et-sauvegarde-des-donnees">Création des structures de population et sauvegarde des données</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="methodologie.html">Méthodologie</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="methodologie.html#fecondite">Fécondité</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methodologie.html#scolarite">Scolarité</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methodologie.html#statut-conjugal">Statut conjugal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methodologie.html#mortalite">Mortalité</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methodologie.html#migrations">Migrations</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-comparaison">Données de comparaison</a></li>
-<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-simulation">Données de simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="resultats.html#resultats-des-comparaisons">Résultats des comparaisons</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="code.html">Dictionnaire (classes et des fonctions)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Documentation des fonctions de SimGen</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="code.html#donnees">Données</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#transitions">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#simulation">Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code.html#statistiques">Statistiques</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="transition_models.html">Modèles de transition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transition_models.html#naissances">Naissances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transition_models.html#fin-des-etudes-et-niveau-de-scolarite-associe">Fin des études et niveau de scolarité associé</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transition_models.html#mises-en-couple-et-separations">Mises en couple et séparations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transition_models.html#deces">Décès</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transition_models.html#migrations">Migrations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-comparaison">Données de comparaison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-simulation">Données de simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#comparaison">Comparaison</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div class="section" id="index">
-<h1>Index<a class="headerlink" href="#index" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="index-et-tables">
+<h1>Index et Tables<a class="headerlink" href="#index-et-tables" title="Lien permanent vers ce titre">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Index du module</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Page de recherche</span></a></p></li>
 </ul>
 </div>
 
@@ -225,28 +209,27 @@ Pour rester informé.e des mises à jour de SimGen, inscrivez-vous à notre <a c
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+        <a href="premierpas.html" class="btn btn-neutral float-right" title="Premiers pas avec SimGen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Équipe CREEi.
+        &copy; Copyright 2020, Équipe CREEi
 
     </p>
   </div>
-    
-    
-    
-    Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
@@ -254,6 +237,7 @@ Pour rester informé.e des mises à jour de SimGen, inscrivez-vous à notre <a c
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {
