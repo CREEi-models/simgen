@@ -9,7 +9,7 @@ from inspect import currentframe, getframeinfo
 from pandas.core.common import SettingWithCopyError
 params_dir = path.join(path.dirname(__file__), 'params/')
 
-def bdsps(file,year=2017,iprint=False):
+def bdsps(file,year=2017,iprint=False, file_format='.dta'):
 
     """
     Nettoyage de la BDSPS.
@@ -23,7 +23,11 @@ def bdsps(file,year=2017,iprint=False):
     iprint: boolean
         switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)
     """
-    df = pd.read_stata(file,convert_categoricals=False)
+    if file_format=='.dta':
+        df = pd.read_stata(file,convert_categoricals=False)
+    if file_format==".csv":
+        df = pd.read_csv(file)
+    """
     df = df[df.hdprov==4]
     df = df[['hdseqhh','hdwgthh','hdwgthhs','idefseq','idefrh','hhnef','idage','idspoflg',
         'idimmi','idedlev','idestat','idmarst','efnkids','imqndc','hdnkids','idsex']]
@@ -69,8 +73,6 @@ def bdsps(file,year=2017,iprint=False):
     df['nas'] = np.arange(len(df))
     df['nas'] = df['nas'].astype('Int64')
     keep.append('nas')
-    #df['iso_smaf']=-1
-    #keep.append('iso_smaf')
     df['risk_iso']=False
     keep.append('risk_iso')
     # for each nas in df (dominant), drop adults in households, including chidlren
@@ -95,9 +97,10 @@ def bdsps(file,year=2017,iprint=False):
     pop['wgt'] = pop['wgt'] * pop['adj']
     pop['wgt'] *= totpop/pop['wgt'].sum()
     pop = pop.drop(columns=['adj'])
-
+    pop.to_csv('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/bdsps2017_slice.csv')
+    """
     # dominants
-    hh = pop.copy()
+    hh = df.copy()
 
     # spouses
     sps = hh.loc[hh.pn!=2,:].copy()
@@ -378,3 +381,39 @@ class population:
             self.hh['agemin'] = 0
             self.hh.loc[am.index,'agemin'] = am
         return
+
+class formating:
+    """
+    Organisation de la base de données.
+
+    Cette classe permet de créer les fichiers nécessaires à la 
+    simulation avec la base de départ BDSPS_ 2017.
+
+    """
+
+    def __init__(self):
+        return
+    def bdsps_format(self, data):
+        hh,sp,kd = bdsps(data, file_format='.csv')
+        imm = hh[hh.newimm]
+        imm_nas = imm.index
+        sp_imm = sp.loc[sp.index.isin(imm_nas),:]
+        kd_imm = kd.loc[kd.index.isin(imm_nas),:]
+        parsing = parse()
+        parsing.map_hh['educ'] = 'educ4'
+        parsing.map_sp['educ'] = 'educ4'
+        parsing.map_hh['insch'] = 'inschool'
+        parsing.map_sp['insch'] = 'inschool'
+        parsing.map_kd['insch'] = 'inschool'
+        hh = parsing.dominants(hh)
+        sp = parsing.spouses(sp)
+        kd = parsing.kids(kd)
+        imm = parsing.dominants(imm)
+        sp_imm = parsing.spouses(sp_imm)
+        kd_imm = parsing.kids(kd_imm)
+        pop = population()
+        pop.input(hh,sp,kd)
+        imm_pop = population()
+        imm_pop.input(imm,sp_imm,kd_imm)
+        pop.save('start_pop')
+        imm_pop.save('imm_pop')
