@@ -136,7 +136,7 @@ class update:
         df['value'] = df['value']*1e-3
         self.par_emig = df.loc[:,'value']
         return
-    
+
 
     def params_risk_iso(self,params_set=1):
         """
@@ -310,6 +310,21 @@ class update:
         return pop
 
     def divorce(self,pop,year):
+        """
+        Fonction de transitions pour les dissolutions d'unions.
+
+        Parameters
+        ----------
+        pop: population
+            population (instance de la classe population)
+        year: int
+            année de la transition
+
+        Returns
+        -------
+        population
+            instance de la classe population
+        """
         pop.ages(year)
         pop.nkids()
         cond = (pop.hh.married==True) & (pop.hh.age<=65) & (pop.hh.age>=18)
@@ -356,7 +371,7 @@ class update:
         covars = ['male_6569','male_7074','male_7579','male_80p','female_6569','female_7074','female_7579','female_80p']
         work['pr'] = 0.0
         for v in covars:
-            work['pr'] += work[v]*self.par_risk_iso[v] 
+            work['pr'] += work[v]*self.par_risk_iso[v]
         work['rand']= np.random.uniform(size=len(work))
         cond = work['rand']<work['pr']
         work.loc[cond,'risk_iso']=True
@@ -364,26 +379,22 @@ class update:
         pop.hh.loc[nas_risk_iso,'risk_iso'] = True
         return pop
 
-    #def iso_smaf(self,pop,year):
-    #    pop.ages(year)
-    #    cond =  pop.hh.age>=65
-    #    pop.hh.loc[cond,'iso_smaf']=-1
-    #    work = pop.hh.loc[cond,['age','iso_smaf']]
-    #    work['rand']= np.random.uniform(size=len(work))
-    #    for i in np.arange(1,12):
-    #        work['par_iso'+str(i)] = self.par_iso_smaf[work.age,'iso'+str(i)]
-    #        cond=(np.less_equal(work['rand'],1) & (work['iso_smaf']==-1))
-    #    for i in np.arange(1,11):
-    #        work['pr_sum']+=work['pr'+str(i)]
-    #        cond=((np.less_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
-    #        work.loc[cond,'iso_smaf']=i
-    #    cond=((np.greater_equal(work['rand'],work['pr_sum'])) & (work['iso_smaf']==-1))
-    #    work.loc[cond,'iso_smaf']=11
-    #    nas_iso = work.index.to_list()
-    #    pop.hh.loc[nas_iso,'iso_smaf'] = work['iso_smaf']
-    #    return pop
-
     def dead(self,pop,year):
+        """
+        Fonction de transitions pour les décès.
+
+        Parameters
+        ----------
+        pop: population
+            population (instance de la classe population)
+        year: int
+            année de la transition
+
+        Returns
+        -------
+        population
+            instance de la classe population
+        """
         # make sure year up to date
         pop.ages(year)
         work = pop.hh.loc[:,['male','age']]
@@ -430,6 +441,21 @@ class update:
         pop.kagemin()
         return pop
     def emig(self,pop,year):
+        """
+        Fonction de transitions pour gérer l'émigration.
+
+        Parameters
+        ----------
+        pop: population
+            population (instance de la classe population)
+        year: int
+            année de la transition
+
+        Returns
+        -------
+        population
+            instance de la classe population
+        """
         pop.ages(year)
         work = pop.hh.loc[:,['age','male']]
         ages = [(0,4),(5,9),(10,14),(15,19),(20,24),(25,29),(30,34),
@@ -450,6 +476,21 @@ class update:
         pop.kd = pop.kd.loc[~pop.kd.index.isin(nas_emig)]
         return pop
     def educ(self,pop,year):
+        """
+        Fonction de transitions pour changements de niveau d'éducation.
+
+        Parameters
+        ----------
+        pop: population
+            population (instance de la classe population)
+        year: int
+            année de la transition
+
+        Returns
+        -------
+        population
+            instance de la classe population
+        """
         pop.ages(year)
         pop.nkids()
         # deal first with those entering school
@@ -501,43 +542,6 @@ class update:
         s = np.random.choice(a=states,p=pr)
         return s
 
-#Description births(pbirth) dans SIMUL
-
-#Comment obtenir les paramètres : 1) Installer regsave sur Stata (findit regsave); 2) rouler le fichier "prepare.do" puis "births.do" se trouvant dans Dropbox (CEDIA)/OLG_CAN/demo/do/; 3) Les outputs sont disponibles à Dropbox (CEDIA)/OLG_CAN/demo/params/trans_births.csv
-
-#Sélection de l'échantillon
-#	On ne garde que :
-#		- Les femmes
-#		- L'historique des femmes jusqu'à leurs 39 ans (les femmes n'ont plus d'enfants par la suite + les femmes n'ont pas d'enfants avant 18 ans)
-#		- L'historique depuis 30 années pour éviter les effets propres aux cohortes
-#		- La province du Québec
-
-#Description des variables
-#	Soit kid1-3 : la naissance de l'enfant 1 à 3 une année donnée
-#
-#	Soit dage____ l'âge des individus :
-#		- référence : 18 à 24 ans
-#		- dage2529 : de 25 à 29 ans
-#		- dage3034 : de 30 à 34 ans
-#		- dage35+  : de 35 à 39 ans
-#
-#	Education du répondant (dummies) :
-#		- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
-#		- insch : Personne n'ayant pas terminé ses études
-#		- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
-#		- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
-#		- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
-#
-#	Soit lkidage l'âge (à partir de 1 an) du dernier enfant né : uniquement utile pour les enfants numéro 2 et numéro 3
-#
-#	Régression pour le 1er (sans lastkidage), 2nd,et 3ème enfant noté i
-#	logit kid(i) dage2529 dage3034 dage35+ lkidage insch hs college university
-
-
-#@njit
-#def pbirth(age,sp_age,male,educ,educ_sp,nkids):
-#    return 0.0
-        #(float64(int64,int64,int64,float64))
 @njit
 def pbirth(age,educ,agemin,beta):
     base = 0.0
@@ -560,54 +564,7 @@ def pbirth(age,educ,agemin,beta):
         pr= 0
     return pr
 
-#Description pmarr et pdiv
-#
-#Préparation de la base :
-#	On ne garde que :
-#	- Les résidants du Québec
-#	- L'historique depuis 30 années pour éviter les effets propres aux cohortes
-#
-#Variables dépendantes (dummies) :
-#	- Soit m = 0 avant l'union alors que l'individu est célibataire (à partir de 16 ans) & m1 = 1 l'année l'union
-#	- Soit d = 0 entre l'année de la précédente mise en union et l'année précédent une séparation & d1=1 l'année de la séparation
-#
-#Variables indépendantes:
-#
-#	male : est égal à 1 si le répondant est un homme, sinon 0 (dummy)
-#
-#	Divorces : âge du répondant selon le genre, sinon 0
-#	- mage : âge du répondant si c'est un homme, sinon 0
-#	- mage2 : âge au carré du répondant si c'est un homme, sinon 0
-#	- mage3 : âge au cube du répondant si c'est un homme, sinon 0
-#	- wage : âge du répondant si c'est une femme, sinon 0
-#	- wage2 : âge au carré du répondant si c'est une femme, sinon 0
-#	- wage3 : âge au cube du répondant si c'est une femme, sinon 0
-#
-#	unions : dummies d'âge du répondant par classes d'âge
-#	- age1619
-# 	- age2024
-#	- age2529
-#	- age3034 : référence
-#	- age3539
-#	- age4044
-#	- age4549
-#	- age5054
-#	- age5559
-#	- age6065
-#
-#	Education du répondant (dummies) :
-#	- Référence : Personne ayant terminé ses études & n'ayant pas accompli ses études secondaires
-#	- insch : Personne n'ayant pas terminé ses études
-#	- des :  Personne ayant terminé ses études & ayant un diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
-#	- dec : Personne ayant terminé ses études &  ayant un diplôme d'études d'un collège communautaire
-#	- uni : Personne ayant terminé ses études & ayant un diplôme supérieur ou égal au baccaulauréat
-#
-#	Enfant de moins de 18 ans (dummy) :
-#	- kid : L'individu a un enfant de moins de 18 ans
-#
-#Régressions logistiques :
-#logit m male age1619 age2024 age2529 /*age3034*/ age3539 age4044 age4549 age5054 age5559 age6065 insch educ_2 educ_3 educ_4
-#logit d male mage mage2 mage3 wage wage2 wage3 insch educ_2 educ_3 educ_4 kid
+
 
 @njit
 def pmarr(age,male,educ):
@@ -622,21 +579,6 @@ def find_spouse(age,male,educ):
 @njit
 def pdiv(age,sp_age,male,educ,sp_educ,nkids):
     return 0.0
-
-#Description mortality(pdead) dans SIMUL
-
-#Comment obtenir les paramètres : Les outputs sont disponibles à Dropbox (CEDIA)/OLG_CAN/demo/params/. Les hypothèses low, medium et high de Statcan sont disponibles : trans_mortality_low.csv, trans_mortality_medium.csv et trans_mortality_high.csv
-
-#Etapes de préparation et de calcul pour obtenir les outputs trans_mortality_low.csv, trans_mortality_medium.csv et trans_mortality_high.csv :
-#1) On utilise comme inputs les quotients de mortalité de Statcan par âge, genre, année et province disponibles entre 2013-2014 et 2062-2063. Les fichiers sont localisés à : Dropbox (CEDIA)/OLG_CAN/demo/raw/census/Quotients perspectifs de mortalite 2013-14 a 2062-63.xlsx
-#2) A partir du fichier xlsx, on créé trois fichiers .csv en fonction des 3 hypothèses de Statcan : quotients-low, quotients-medium, quotients-high (pour plus de facilité on a supprimé à la main les 3 premières lignes du fichier xlsx & on a remplacé les séparateurs "," par des ".")
-#3) Dans le do file :
-#	- on créé une variable d'année calendaire "year" de 2013 à 2062 à partir des données qui sont à cheval sur deux années. On étend les quotients de mortalité de 2010 à 2012 (égaux à ceux de 2013) et de 2063 à 2200 (égaux à ceux de 2062).
-#	- on ne conserve que les observations pour le Québec
-#	- on créé une variable de genre "male" égale à 1 pour les hommes et égale à 0 pour les femmes.
-#	- on créé une variable de taux de mortalité par âge de la variable "tx0" jusqu'à la variable "tx110".
-#	- précision : les données initialement en quotients de mortalité sont transformés en taux de mortalité.
-
 
 @njit
 def pdead(age,male):
@@ -653,39 +595,6 @@ def quit(age,male):
 @njit
 def enroll(age,male):
     return 0.0
-
-#Description de la transition de fin d'études et du niveau d'études
-#
-#Préparation de la base :
-#	On ne garde que :
-#	- Les résidants du Québec
-#	- L'historique depuis 30 années pour éviter les effets propres aux cohortes
-#
-#Description des variables pour la transition de fin des études :
-#	- "schldone"=1 si les études sont terminées et =0 si elles sont toujours en cours.
-#	- male : est égal à 1 si le répondant est un homme, sinon 0 (dummy)
-#	- mother=1 si l'individu est une mère, 0 sinon
-#	- father=1 si l'individu est un père, 0 sinon
-#	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans
-#
-#Description des variables pour attribuer le niveau d'éducation atteind :
-#	Soit "educ4" les niveaux d'éducation :
-#		less_than_des=1 si l'individu n'a pas accompli ses études secondaires
-#		Référence : = Diplôme d'études secondaires ou études PARTIELLES à l'université ou au collège communautaire
-#		dec : = Diplôme d'études d'un collège communautaire
-#		uni : Supérieur ou égal au baccalauréat
-#
-#	Soit les variables indépendantes :
-#	- male : est égal à 1 si le répondant est un homme, sinon 0 (dummy)
-#	- mother=1 si l'individu est une mère, 0 sinon
-#	- father=1 si l'individu est un père, 0 sinon
-#	- agex=1 si l'individu a x ans, avec x = 17, ..., 35
-#		L'âge de référence est 17 ans
-#
-#Régressions :
-#logit schldone male mother father age*
-#mlogit educ4 male mother father age*  if(schldone==1), base(2)
 
 @njit
 def pdes(age,male):
