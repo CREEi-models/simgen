@@ -30,13 +30,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="_static/contentui.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/contentui.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -91,13 +91,18 @@
             
               <p class="caption"><span class="caption-text">Menu :</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-automatisee">Installation automatisée</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-manuelle">Installation manuelle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#acces-a-distance">Accès à distance</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utilisation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#etapes">Étapes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Étapes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#choix-des-parametres-d-utilisation">1. Choix des paramètres d’utilisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#initialisation-du-modele">2. Initialisation du modèle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lancement-de-la-simulation">3. Lancement de la simulation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#affichage-des-resultats">4. Affichage des résultats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#production-des-resultats">4. Production des résultats</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#exemple">Exemple</a><ul>
@@ -106,9 +111,64 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="methodologie.html">Méthodologie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="code.html">Dictionnaire (classes et des fonctions)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methodologie.html">Méthodologie</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="methodologie.html#fecondite">Fécondité</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#modele-econometrique">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#donnees-et-echantillon">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#variables-du-modele">Variables du modèle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#resultats-de-regression">Résultats de régression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#mise-en-oeuvre">Mise en œuvre</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="methodologie.html#scolarite">Scolarité</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#model2">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id2">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id4">Variables du modèle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id5">Résultats de régression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id6">Mise en œuvre</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="methodologie.html#etat-matrimonial">État matrimonial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#model3">Modèle économétrique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id8">Données et échantillon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id10">Variables du modèle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id11">Résultats de régression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#id12">Mise en œuvre</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="methodologie.html#mortalite">Mortalité</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methodologie.html#migrations">Migrations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#immigration">Immigration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methodologie.html#emigration">Émigration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resultats.html">Résultats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-comparaison">Données de comparaison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#donnees-de-simulation">Données de simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resultats.html#resultats-des-comparaisons">Résultats des comparaisons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="resultats.html#population-totale">Population totale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resultats.html#population-par-groupes-d-age">Population par groupes d’âge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resultats.html#niveau-de-scolarite">Niveau de scolarité</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resultats.html#personnes-en-couple">Personnes en couple</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Dictionnaire (classes et fonctions)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code.html#donnees">Données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code.html#transitions">Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code.html#statistiques">Statistiques</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Nous joindre</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#principaux-contributeurs">Principaux contributeurs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#personne-contact">Personne-contact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#problemes-et-ameliorations">Problèmes et améliorations</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -179,48 +239,58 @@
   <div class="section" id="utilisation">
 <span id="id1"></span><h1>Utilisation<a class="headerlink" href="#utilisation" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Cette section a pour objectif de guider les utilisateurs de SimGen dans l’utilisation de celui-ci.
-Dans un premier temps, les étapes d’utilisation et les différents choix possibiles de paramètres sont présentés.
+Dans un premier temps, les étapes d’utilisation et les différents choix possibles de paramètres sont présentés.
 Par la suite, un exemple de notebook/script est proposé afin de servir de point de départ
 aux utilisateurs pour le lancement de simulations et l’analyse des résultats.</p>
-<div class="section" id="etapes">
-<h2>Étapes<a class="headerlink" href="#etapes" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Lors de la rédaction d’un notebook ou d’un script Python, quatre étapes principales doivent être suivies afin d’obtenir des résultats de simulation avec SimGen :</p>
+<div class="section" id="id2">
+<h2>Étapes<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Lors de la rédaction d’un notebook ou d’un script Python, quatre étapes principales doivent être suivies afin d’obtenir des résultats de simulation avec SimGen:</p>
 <div class="section" id="choix-des-parametres-d-utilisation">
 <h3>1. Choix des paramètres d’utilisation<a class="headerlink" href="#choix-des-parametres-d-utilisation" title="Lien permanent vers ce titre">¶</a></h3>
 <p>La première étapes consiste à choisir les paramètres qui guideront SimGen par rapport à la localisation de la base de données de départ et
 aux hypothèses de modélisation.</p>
-<p><strong>Sentier d’accès et nom du fichier de la BDSPS</strong></p>
-<p>Un premier paramètre d’utilisation à déterminer est le sentier d’accès et le nom du fichier .csv
-qui vous aura été fourni par l’équipe du CREEi et qui correspond à une version épurée de
+<p><strong>Chemin d’accès et nom du fichier de la BDSPS</strong></p>
+<p>Un premier paramètre d’utilisation à déterminer est le chemin d’accès et le nom du fichier .csv
+qui vous aura été fourni par l’équipe de la CREEi et qui correspond à une version épurée de
 la <a class="reference external" href="https://www.statcan.gc.ca/fra/microsimulation/bdmsps/bdmsps">Base de données de simulation de politiques sociales (BDSPS)</a>.
-En début de notebook/script, il est suggéré de définir un objet qui comprend le sentier d’accès et le nom du fichier
-de la BDSPS selon l’endroit où vous aurez enregistré le fichier, et le nom que vous lui aurez donné :</p>
+En début de notebook/script, il est suggéré de définir un objet qui comprend le chemin d’accès et le nom du fichier
+de la BDSPS selon l’endroit où vous aurez enregistré le fichier, et le nom que vous lui aurez donné:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">donnees_brutes</span> <span class="o">=</span> <span class="s1">&#39;.../bdsps2017_slice.csv&#39;</span>
 </pre></div>
 </div>
-<p>Cet objet servira d’intrant dans la fonction de formattage des données (<em>bdsps_format()</em>) à l’étape d’initialisation du modèle.</p>
+<p>Cet objet servira d’intrant dans la fonction de formatage des données (<em>bdsps_format()</em>) à l’étape d’initialisation du modèle.</p>
 <p><strong>Année de fin</strong></p>
 <p>L’année de fin de la simulation détermine la durée des projections effectuées par SimGen. Les valeurs possibles vont de 2018 à 2100.
-Ce paramètre doit figurer comme intrant dans la fonction de création d’instance de classe de SimGen (<em>model()</em>), qui est couvert plus en détails à l’étape d’initialisation du modèle.</p>
+La valeur minimale de l’année de fin correspond à 2018, puisque l’année de départ est fixée par défaut à 2017.
+Cette dernière valeur ne peut être choisie par l’utilisateur, puisque la base de données de départ date de 2017 et que l’année de départ doit correspondre à cette valeur.</p>
+<p>Il est suggéré de définir, en début de notebook/script, un objet qui comprend l’année de fin choisie comme suit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">annee_fin</span> <span class="o">=</span> <span class="mi">2050</span>
+</pre></div>
+</div>
+<p>Cet objet sera utilisé à l’étape 2 lors du chargement des principaux intrants. Il en va de même pour tous les autres paramètres d’utilisation.</p>
 <p><strong>Nombre de réplications</strong></p>
-<p>Le nombre de réplications détermine le nombre de fois où SimGen simule l’ensemble de l’horizon de temps (année de début à l’année de fin) dans une simulation.
-Ce paramètre est fixé par défaut à 1. Lorsque le nombre de réplication est supérieur à 1, les résultats de la simulation correspondent à la moyenne des résultats des réplications.</p>
+<p>Le nombre de réplications détermine le nombre de fois où SimGen simule l’ensemble de l’horizon de temps (année du début à l’année de fin) dans une simulation.
+Ce paramètre est fixé par défaut à 1. Lorsque le nombre de réplications est supérieur à 1, les résultats de la simulation correspondent à la moyenne des résultats des réplications.</p>
 <p>Il est suggéré d’utiliser plus d’une réplication afin d’obtenir des résultats uniformes d’une simulation à une autre.
-Le nombre optimal de réplications varie selon les résultats utilisés. Les résultats précis comprenant un petit nombre d’observations (ex. : le nombre de personnes en couple de 95 ans) sont plus susceptibles de varier
-d’une simulation à une autre qu’un résultat global comportant un grand nombre d’observations (ex. : le nombre total de personnes en couple âgées de 15 à 65 ans).
-Les résultats précis nécessitent donc un plus grand nombre de réplications pour être stables (50 réplications),
+Le nombre optimal de réplications varie selon les résultats utilisés. Les résultats précis comprenant un petit nombre d’observations (ex.: le nombre de personnes en couple de 95 ans) sont plus susceptibles de varier
+d’une simulation à une autre qu’un résultat global comportant un grand nombre d’observations (ex.: le nombre total de personnes en couple âgées de 15 à 65 ans).
+Les résultats précis nécessitent donc un plus grand nombre de réplications pour être stables (50 réplications)
 que les résultats globaux (10 réplications).</p>
+<p>Il est suggéré de définir, en début de notebook/script, un objet qui comprend le nombre de réplications choisi comme suit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nb_rep</span> <span class="o">=</span> <span class="mi">50</span>
+</pre></div>
+</div>
 <p><strong>Hypothèses</strong></p>
 <p><em>Fécondité</em></p>
-<p>Dans SimGen, il est possible de calibrer le nombre de naissances selon trois scénarios de <a class="reference external" href="https://bdso.gouv.qc.ca/docs-ken/multimedia/PB01661FR_Perspective_demo2019H00F00.pdf">fécondité</a> issus du plus récent document de projection démographique de l’Institut de la statistique du Québec (ISQ).
-Les scénarios supposent la convergence de l’indice synthétique de fécondité (ISF) vers les trois valeurs suivantes d’ici 2026 :</p>
+<p>Dans SimGen, il est possible de calibrer le nombre de naissances selon trois scénarios de fécondité issus du plus récent <a class="reference external" href="https://bdso.gouv.qc.ca/docs-ken/multimedia/PB01661FR_Perspective_demo2019H00F00.pdf">document de projection démographique</a> de l’Institut de la statistique du Québec (ISQ).
+Les scénarios de fécondité supposent la convergence de l’indice synthétique de fécondité (ISF) vers les valeurs suivantes d’ici 2026, selon le scénario:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 68%" />
-<col style="width: 32%" />
+<col style="width: 78%" />
+<col style="width: 22%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Scénario</p></th>
+<tr class="row-odd"><th class="head"><p>Fécondité</p></th>
 <th class="head"><p>ISF</p></th>
 </tr>
 </thead>
@@ -228,31 +298,30 @@ Les scénarios supposent la convergence de l’indice synthétique de fécondit�
 <tr class="row-even"><td><p>Faible (weak)</p></td>
 <td><p>1,45</p></td>
 </tr>
-<tr class="row-odd"><td><p>Référence</p></td>
+<tr class="row-odd"><td><p>Référence (reference)</p></td>
 <td><p>1,60</p></td>
 </tr>
-<tr class="row-even"><td><p>Fort (strong)</p></td>
+<tr class="row-even"><td><p>Forte (strong)</p></td>
 <td><p>1,75</p></td>
 </tr>
 </tbody>
 </table>
 <p>Dans le version actuelle de SimGen, les termes anglais <em>weak</em>, <em>reference</em>, et <em>strong</em> doivent être utilisés comme intrant dans la fonction d’hypothèse de fécondité.
-Il est suggéré de définir un objet qui comprend le nom du scénario de fécondité choisi comme suit :</p>
+Il est suggéré de définir, en début de notebook/script, un objet qui comprend le nom du scénario de fécondité choisi comme suit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fecondite</span> <span class="o">=</span> <span class="s1">&#39;reference&#39;</span>
 </pre></div>
 </div>
-<p>Cet objet sere utilisé à l’étpae 2 lors du chargement des des principaux intrants.</p>
 <p><em>Mortalité</em></p>
-<p>Il est possible de fixer les quotients de mortalité selon trois scénarios de <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/91-620-x/91-620-x2014001-fra.pdf">mortalité</a> issus du plus récent document de projection démographique de Statistique Canada.
-Les scénarios supposent l’atteinte de trois valeurs possibles de l’espérance de vie à la naissance selon le genre d’ici 2062 :</p>
+<p>Il est possible de fixer les quotients de mortalité selon trois scénarios de mortalité issus du plus récent <a class="reference external" href="https://www150.statcan.gc.ca/n1/pub/91-620-x/91-620-x2014001-fra.pdf">document de projection démographique</a> de Statistique Canada.
+Les scénarios de mortalité supposent l’atteinte de trois valeurs possibles de l’espérance de vie à la naissance selon le genre d’ici 2062:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 47%" />
-<col style="width: 27%" />
-<col style="width: 27%" />
+<col style="width: 50%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Scénario</p></th>
+<tr class="row-odd"><th class="head"><p>Mortalité</p></th>
 <th class="head"><p>Hommes</p></th>
 <th class="head"><p>Femmes</p></th>
 </tr>
@@ -262,11 +331,11 @@ Les scénarios supposent l’atteinte de trois valeurs possibles de l’espéran
 <td><p>89,8 ans</p></td>
 <td><p>92,0 ans</p></td>
 </tr>
-<tr class="row-odd"><td><p>Moyen (medium)</p></td>
+<tr class="row-odd"><td><p>Moyenne (medium)</p></td>
 <td><p>87,5 ans</p></td>
 <td><p>89,2 ans</p></td>
 </tr>
-<tr class="row-even"><td><p>Élevé (high)</p></td>
+<tr class="row-even"><td><p>Élevée (high)</p></td>
 <td><p>85,9 ans</p></td>
 <td><p>87,3 ans</p></td>
 </tr>
@@ -274,33 +343,33 @@ Les scénarios supposent l’atteinte de trois valeurs possibles de l’espéran
 </table>
 <p>En 2020, l’espérance de vie à la naissance est estimée à 80,6 ans pour les hommes et 84,0 ans pour les femmes (<a class="reference external" href="https://statistique.quebec.ca/fr/communique/baisse-de-lesperance-de-vie-au-quebec-en-2020-a-la-suite-de-la-hausse-marquee-du-nombre-de-deces">ISQ, mars 2021</a>).
 Dans le version actuelle de SimGen, les termes anglais <em>weak</em>, <em>medium</em>, et <em>strong</em> doivent être utilisés comme intrant dans la fonction d’hypothèse de mortalité.
-Il est suggéré de définir un objet qui comprend le nom du scénario de mortalité choisi comme suit :</p>
+Il est suggéré de définir, en début de notebook/script, un objet qui comprend le nom du scénario de mortalité choisi comme suit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mortalite</span> <span class="o">=</span> <span class="s1">&#39;low&#39;</span>
 </pre></div>
 </div>
-<p>Cet objet sere utilisé à l’étpae 2 lors du chargement des des principaux intrants.</p>
 <p><em>Immigration</em></p>
-<p>Dans SimGen, le nombre de nouveaux immigrants par année est déterminé par le taux prospectif d’immigration internationnale
+<p>Dans SimGen, le nombre de nouveaux immigrants par année est déterminé par le taux prospectif d’immigration internationale
 (proportion de nouveaux immigrants par rapport à la population totale).
 Ce paramètre est fixé par défaut à une valeur de 0,0066.
-Cette valeur correspond à 55 000 nouveaux immigrants internationnaux en 2017 (sur une population totale de 8 302 063),
-conformément au scénario de référence du plus récent <a class="reference external" href="https://bdso.gouv.qc.ca/docs-ken/multimedia/PB01661FR_Perspective_demo2019H00F00.pdf">document</a> de projection démographique de l’ISQ.</p>
-<p>Le paramètre de taux prospectif d’immigration internationnale peut être fixé à la valeur désirée (supérieure ou égale à 0).
+Cette valeur correspond à 55 000 nouveaux immigrants internationaux en 2017 (sur une population totale de 8 302 063),
+conformément au scénario de référence du plus récent <a class="reference external" href="https://bdso.gouv.qc.ca/docs-ken/multimedia/PB01661FR_Perspective_demo2019H00F00.pdf">document de projection démographique</a> de l’ISQ.</p>
+<p>Le paramètre de taux prospectif d’immigration internationale peut être fixé à la valeur désirée (supérieure ou égale à 0).
 Ce paramètre reste toutefois fixe durant toutes les années de la simulation.
 Cette caractéristique implique une augmentation graduelle du nombre de nouveaux immigrants suivant la croissance de la population totale.</p>
-<p>Si l’utilisateur souhaite modifier l’hypothèse d’immigration, il est suggéré de définir un objet qui comprend le taux d’immigration internationnale choisi comme suit :</p>
+<p>Si l’utilisateur souhaite modifier l’hypothèse d’immigration, il est suggéré de définir, en début de notebook/script, un objet qui comprend le taux d’immigration internationale choisi comme suit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">taux_immigration</span> <span class="o">=</span> <span class="mf">0.0066</span>
 </pre></div>
 </div>
-<p>Cet objet sere utilisé à l’étpae 2 lors du chargement des des principaux intrants.
-Il est à noter que les caractéristiques des nouveaux immigrants sont issues des immigrants récents (depuis 5 ans ou moins) de la BDSPS de 2017.</p>
+<p>Il est à noter que les caractéristiques des nouveaux immigrants sont celles des immigrants récents (depuis 5 ans ou moins) dans la BDSPS de 2017.
+Par ailleurs, la migration interprovinciale est prise en compte dans SimGen, mais il n’existe toutefois pas de paramètre d’utilisation par rapport à cet aspect
+(consultez la section <a class="reference internal" href="methodologie.html#emigration"><span class="std std-ref">Émigration</span></a> pour les détails méthodologiques).</p>
 </div>
 <div class="section" id="initialisation-du-modele">
 <h3>2. Initialisation du modèle<a class="headerlink" href="#initialisation-du-modele" title="Lien permanent vers ce titre">¶</a></h3>
 <p>L’initialisation du modèle vise à charger en mémoire l’ensemble des informations nécessaires au lancement de la simulation.
 Cette étape se divise en plusieurs sous-étapes.</p>
 <p><strong>Importation des packages</strong></p>
-<p>SimGen utilise certains packages standards, qu’il est nécessaire d’importer :</p>
+<p>SimGen utilise certains packages Python standards, qu’il est nécessaire d’importer:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -308,161 +377,81 @@ Cette étape se divise en plusieurs sous-étapes.</p>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Importation des fonctions et des classes de SIMGEN</strong></p>
-<p>Il est ensuite nécessaire d’importer SimGen en tant que tel :</p>
+<p><strong>Importation des fonctions et des classes de SimGen</strong></p>
+<p>Il est ensuite nécessaire d’importer SimGen en tant que tel:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">simgen</span>
 <span class="kn">from</span> <span class="nn">simgen</span> <span class="kn">import</span> <span class="n">model</span><span class="p">,</span> <span class="n">formating</span>
 </pre></div>
 </div>
-<p><strong>Formattage données de départ</strong></p>
+<p><strong>Formatage données de départ</strong></p>
 <p>La fonction bdsps_format transforme la BDSPS de Statistique Canada afin de mettre en forme certaines variables et créer les registres des individus (dominants, conjoints et enfants).
-Cette fonction calibre également les poids des répondants, par âge et sexe, afin de s’arrimer à la population québécoise de 2017, selon l’ISQ.</p>
+Cette fonction calibre également les poids des répondants, par âge et sexe, afin de s’arrimer à la population québécoise de 2017, selon l’ISQ.
+Enfin, cette fonction sauvegarde la base de données de départ en format <em>pkl</em> en lui donnant le nom de « startpop » et
+sauvegarde la banque de données des caractéristiques des nouveaux immigrants en format <em>pkl</em> en lui donnant le nom de « imm_pop ».
+La commande à utiliser est comme suit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">preparation_data</span><span class="o">=</span><span class="n">formating</span><span class="p">()</span>
 <span class="n">preparation_data</span><span class="o">.</span><span class="n">bdsps_format</span><span class="p">(</span><span class="n">donnees_brutes</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>donnees_brutes</em> correspond au sentier d’accès et au nom du fichier .csv de la BDSPS (ex. : donnees_brutes = “…/bdsps2017_slice.csv”).</p>
+<p>où <em>donnees_brutes</em> correspond au chemin d’accès et au nom du fichier .csv de la BDSPS dans votre système (ex.: donnees_brutes = “…/bdsps2017_slice.csv”).</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : bdsps_format()</strong></p>
+<p><strong>Détails: bdsps_format()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt id="simgen.bdsps">
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">bdsps</code><a class="headerlink" href="#simgen.bdsps" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Nettoyage de la BDSPS.</p>
-<p>Fonction qui permet de mettre en forme la BDSPS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>year</strong> (<em>int</em>) – année de la base de départ (défaut=2017)</p></li>
-<li><p><strong>iprint</strong> (<em>boolean</em>) – switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p><strong>Création de l’instance du modèle</strong></p>
-<p>La commande suivante crée un gabarit permettant entre autres de stocker les résultats propres à la simulation selon les paramètres d’utilisation choisis :</p>
+<p>La commande suivante crée un gabarit permettant entre autres de stocker les résultats propres à la simulation selon les paramètres d’utilisation choisis:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">stop_yr</span><span class="o">=</span><span class="n">annee_fin</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>annee_fin</em> correspond à l’année de fin de la simulation (ex. : annee_fin = 2050).</p>
+<p>où <em>annee_fin</em> correspond à l’année de fin de la simulation (ex.: annee_fin = 2050). Si l’argument <em>stop_yr</em> n’est pas spécifié, SimGen fixe par défaut l’année de fin à 2100.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : classe model()</strong></p>
+<p><strong>Détails: classe model()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt id="simgen.model">
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Modèle de simulation SimGen.</p>
-<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
-<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Pour être en mesure de lancer une deuxième simulation avec des paramètres d’utilisation différents et de comparer les résultats des deux simulations,
-vous n’avez qu’à réutiliser cette commande en donnant un nom différent au gabarit :</p>
+vous n’avez qu’à réutiliser cette commande en donnant un nom différent au gabarit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base2</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">stop_yr</span><span class="o">=</span><span class="n">annee_fin</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>annee_fin</em> correspond à l’année de fin de la simulation (ex. : annee_fin = 2050).</p>
+<p>et de suivre les mêmes étapes de programmation que pour le premier gabarit (<em>base</em>).</p>
 <p><strong>Chargement des principaux intrants</strong></p>
-<p>Tout d’abord, le chargement de la base de données de départ s’effectue à l’aide de la commande suivant :</p>
+<p>Tout d’abord, le chargement de la base de données de départ s’effectue à l’aide de la commande suivante:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">startpop</span><span class="p">(</span><span class="s1">&#39;start_pop&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>start_pop</em> est le nom donné par défaut à la base de données de départ à la suite du formattage de la BDSPS.</p>
+<p>où <em>start_pop</em> est le nom donné par défaut à la base de données de départ à la suite du formattage de la BDSPS.
+Ce nom exacte doit être utilisé, puisqu’un message d’erreur vous sera envoyé en cas contraire.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction startpop()</strong></p>
+<p><strong>Détails: fonction startpop()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt>
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
-<dd><p>Modèle de simulation SimGen.</p>
-<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
-<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="simgen.model.startpop">
-<code class="sig-name descname">startpop</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.startpop" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Charger une population de départ.</p>
-<p>Fonction membre qui permet de charger une population de départ.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – nom du fichier contenant la population de départ</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Le chargement des hypothèses de la simulation s’effectue ensuite à l’aide des commandes suivantes et des objets définis à l’étape 1 (<em>taux_immigration</em>, <em>fecondite</em>, <em>mortalite</em>) :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">immig_assumptions</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;imm_pop&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">taux_immigration</span><span class="p">)</span>
-<span class="n">base</span><span class="o">.</span><span class="n">birth_assumptions</span><span class="p">(</span><span class="n">scenario</span><span class="o">=</span><span class="n">fecondite</span><span class="p">)</span>
+<p>Le chargement des hypothèses de la simulation s’effectue ensuite à l’aide des commandes suivantes et des objets définis à l’étape 1 (<em>taux_immigration</em>, <em>fecondite</em>, <em>mortalite</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">birth_assumptions</span><span class="p">(</span><span class="n">scenario</span><span class="o">=</span><span class="n">fecondite</span><span class="p">)</span>
 <span class="n">base</span><span class="o">.</span><span class="n">dead_assumptions</span><span class="p">(</span><span class="n">scenario</span><span class="o">=</span><span class="n">mortalite</span><span class="p">)</span>
+<span class="n">base</span><span class="o">.</span><span class="n">immig_assumptions</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;imm_pop&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">taux_immigration</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>imm_pop</em> correspond à la la banque de données des immigrants récents produite par la fonction <em>bdsps_format()</em>.</p>
+<p>où <em>imm_pop</em> correspond à la la banque de données des immigrants récents produite par la fonction <em>bdsps_format()</em>.
+Ce nom exacte doit être utilisé pour l’argument <em>init</em>, puisqu’un message d’erreur vous sera envoyé en cas contraire.
+Si les arguments <em>scenario</em> des fonctions <em>birth_assumptions</em> et <em>dead_assumptions</em> ne sont pas spécifiés, SimGen utilise par défaut le scénario de fécondité de référence (<em>reference</em>)
+et le scénario de mortalité moyenne (<em>medium</em>).
+Pour l’immigration, SimGen fixe par défaut le taux d’immigration internationnale à 0,0066, si l’argument <em>num</em> n’est pas spécifié.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction immig_assumptions()</strong></p>
+<p><strong>Détails: fonction _assumptions()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt>
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
-<dd><p>Modèle de simulation SimGen.</p>
-<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
-<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="simgen.model.immig_assumptions">
-<code class="sig-name descname">immig_assumptions</code><span class="sig-paren">(</span><em class="sig-param">allow=True</em>, <em class="sig-param">num=0.0066</em>, <em class="sig-param">init=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.immig_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Hypothèses d’immigration.</p>
-<p>Fonction membre qui permet de spécifier les hypothèses d’immigration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>allow</strong> (<em>boolean</em>) – paramètre permettant d’aligner le nombre d’immigrants sur l’ISQ</p></li>
-<li><p><strong>num</strong> (<em>float</em>) – immigration totale (nombre); par défaut, scénario de référence de l’ISQ</p></li>
-<li><p><strong>init</strong> (<em>str</em>) – nom du fichier contenant la population d’immigrants</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -470,47 +459,32 @@ vous n’avez qu’à réutiliser cette commande en donnant un nom différent au
 </div>
 <div class="section" id="lancement-de-la-simulation">
 <h3>3. Lancement de la simulation<a class="headerlink" href="#lancement-de-la-simulation" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Le lancement de la simulation s’effectue à l’aide de la fonction suivante :</p>
+<p>Le lancement de la simulation s’effectue à l’aide de la fonction suivante:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">rep</span><span class="o">=</span><span class="n">nb_rep</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>où <em>nb_rep</em> correspond au nombre de réplications de la simulation (ex. : nb_rep = 100).</p>
+<p>où <em>nb_rep</em> correspond au nombre de réplications de la simulation (ex.: nb_rep = 50). Si l’argument <em>rep</em> n’est pas spécifié, SimGen fixe par défaut le nombre de réplications à 1.</p>
 <p>Il est à noter que cette commande a un temps d’exécution plus élevé que les commandes présentées précédemment.
-Le temps de simulation croît de manière substantielle selon l’année de fin et le nombre de réplications.</p>
+Le temps de simulation croît de manière substantielle avec l’année de fin et le nombre de réplications.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction simulate()</strong></p>
+<p><strong>Détails: fonction simulate()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt>
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
-<dd><p>Modèle de simulation SimGen.</p>
-<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
-<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="affichage-des-resultats">
-<h3>4. Affichage des résultats<a class="headerlink" href="#affichage-des-resultats" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Tout d’abord, le tableau ci-dessous présente la liste des variables pouvant servir lors de l’affichage des résultats de SimGen :</p>
+<div class="section" id="production-des-resultats">
+<h3>4. Production des résultats<a class="headerlink" href="#production-des-resultats" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Tout d’abord, le tableau ci-dessous présente la liste des variables pouvant servir lors de l’affichage des résultats de SimGen:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 20%" />
+<col style="width: 23%" />
 <col style="width: 10%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 45%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 43%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Variable</p></th>
@@ -547,7 +521,7 @@ Le temps de simulation croît de manière substantielle selon l’année de fin 
 <p>Études terminées</p>
 </td>
 </tr>
-<tr class="row-odd"><td><p>Niveau scolarité</p></td>
+<tr class="row-odd"><td><p>Scolarité complétée</p></td>
 <td><p>educ</p></td>
 <td><p>Caractères</p></td>
 <td><p><em>none</em></p>
@@ -558,7 +532,7 @@ Le temps de simulation croît de manière substantielle selon l’année de fin 
 <td><p>Sans diplôme</p>
 <p>Secondaire</p>
 <p>Collégial</p>
-<p>Universitaire (Bacc. et supérieur)</p>
+<p>Universitaire (bacc. et supérieur)</p>
 </td>
 </tr>
 <tr class="row-even"><td><p>Statut conjugal</p></td>
@@ -574,158 +548,71 @@ Le temps de simulation croît de manière substantielle selon l’année de fin 
 <tr class="row-odd"><td><p>Nombre d’enfants</p></td>
 <td><p>nkids</p></td>
 <td><p>Entier</p></td>
-<td><p>0 à 3+</p></td>
+<td><p>0 à 3</p></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Production de résultats</strong></p>
-<p>Il est possible de produire des résultats à l’aide de deux fonctions.
-La fonction <em>stats.freq()</em> calcul le nombre d’individus selon le sous-groupe spécifié. Par exemple :</p>
+<p>Il est possible de produire deux types de résultats: 1) des fréquences et 2) des proportions.</p>
+<p><strong>Fréquences</strong></p>
+<p>La fonction <em>stats.freq()</em> calcule le nombre d’individus selon le sous-groupe spécifié. Par exemple:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">population_hommes</span><span class="o">=</span><span class="n">base</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="n">sub</span><span class="o">=</span><span class="s1">&#39;male==True&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Si aucun argument n’est inscrit dans la fonction, celle-ci calcule le nombre de personne dans l’ensemble de la population.</p>
+<p>Si l’argument <em>sub</em> n’est pas spécifié, la fonction renvoie le nombre de personnes dans l’ensemble de la population.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction stats.freq()</strong></p>
+<p><strong>Détails: fonction stats.freq()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt id="simgen.statistics">
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
-<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
-</dd>
-</dl>
-<dl class="method">
-<dt id="simgen.statistics.freq">
-<code class="sig-name descname">freq</code><span class="sig-paren">(</span><em class="sig-param">strata=None, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.freq" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Fonction de fréquences.</p>
-<p>Fonction qui permet, à l’aide de <em>counts</em>, de calculer les fréquences pondérées pour une strate donnée. Deux options sont disponibles: l’une, <em>bins</em>, permet de modifier les catégories de la strate (par exemple le groupe d’âge), tandis que <em>sub</em> permet de définir un critère de sélection particulier pour le calcul des fréquences (en str).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>strata</strong> (<em>str</em>) – nom de la variable par laquelle on veut découper les données; ne pas spécifier cette option revient à demander les fréquences totales</p></li>
-<li><p><strong>bins</strong> (<em>list of int</em>) – liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)</p></li>
-<li><p><strong>sub</strong> (<em>str</em>) – condition à respecter pour un sous-échantillon, p.ex. « age&gt;=18 »</p></li>
-</ul>
-</dd>
-<dt class="field-even">Renvoie</dt>
-<dd class="field-even"><p>dataframe avec les fréquences par année (ligne) et valeur de la strate (colonne)</p>
-</dd>
-<dt class="field-odd">Type renvoyé</dt>
-<dd class="field-odd"><p>dataframe</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>La fonction <em>stats.prop()</em> calcule pour sa part la proportion de la population respectant les caractéristiques spécifiées. Par exemple :</p>
+<p><strong>Proportion</strong></p>
+<p>La fonction <em>stats.prop()</em> calcule pour sa part la proportion de la population respectant les caractéristiques spécifiées. Par exemple:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proportion_niveau_scolarite</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="n">sub</span><span class="o">=</span><span class="s2">&quot;age&gt;=25 and age&lt;=64 and insch==False&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Si l’argument <em>sub</em> n’est pas spécifié, la fonction renvoie la proportion de personnes selon les catégories de la variable spécifiée dans l’ensemble de la population.</p>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction stats.prop()</strong></p>
+<p><strong>Détails: fonction stats.prop()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt>
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span></dt>
-<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
-<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
-</dd>
-</dl>
-<dl class="method">
-<dt id="simgen.statistics.prop">
-<code class="sig-name descname">prop</code><span class="sig-paren">(</span><em class="sig-param">strata, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.prop" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Fonction de proportions.</p>
-<p>Fonction qui permet, à l’aide de <em>counts</em>, de calculer les proportions pondérées pour une strate donnée. Deux options sont disponibles: l’une, <em>bins</em>, permet de modifier les catégories de la strate (par exemple le groupe d’âge), tandis que <em>sub</em> permet de définir un critère de sélection particulier pour le calcul des proportions (en str).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>strata</strong> (<em>str</em>) – nom de la variable par laquelle on veut découper les données</p></li>
-<li><p><strong>bins</strong> (<em>list of int</em>) – liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)</p></li>
-<li><p><strong>sub</strong> (<em>str</em>) – condition à respecter pour un sous-échantillon, p.ex. « age&gt;=18 »</p></li>
-</ul>
-</dd>
-<dt class="field-even">Renvoie</dt>
-<dd class="field-even"><p>dataframe avec les proportions par année (ligne) et valeur de la strate (colonne)</p>
-</dd>
-<dt class="field-odd">Type renvoyé</dt>
-<dd class="field-odd"><p>dataframe</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p><strong>Sauvegarde des données</strong></p>
-<p>Enfin, il est possible de sauvegarder les résultats de la simulation dans un fichier .pkl à l’aide de la commande suivante :</p>
+<p><strong>Sauvegarde des données des résultats</strong></p>
+<p>Enfin, il est possible de sauvegarder les résultats de la simulation dans un fichier .pkl à l’aide de la commande suivante:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;.../resultats_simgen&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="toggle-header docutils container">
-<p><strong>Détails : fonction save()</strong></p>
+<p><strong>Détails: fonction save()</strong></p>
 </div>
 <div class="toggle-content docutils container">
-<dl class="class">
-<dt>
-<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span></dt>
-<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
-<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
-</dd>
-</dl>
-<dl class="method">
-<dt id="simgen.statistics.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.save" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Fonction pour sauvegarder les fichiers de fréquences.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres</dt>
-<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – nom du fichier de sauvegarde, incluant l’extension pkl (format pickle)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Pour une descrption complète des classes et des fonctions de SimGen, consultez la page <a class="reference internal" href="code.html#code"><span class="std std-ref">Dictionnaire (classes et des fonctions)</span></a>.</p>
+<p>Pour une description complète des classes et des fonctions de SimGen, consultez la page <a class="reference internal" href="code.html#code"><span class="std std-ref">Dictionnaire (classes et fonctions)</span></a>.</p>
 </div>
 </div>
 <div class="section" id="exemple">
 <h2>Exemple<a class="headerlink" href="#exemple" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="section" id="simulation-de-base">
 <h3>Simulation de base<a class="headerlink" href="#simulation-de-base" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Cet exemple de notebook permet de se familiariser avec l’utilisation de Simgen en effectuent une simulation
-et en présentant des résutats de base.</p>
+<p>Cet exemple de notebook permet de se familiariser avec l’utilisation de Simgen en effectuant une simulation
+et en présentant des résultats de base.</p>
 <dl class="simple">
-<dt><strong>Téléchargement du notebook :</strong></dt><dd><p>Cliquez <a class="reference download external" download="" href="https://raw.githubusercontent.com/CREEi-models/simgen/master/tests/Exemple_utilisation_SIMGEN.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">ici</span></code></a></p>
+<dt><strong>Téléchargement du notebook:</strong></dt><dd><p>Cliquez <a class="reference download external" download="" href="https://raw.githubusercontent.com/CREEi-models/simgen/master/tests/Exemple_utilisation_SIMGEN.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">ici</span></code></a>, puis sauvegardez le fichier en format .ipynb.</p>
 </dd>
-<dt><strong>Accès au notebook via Google colab* :</strong></dt><dd><p>Cliquez <a class="reference download external" download="" href="https://colab.research.google.com/drive/1Vrxo7kSp0_USMbECH-SlFdsZ3IYQwCCn?usp=sharing"><code class="xref download docutils literal notranslate"><span class="pre">ici</span></code></a></p>
+<dt><strong>Accès au notebook via Google Colab*:</strong></dt><dd><p>Cliquez ici: <a class="reference external" href="https://colab.research.google.com/drive/1Vrxo7kSp0_USMbECH-SlFdsZ3IYQwCCn?usp=sharing"><img alt="ImageLink3" src="https://colab.research.google.com/assets/colab-badge.png" /></a></p>
 </dd>
 </dl>
-<p>Il est à noter qu’il est nécessaire de posséder un compte Google pour utiliser Google colab.</p>
+<ul class="simple">
+<li><p>Il est à noter qu’il est nécessaire de posséder un compte Google pour utiliser Google Colab.</p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -744,7 +631,7 @@ et en présentant des résutats de base.</p>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Équipe CREEi.
+        &#169; Copyright 2021, Équipe CREEi.
 
     </p>
   </div>

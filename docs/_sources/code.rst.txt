@@ -1,6 +1,6 @@
 .. _code:
 
-Dictionnaire (classes et des fonctions)
+Dictionnaire (classes et fonctions)
 ========================================
 
 .. automodule:: simgen
