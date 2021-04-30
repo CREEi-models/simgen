@@ -56,5 +56,5 @@ Index
 Documentation en PDF
 ======================
 
-Ficher :download:`pdf <_build/latex/simgen.pdf>`
+Ficher :download:`pdf <../_build/latex/simgen.pdf>`
 
