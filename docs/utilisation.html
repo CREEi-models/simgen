@@ -30,13 +30,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script src="_static/translations.js"></script>
-        <script src="_static/contentui.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script type="text/javascript" src="_static/contentui.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -398,6 +398,21 @@ La commande à utiliser est comme suit:</p>
 <p><strong>Détails: bdsps_format()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt id="simgen.bdsps">
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">bdsps</code><a class="headerlink" href="#simgen.bdsps" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Nettoyage de la BDSPS.</p>
+<p>Fonction qui permet de mettre en forme la BDSPS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – année de la base de départ (défaut=2017)</p></li>
+<li><p><strong>iprint</strong> (<em>boolean</em>) – switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -412,6 +427,21 @@ La commande à utiliser est comme suit:</p>
 <p><strong>Détails: classe model()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt id="simgen.model">
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Modèle de simulation SimGen.</p>
+<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
+<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -433,6 +463,33 @@ Ce nom exacte doit être utilisé, puisqu’un message d’erreur vous sera envo
 <p><strong>Détails: fonction startpop()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
+<dd><p>Modèle de simulation SimGen.</p>
+<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
+<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.model.startpop">
+<code class="sig-name descname">startpop</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.startpop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Charger une population de départ.</p>
+<p>Fonction membre qui permet de charger une population de départ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – nom du fichier contenant la population de départ</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -452,6 +509,64 @@ Pour l’immigration, SimGen fixe par défaut le taux d’immigration internatio
 <p><strong>Détails: fonction _assumptions()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
+<dd><p>Modèle de simulation SimGen.</p>
+<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
+<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.model.birth_assumptions">
+<code class="sig-name descname">birth_assumptions</code><span class="sig-paren">(</span><em class="sig-param">scenario='reference'</em>, <em class="sig-param">align=True</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.birth_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Hypothèses de fécondité.</p>
+<p>Fonction membre qui permet de spécifier les hypothèses de fécondité.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario</strong> (<em>str</em>) – Permet de choisir entre les différents scénarios de fécondité produits pas l’ISQ (weak, reference, strong)</p></li>
+<li><p><strong>aling</strong> (<em>boolean</em>) – paramètre permettant d’aligner le nombre d’immigrants sur l’ISQ</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simgen.model.dead_assumptions">
+<code class="sig-name descname">dead_assumptions</code><span class="sig-paren">(</span><em class="sig-param">scenario='medium'</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.dead_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Hypothèses de mortalité.</p>
+<p>Fonction membre qui permet de spécifier les hypothèses de mortalité.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>scenario</strong> (<em>str</em>) – Permet de choisir entre les différents scénarios de mortalité produits pas l’STC (low, medium, high)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simgen.model.immig_assumptions">
+<code class="sig-name descname">immig_assumptions</code><span class="sig-paren">(</span><em class="sig-param">allow=True</em>, <em class="sig-param">num=0.0066</em>, <em class="sig-param">init=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.immig_assumptions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Hypothèses d’immigration.</p>
+<p>Fonction membre qui permet de spécifier les hypothèses d’immigration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>allow</strong> (<em>boolean</em>) – paramètre permettant d’aligner le nombre d’immigrants sur l’ISQ</p></li>
+<li><p><strong>num</strong> (<em>float</em>) – immigration totale (nombre); par défaut, scénario de référence de l’ISQ</p></li>
+<li><p><strong>init</strong> (<em>str</em>) – nom du fichier contenant la population d’immigrants</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -470,6 +585,32 @@ Le temps de simulation croît de manière substantielle avec l’année de fin e
 <p><strong>Détails: fonction simulate()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">start_yr=2017</em>, <em class="sig-param">stop_yr=2100</em><span class="sig-paren">)</span></dt>
+<dd><p>Modèle de simulation SimGen.</p>
+<p>Cette classe permet de créer une instance d’un modèle de microsimulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_yr</strong> (<em>int</em>) – année de départ de la simulation (défaut=2017)</p></li>
+<li><p><strong>stop_yr</strong> (<em>int</em>) – dernière année de la simulation (défaut=2100)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.model.simulate">
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">rep=1</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.model.simulate" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction déclenchant le lancement de la simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>stratas</strong> (<em>rep</em>) – Nombre de réplications</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -564,6 +705,40 @@ Le temps de simulation croît de manière substantielle avec l’année de fin e
 <p><strong>Détails: fonction stats.freq()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt id="simgen.statistics">
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
+<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.statistics.freq">
+<code class="sig-name descname">freq</code><span class="sig-paren">(</span><em class="sig-param">strata=None, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.freq" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de fréquences.</p>
+<p>Fonction qui permet, à l’aide de <em>counts</em>, de calculer les fréquences pondérées pour une strate donnée. Deux options sont disponibles: l’une, <em>bins</em>, permet de modifier les catégories de la strate (par exemple le groupe d’âge), tandis que <em>sub</em> permet de définir un critère de sélection particulier pour le calcul des fréquences (en str).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strata</strong> (<em>str</em>) – nom de la variable par laquelle on veut découper les données; ne pas spécifier cette option revient à demander les fréquences totales</p></li>
+<li><p><strong>bins</strong> (<em>list of int</em>) – liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)</p></li>
+<li><p><strong>sub</strong> (<em>str</em>) – condition à respecter pour un sous-échantillon, p.ex. « age&gt;=18 »</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>dataframe avec les fréquences par année (ligne) et valeur de la strate (colonne)</p>
+</dd>
+<dt class="field-odd">Type renvoyé</dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -578,6 +753,40 @@ Le temps de simulation croît de manière substantielle avec l’année de fin e
 <p><strong>Détails: fonction stats.prop()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span></dt>
+<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
+<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.statistics.prop">
+<code class="sig-name descname">prop</code><span class="sig-paren">(</span><em class="sig-param">strata, bins=[0], sub=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.prop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de proportions.</p>
+<p>Fonction qui permet, à l’aide de <em>counts</em>, de calculer les proportions pondérées pour une strate donnée. Deux options sont disponibles: l’une, <em>bins</em>, permet de modifier les catégories de la strate (par exemple le groupe d’âge), tandis que <em>sub</em> permet de définir un critère de sélection particulier pour le calcul des proportions (en str).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strata</strong> (<em>str</em>) – nom de la variable par laquelle on veut découper les données</p></li>
+<li><p><strong>bins</strong> (<em>list of int</em>) – liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)</p></li>
+<li><p><strong>sub</strong> (<em>str</em>) – condition à respecter pour un sous-échantillon, p.ex. « age&gt;=18 »</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie</dt>
+<dd class="field-even"><p>dataframe avec les proportions par année (ligne) et valeur de la strate (colonne)</p>
+</dd>
+<dt class="field-odd">Type renvoyé</dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -591,6 +800,29 @@ Le temps de simulation croît de manière substantielle avec l’année de fin e
 <p><strong>Détails: fonction save()</strong></p>
 </div>
 <div class="toggle-content docutils container">
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">simgen.</code><code class="sig-name descname">statistics</code><span class="sig-paren">(</span><em class="sig-param">stratas</em><span class="sig-paren">)</span></dt>
+<dd><p>Classe pour créer les statistiques provenant d’une simulation.</p>
+<p>Cette classe permet de capturer la distribution de la population par strate durant une simulation. Elle permet ensuite de faire plusieurs tableaux dynamiques à partir de ces distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>stratas</strong> (<em>list of str</em>) – liste des noms de variables du fichiers de dominants afin de stratifier la population et récolter les fréquences (pondérées)</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="simgen.statistics.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#simgen.statistics.save" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction pour sauvegarder les fichiers de fréquences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – nom du fichier de sauvegarde, incluant l’extension pkl (format pickle)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="line-block">
 <div class="line"><br /></div>

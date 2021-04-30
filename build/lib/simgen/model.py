@@ -53,7 +53,7 @@ class model:
         Parameters
         ----------
         allow : boolean
-            switch pour aligner le nombre d'immigrants sur l'ISQ
+            paramètre permettant d'aligner le nombre d'immigrants sur l'ISQ
         num : float
             immigration totale (nombre); par défaut, scénario de référence de l'ISQ
         init : str
@@ -71,6 +71,18 @@ class model:
             self.imm = None
         return
     def birth_assumptions(self,scenario='reference',align=True):
+        """
+        Hypothèses de fécondité.
+
+        Fonction membre qui permet de spécifier les hypothèses de fécondité.
+
+        Parameters
+        ----------
+        scenario : str
+            Permet de choisir entre les différents scénarios de fécondité produits pas l'ISQ (weak, reference, strong)
+        aling : boolean
+            paramètre permettant d'aligner le nombre d'immigrants sur l'ISQ
+        """
         isq = pd.read_excel(params_dir+'naissance_ed2019.xlsx',sheet_name='numbers')
         isq = isq.set_index('year')
         maxyr = isq.index.max()
@@ -81,12 +93,30 @@ class model:
         self.adjust_births = isq[scenario]
         return
     def dead_assumptions(self,scenario='medium'):
+        """
+        Hypothèses de mortalité.
+
+        Fonction membre qui permet de spécifier les hypothèses de mortalité.
+
+        Parameters
+        ----------
+        scenario : str
+            Permet de choisir entre les différents scénarios de mortalité produits pas l'STC (low, medium, high)
+        """
         self.trans.params_dead(scenario)
         return
     def risk_iso_assumtions(self,params_set=1):
         self.trans.params_risk_iso(params_set)
         return
     def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','risk_iso']):
+        """
+        Fonction déterminant les variables de sortie.
+
+        Parameters
+        ----------
+        stratas : list
+            Liste des variables de sortie
+        """
         self.stats = statistics(stratas)
         return
     def reset(self):
@@ -128,6 +158,14 @@ class model:
             self.pop = pop
         return
     def simulate(self,rep = 1):
+        """
+        Fonction déclenchant le lancement de la simulation.
+
+        Parameters
+        ----------
+        stratas : rep
+            Nombre de réplications
+        """
         for _ in range(rep):
             self.reset()
             print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
