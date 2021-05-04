@@ -158,6 +158,14 @@ class model:
             self.pop = pop
         return
     def simulate(self,rep = 1):
+        """
+        Fonction déclenchant le lancement de la simulation.
+
+        Parameters
+        ----------
+        stratas : rep
+            Nombre de réplications
+        """
         for _ in range(rep):
             self.reset()
             print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
