@@ -1,5 +1,5 @@
 import numpy as np
-from numba import njit,int64,float64
+from numba import njit,jit,int64,float64
 from simgen import population
 import pandas as pd
 from multiprocessing import Pool
@@ -304,7 +304,22 @@ class update:
             p.close()
             p.join()
         else :
-            newsp = f(grooms)
+            donors = pop.hh.loc[pop.hh.married==True,['male','educ','byr']].copy()
+            donors = donors.reset_index()
+            donors.nas = donors.nas.astype('int64')
+            grooms = grooms.loc[:,['male','educ','byr']].copy()
+            grooms = grooms.reset_index()
+            grooms.nas = grooms.nas.astype('int64')
+            grooms['nas_bride'] = 0
+            for m in [False,True]:
+	            for e in ['none','des','dec','uni']:
+		            g = grooms.loc[(grooms.male==m) & (grooms.educ==e),['byr','nas']]
+		            d = donors.loc[(donors.male==m) & (donors.educ==e),['byr','nas']]
+		            nas_sp = match_jit(g.nas.to_numpy(),d.nas.to_numpy(),g.byr.to_numpy(),d.byr.to_numpy())
+		            grooms.loc[(grooms.male==m) & (grooms.educ==e),'nas_bride'] = nas_sp 
+            nas_brides = grooms.nas_bride.to_list()
+            newsp = pd.DataFrame(index=grooms.nas.to_list(),columns=pop.sp.columns)
+            newsp = pop.sp.loc[pop.sp.index.isin(nas_brides),:] 
         # grooms become married
         pop.hh.loc[nas_grooms,'married'] = True
         # brides added to pool of spouses
@@ -607,3 +622,14 @@ def pdec(age,male):
 @njit
 def puni(age,male):
     return 0.0
+
+@jit(fastmath=True,parallel=True)
+def match_jit(nas_grooms,nas_donors,byr_grooms,byr_donors):
+	n = nas_grooms.shape[0]
+	bride_nas = np.zeros(n)
+	for i in range(n):
+		d = np.abs(byr_grooms[i] - byr_donors)
+		nas_pool = np.argsort(d)
+		pick = np.random.choice(nas_pool[:5],size=1)
+		bride_nas[i] = nas_donors[pick]
+	return bride_nas
