@@ -623,7 +623,7 @@ def pdec(age,male):
 def puni(age,male):
     return 0.0
 
-@jit(fastmath=True,parallel=True)
+@jit(fastmath=True)
 def match_jit(nas_grooms,nas_donors,byr_grooms,byr_donors):
 	n = nas_grooms.shape[0]
 	bride_nas = np.zeros(n)
