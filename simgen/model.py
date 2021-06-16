@@ -23,11 +23,11 @@ class model:
     stop_yr : int
         dernière année de la simulation (défaut=2100)
     """
-    def __init__(self,start_yr=2017,stop_yr=2100):
+    def __init__(self,start_yr=2017,stop_yr=2100,iomp = False):
         self.start_yr = start_yr
         self.stop_yr = stop_yr
         self.year = start_yr
-        self.trans = update()
+        self.trans = update(iomp = iomp)
         self.set_statistics()
         return
     def startpop(self,file):

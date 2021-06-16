@@ -16,7 +16,8 @@ class update:
     Classe permettant d'effectuer différentes transitions d'une année à l'autre.
 
     """
-    def __init__(self):
+    def __init__(self,iomp=False):
+        self.iomp = iomp 
         self.map_edu = {'none':0,'des':1,'dec':2,'uni':3}
         self.imap_edu = {0:'none',1:'des',2:'dec',3:'uni'}
         self.params_birth()
@@ -26,8 +27,6 @@ class update:
         self.params_schldone()
         self.params_educ()
         self.params_emig()
-        self.params_chsld()
-        #self.params_iso_smaf()
         self.params_risk_iso(params_set=1)
         return
     def params_birth(self):
@@ -146,7 +145,7 @@ class update:
 
         """
         df = pd.read_csv(params_dir+'risk_iso.csv',sep=';')
-        df.columns = ['var','risk_iso1','risk_iso2','risk_iso3']
+        df.columns = ['var','risk_iso1']
         df = df.set_index('var')
         self.par_risk_iso = df.loc[:,'risk_iso'+str(params_set)]
         return
@@ -238,16 +237,17 @@ class update:
     def match(self,grooms,pop):
         nas_grooms = grooms.index.to_list()
         newsp = pd.DataFrame(index=nas_grooms,columns=pop.sp.columns)
+        donors = pop.hh[pop.hh.married==True].sort_values(by=['educ','male'])
         for i in grooms.index:
             groom = grooms.loc[i,:]
-            pool = (pop.hh.married==True) & (pop.hh.educ==groom['educ']) & (np.absolute(pop.hh.byr-groom['byr'])<=5) & (pop.hh.male == groom['male'])
-            nas_pool = pop.hh.loc[pool].index.to_list()
+            pool = (donors.educ==groom['educ']) & (donors.male == groom['male']) & (np.absolute(donors.byr-groom['byr'])<=5) 
+            nas_pool = donors.loc[pool].index.to_list()
             if len(nas_pool)>0:
                 nas_pick = choices(nas_pool,k=1)
                 bride = pop.sp.loc[nas_pick[0],:]
             else :
-                pool = (pop.hh.married==True) & (pop.hh.educ==groom['educ']) & (np.absolute(pop.hh.byr-groom['byr'])<=20) & (pop.hh.male == groom['male'])
-                nas_pool = pop.hh.loc[pool].index.to_list()
+                pool = (donors.educ==groom['educ']) & (donors.male == groom['male']) & (np.absolute(donors.byr-groom['byr'])<=20) 
+                nas_pool = donors.loc[pool].index.to_list()
                 nas_pick = choices(nas_pool,k=1)
                 bride = pop.sp.loc[nas_pick[0],:]
             newsp.loc[i,:] = bride.to_list()
@@ -280,7 +280,6 @@ class update:
         work['age4549'] = (work['age']>=45) & (work['age']<=49)
         work['age5054'] = (work['age']>=50) & (work['age']<=54)
         work['age5559'] = (work['age']>=55) & (work['age']<=59)
-        work['age6065'] = (work['age']>=60) & (work['age']<=65)
         work['des'] = work['educ']=='des'
         work['dec'] = work['educ']=='dec'
         work['uni'] = work['educ']=='uni'
@@ -293,16 +292,19 @@ class update:
             work['pr'] += work[v]*self.par_union[v]
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['wedding'] = np.random.uniform(size=len(work))<work['pr']
-        grooms = work[work['wedding']]
+        grooms = work[work['wedding']].copy()
         nas_grooms = grooms.index.to_list()
         # find brides for the grooms by picking among pool of spouses
         f = partial(self.match,pop=pop)
-        ncores = cpu_count()
-        grooms_split = np.array_split(grooms, ncores)
-        p = Pool(ncores)
-        newsp = pd.concat(p.map(f,grooms_split))
-        p.close()
-        p.join()
+        if self.iomp:
+            ncores = cpu_count()
+            grooms_split = np.array_split(grooms, ncores)
+            p = Pool(ncores)
+            newsp = pd.concat(p.map(f,grooms_split))
+            p.close()
+            p.join()
+        else :
+            newsp = f(grooms)
         # grooms become married
         pop.hh.loc[nas_grooms,'married'] = True
         # brides added to pool of spouses
@@ -515,7 +517,7 @@ class update:
         work['pr'] = np.exp(work['pr'])/(1+np.exp(work['pr']))
         work['quit'] = np.random.uniform(size=len(work))<work['pr']
         work['quit'] = np.where(work['age']==35,True,work['quit'])
-        quit = work[work['quit']]
+        quit = work[work['quit']].copy()
         if len(quit)>0:
             nas_quit = quit.index.to_list()
             states = ['none','des','dec','uni']
