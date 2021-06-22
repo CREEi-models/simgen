@@ -81,7 +81,22 @@ class replicate:
 		freqs = freqs.reset_index()
 		freqs.set_index(['index','rep'],inplace=True)
 		return {'mean':freqs.groupby(level=0).mean(), 'sd':freqs.groupby(level=0).std()}
-
+	def prop(self,strata=None,bins=[0],sub=None):
+		freqs = []
+		for r in range(self.nreps):
+			s = self.set_statistics()
+			s.counts = self.stats.loc[self.stats.index.get_level_values(0)==r,:]
+			if strata!=None:
+				freq = s.prop(strata,bins,sub)
+			else :	
+				freq = s.prop(strata,bins,sub).to_frame()
+				freq.columns= ['pop']
+			freq.loc[:,'rep'] = r 
+			freqs.append(freq)
+		freqs = pd.concat(freqs,axis=0)
+		freqs = freqs.reset_index()
+		freqs.set_index(['index','rep'],inplace=True)
+		return {'mean':freqs.groupby(level=0).mean(), 'sd':freqs.groupby(level=0).std()}
 		
 
 
