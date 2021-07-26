@@ -16,8 +16,7 @@ class update:
     Classe permettant d'effectuer différentes transitions d'une année à l'autre.
 
     """
-    def __init__(self,iomp=False):
-        self.iomp = iomp 
+    def __init__(self):
         self.map_edu = {'none':0,'des':1,'dec':2,'uni':3}
         self.imap_edu = {0:'none',1:'des',2:'dec',3:'uni'}
         self.params_birth()
@@ -296,40 +295,32 @@ class update:
         nas_grooms = grooms.index.to_list()
         # find brides for the grooms by picking among pool of spouses
         f = partial(self.match,pop=pop)
-        if self.iomp:
-            ncores = cpu_count()
-            grooms_split = np.array_split(grooms, ncores)
-            p = Pool(ncores)
-            newsp = pd.concat(p.map(f,grooms_split))
-            p.close()
-            p.join()
-        else :
-            donors = pop.hh.loc[pop.hh.married==True,['male','educ','byr']].copy()
-            donors = donors.reset_index()
-            donors.nas = donors.nas.astype('int64')
-            donors.byr = donors.byr.astype('int64')
+        donors = pop.hh.loc[pop.hh.married==True,['male','educ','byr']].copy()
+        donors = donors.reset_index()
+        donors.nas = donors.nas.astype('int64')
+        donors.byr = donors.byr.astype('int64')
 
-            grooms = grooms.loc[:,['male','educ','byr']].copy()
-            grooms = grooms.reset_index()
-            grooms.nas = grooms.nas.astype('int64')
-            grooms.byr = grooms.byr.astype('int64')
-            grooms['nas_bride'] = 0
-            grooms.nas_bride = grooms.nas_bride.astype('int64')
-            check_n = 0
-            for m in [False,True]:
-                for e in ['none','des','dec','uni']:
-                    g = grooms.loc[(grooms.male==m) & (grooms.educ==e),['byr','nas']]
-                    nas_g = g['nas'].to_list()
-                    d = donors.loc[(donors.male==m) & (donors.educ==e),['byr','nas']]
-                    nas_sp = match_jit(g.nas.to_numpy(),d.nas.to_numpy(),g.byr.to_numpy(),d.byr.to_numpy())
-                    grooms.loc[(grooms.male==m) & (grooms.educ==e),'nas_bride'] = nas_sp
-                    check_n += len(nas_sp)
-            nas_brides = grooms.nas_bride.to_list()
-            #print('number of brides: ',len(nas_brides),grooms.nas_bride.describe().transpose())
-            #print('check sum of matched spouses',check_n)
-            newsp = pd.DataFrame(index=grooms.nas.to_list(),columns=pop.sp.columns)
-            for j,i in enumerate(newsp.index):
-                newsp.loc[i,:] = pop.sp.loc[nas_brides[j],:].to_list()
+        grooms = grooms.loc[:,['male','educ','byr']].copy()
+        grooms = grooms.reset_index()
+        grooms.nas = grooms.nas.astype('int64')
+        grooms.byr = grooms.byr.astype('int64')
+        grooms['nas_bride'] = 0
+        grooms.nas_bride = grooms.nas_bride.astype('int64')
+        check_n = 0
+        for m in [False,True]:
+            for e in ['none','des','dec','uni']:
+                g = grooms.loc[(grooms.male==m) & (grooms.educ==e),['byr','nas']]
+                nas_g = g['nas'].to_list()
+                d = donors.loc[(donors.male==m) & (donors.educ==e),['byr','nas']]
+                nas_sp = match_jit(g.nas.to_numpy(),d.nas.to_numpy(),g.byr.to_numpy(),d.byr.to_numpy())
+                grooms.loc[(grooms.male==m) & (grooms.educ==e),'nas_bride'] = nas_sp
+                check_n += len(nas_sp)
+        nas_brides = grooms.nas_bride.to_list()
+        #print('number of brides: ',len(nas_brides),grooms.nas_bride.describe().transpose())
+        #print('check sum of matched spouses',check_n)
+        newsp = pd.DataFrame(index=grooms.nas.to_list(),columns=pop.sp.columns)
+        for j,i in enumerate(newsp.index):
+            newsp.loc[i,:] = pop.sp.loc[nas_brides[j],:].to_list()
         #print('number of grooms: ',len(grooms))
         #print('number of new spouses :',len(newsp))
         # grooms become married
