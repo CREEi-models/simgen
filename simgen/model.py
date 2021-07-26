@@ -27,7 +27,7 @@ class model:
         self.start_yr = start_yr
         self.stop_yr = stop_yr
         self.year = start_yr
-        self.trans = update
+        self.trans = update()
         self.set_statistics()
         return
     def startpop(self,file):
