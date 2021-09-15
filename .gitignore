@@ -82,3 +82,5 @@ ipython_config.py
 
 # pyenv
 .python-version
+*.nbi
+*.nbc
