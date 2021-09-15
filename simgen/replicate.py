@@ -12,6 +12,18 @@ params_dir = path.join(path.dirname(__file__), 'params/')
 
 
 class replicate:
+	"""
+    Modèle de simulation SimGen.
+
+    Cette classe permet la parallélisation du calcul des différentes réplications.
+
+    Parameters
+    ----------
+    nreps : int
+        nombre de réplications (défaut=1)
+    ncpus : int
+        nombre de coeurs utilisés pour le calcul (défaut=1)
+    """
 	def __init__(self,nreps=1,ncpus=1):
 		self.nreps = nreps
 		self.ncpus = ncpus
@@ -27,6 +39,12 @@ class replicate:
 		m.simulate()
 		return m.stats.counts
 	def simulate(self):
+		"""
+        Fonction déclenchant le lancement de la simulation.
+
+        Parameters
+        ----------
+    	"""
 		if self.ncpus>1:
 			stats = []
 			p = pool(self.ncpus)
@@ -66,6 +84,24 @@ class replicate:
 		"""
 		return statistics(stratas)
 	def freq(self,strata=None,bins=[0],sub=None):
+		"""
+        Fonction de fréquences.
+
+        Fonction qui permet, à l'aide de *counts*, de calculer les fréquences pondérées pour une strate donnée. Deux options sont disponibles: l'une, *bins*, permet de modifier les catégories de la strate (par exemple le groupe d'âge), tandis que *sub* permet de définir un critère de sélection particulier pour le calcul des fréquences (en str).
+
+        Parameters
+        ----------
+        strata: str
+            nom de la variable par laquelle on veut découper les données; ne pas spécifier cette option revient à demander les fréquences totales
+        bins: list of int
+            liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)
+        sub: str
+            condition à respecter pour un sous-échantillon, p.ex. \"age>=18\"
+        Returns
+        -------
+        dataframe
+            dataframe avec les fréquences par année (ligne) et valeur de la strate (colonne)
+        """
 		freqs = []
 		for r in range(self.nreps):
 			s = self.set_statistics()
@@ -82,6 +118,24 @@ class replicate:
 		freqs.set_index(['index','rep'],inplace=True)
 		return {'mean':freqs.groupby(level=0).mean(), 'sd':freqs.groupby(level=0).std()}
 	def prop(self,strata=None,bins=[0],sub=None):
+		"""
+        Fonction de proportions.
+
+        Fonction qui permet, à l'aide de *counts*, de calculer les proportions pondérées pour une strate donnée. Deux options sont disponibles: l'une, *bins*, permet de modifier les catégories de la strate (par exemple le groupe d'âge), tandis que *sub* permet de définir un critère de sélection particulier pour le calcul des proportions (en str).
+
+        Parameters
+        ----------
+        strata: str
+            nom de la variable par laquelle on veut découper les données
+        bins: list of int
+            liste de valeurs pour découper les données selon la variable strata; fonctionne seulement avec des variables de types int (pas de str)
+        sub: str
+            condition à respecter pour un sous-échantillon, p.ex. \"age>=18\"
+        Returns
+        -------
+        dataframe
+            dataframe avec les proportions par année (ligne) et valeur de la strate (colonne)
+        """
 		freqs = []
 		for r in range(self.nreps):
 			s = self.set_statistics()
