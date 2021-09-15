@@ -23,11 +23,11 @@ class model:
     stop_yr : int
         dernière année de la simulation (défaut=2100)
     """
-    def __init__(self,start_yr=2017,stop_yr=2100,iomp = False):
+    def __init__(self,start_yr=2017,stop_yr=2100):
         self.start_yr = start_yr
         self.stop_yr = stop_yr
         self.year = start_yr
-        self.trans = update(iomp = iomp)
+        self.trans = update()
         self.set_statistics()
         return
     def startpop(self,file):
@@ -157,22 +157,17 @@ class model:
 
             self.pop = pop
         return
-    def simulate(self,rep = 1):
+
+
+    def simulate(self):
         """
         Fonction déclenchant le lancement de la simulation.
 
         Parameters
         ----------
-        stratas : rep
-            Nombre de réplications
         """
-        for _ in range(rep):
-            self.reset()
-            print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
-            while self.year <= self.stop_yr:
-                print("year: "+ str(self.year)+ " replication: " + str(_+1),end='\r')
-                self.next()
-                self.stats.add(self.pop,self.year)
-            self.stats.add_to_mean(rep)
-        self.stats.counts = self.stats.mean_counts #À la fin on remet la moyenne dans stats.counts.
+        self.reset()
+        while self.year <= self.stop_yr:
+            self.next()
+            self.stats.add(self.pop,self.year)
         return
