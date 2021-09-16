@@ -66,17 +66,15 @@ class replicate:
 		return 
 	def save(self,file,imean=True,isd=True):
 		"""
-        Fonction pour sauvegarder des fichiers de fréquences.
+		Fonction pour sauvegarder les fichiers de fréquences.
 
-		*.pkl : fichier contenant les fréquences de l'ensemble des réplications
-		*_mean.pkl : fichier contenant les fréquences moyennes des réplications
-		*_sd.pkl : fichier contenant l'écart-type des fréquences des réplications
+		Sauvegarde de 3 fichiers : 1) *.pkl* avec les fréquences de l'ensemble des réplications 2) *_mean.pkl* avec les fréquences moyennes des fréquences des réplications 3) *_sd.pkl* avec l'écart-type des fréquences des réplications
 
-        Parameters
-        ----------
-        file: str
-            nom du fichier de sauvegarde, incluant l'extension pkl (format pickle)
-        """
+		Parameters
+		----------
+		file: str
+			Nom du fichier de sauvegarde, incluant l'extension pkl (format pickle)
+		"""
 		self.stats.to_pickle(file+'.pkl',protocol=4)
 		if imean:
 			means = self.stats.groupby(level=list(self.stats.index.names)[1:]).mean()
