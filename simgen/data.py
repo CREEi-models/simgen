@@ -231,7 +231,7 @@ class parse:
                 hh[m] = data[self.map_hh[m]]
         hh.index.name = 'nas'
         self.hh = hh
-        hh.wgt = hh.wgt.astype('Float64')
+        hh.wgt = hh.wgt.astype(np.float64)
         hh.nkids = hh.nkids.astype('Int64')
         return hh
     def spouses(self,data):
