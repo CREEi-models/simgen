@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="fr" >
 <head>
@@ -31,13 +30,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="_static/contentui.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/contentui.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -100,8 +99,8 @@
 <li class="toctree-l2"><a class="reference internal" href="utilisation.html#id2">Étapes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="utilisation.html#choix-des-parametres-d-utilisation">1. Choix des paramètres d’utilisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="utilisation.html#initialisation-du-modele">2. Initialisation du modèle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="utilisation.html#lancement-de-la-simulation">3. Lancement de la simulation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="utilisation.html#production-des-resultats">4. Production des résultats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilisation.html#lancement-de-la-simulation">1. Lancement de la simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilisation.html#production-des-resultats">1. Production des résultats</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="utilisation.html#exemple">Exemple</a><ul>
@@ -246,6 +245,7 @@
  | <a href="#K"><strong>K</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#U"><strong>U</strong></a>
  
@@ -254,6 +254,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code.html#simgen.statistics.add">add() (méthode simgen.statistics)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code.html#simgen.statistics.add_to_mean">add_to_mean() (méthode simgen.statistics)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -305,8 +309,12 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code.html#simgen.statistics.freq">freq() (méthode simgen.statistics)</a>, <a href="utilisation.html#simgen.statistics.freq">[1]</a>
+      <li><a href="code.html#simgen.replicate.freq">freq() (méthode simgen.replicate)</a>, <a href="utilisation.html#simgen.replicate.freq">[1]</a>
+
+      <ul>
+        <li><a href="code.html#simgen.statistics.freq">(méthode simgen.statistics)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -337,10 +345,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code.html#simgen.update.marriage">marriage() (méthode simgen.update)</a>
 </li>
+      <li><a href="code.html#simgen.model">model (classe dans simgen)</a>, <a href="utilisation.html#id0">[1]</a>, <a href="utilisation.html#id5">[2]</a>, <a href="utilisation.html#simgen.model">[3]</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code.html#simgen.model">model (classe dans simgen)</a>, <a href="utilisation.html#simgen.model">[1]</a>, <a href="utilisation.html#simgen.model">[2]</a>, <a href="utilisation.html#simgen.model">[3]</a>, <a href="utilisation.html#simgen.model">[4]</a>
+      <li>
+    module
+
+      <ul>
+        <li><a href="code.html#module-simgen">simgen</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -349,11 +364,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code.html#simgen.parse">parse (classe dans simgen)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code.html#simgen.population">population (classe dans simgen)</a>
 </li>
-      <li><a href="code.html#simgen.statistics.prop">prop() (méthode simgen.statistics)</a>, <a href="utilisation.html#simgen.statistics.prop">[1]</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code.html#simgen.replicate.prop">prop() (méthode simgen.replicate)</a>, <a href="utilisation.html#simgen.replicate.prop">[1]</a>
+
+      <ul>
+        <li><a href="code.html#simgen.statistics.prop">(méthode simgen.statistics)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code.html#id0">replicate (classe dans simgen)</a>, <a href="code.html#simgen.replicate">[1]</a>, <a href="utilisation.html#id6">[2]</a>, <a href="utilisation.html#id7">[3]</a>, <a href="utilisation.html#id8">[4]</a>, <a href="utilisation.html#id9">[5]</a>, <a href="utilisation.html#simgen.replicate">[6]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -361,23 +388,36 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code.html#simgen.statistics.save">save() (méthode simgen.statistics)</a>, <a href="utilisation.html#simgen.statistics.save">[1]</a>
+      <li><a href="code.html#simgen.replicate.save">save() (méthode simgen.replicate)</a>, <a href="utilisation.html#simgen.replicate.save">[1]</a>
+
+      <ul>
+        <li><a href="code.html#simgen.statistics.save">(méthode simgen.statistics)</a>
 </li>
+      </ul></li>
       <li><a href="code.html#simgen.model.set_statistics">set_statistics() (méthode simgen.model)</a>
 </li>
-      <li><a href="code.html#module-simgen">simgen (module)</a>
+      <li>
+    simgen
+
+      <ul>
+        <li><a href="code.html#module-simgen">module</a>
 </li>
-      <li><a href="code.html#simgen.model.simulate">simulate() (méthode simgen.model)</a>, <a href="utilisation.html#simgen.model.simulate">[1]</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code.html#simgen.model.simulate">simulate() (méthode simgen.model)</a>
+
+      <ul>
+        <li><a href="code.html#simgen.replicate.simulate">(méthode simgen.replicate)</a>, <a href="utilisation.html#simgen.replicate.simulate">[1]</a>
+</li>
+      </ul></li>
       <li><a href="code.html#simgen.parse.spouses">spouses() (méthode simgen.parse)</a>
 </li>
       <li><a href="code.html#simgen.statistics.start">start() (méthode simgen.statistics)</a>
 </li>
       <li><a href="code.html#simgen.model.startpop">startpop() (méthode simgen.model)</a>, <a href="utilisation.html#simgen.model.startpop">[1]</a>
 </li>
-      <li><a href="code.html#simgen.statistics">statistics (classe dans simgen)</a>, <a href="utilisation.html#simgen.statistics">[1]</a>, <a href="utilisation.html#simgen.statistics">[2]</a>, <a href="utilisation.html#simgen.statistics">[3]</a>
+      <li><a href="code.html#simgen.statistics">statistics (classe dans simgen)</a>
 </li>
   </ul></td>
 </tr></table>

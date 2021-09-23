@@ -30,13 +30,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="_static/contentui.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/contentui.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -101,8 +101,8 @@
 <li class="toctree-l2"><a class="reference internal" href="utilisation.html#id2">Étapes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="utilisation.html#choix-des-parametres-d-utilisation">1. Choix des paramètres d’utilisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="utilisation.html#initialisation-du-modele">2. Initialisation du modèle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="utilisation.html#lancement-de-la-simulation">3. Lancement de la simulation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="utilisation.html#production-des-resultats">4. Production des résultats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilisation.html#lancement-de-la-simulation">1. Lancement de la simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilisation.html#production-des-resultats">1. Production des résultats</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="utilisation.html#exemple">Exemple</a><ul>
@@ -241,7 +241,7 @@
 <p id="installing-docdir">SimGen est programmé en langage Python. Il est ainsi nécessaire de posséder la version 3.7 de Python ou une version supérieure pour faire fonctionner SimGen sur votre ordinateur.
 Malgré tout, si vous n’avez pas accès au logiciel Python mais que vous disposez d’un compte Google, il vous sera possible d’utiliser SimGen en accès à distance via <em>Google Colab</em>.
 Ainsi, il est possible d’avoir accès à SimGen selon trois méthodes présentées ci-dessous.
-Dans tous les cas, veillez lire les <a class="reference external" href="https://pypi.org/policy/terms-of-use/">condition d’utilisation</a> du site internet <em>pypi</em> qui héberge le package.</p>
+Dans tous les cas, veillez lire les <a class="reference external" href="https://pypi.org/policy/terms-of-use/">conditions d’utilisation</a> du site internet <em>pypi</em> qui héberge le package.</p>
 <div class="admonition-important admonition">
 <p class="admonition-title">Important</p>
 <p>SimGen utilise par défaut la Base de données de simulation de politiques sociales (BDSPS) comme base de données de départ. Cette base de données nécessite toutefois une licence d’utilisation gratuite octroyée sur demande par Statistique Canada.</p>
@@ -270,11 +270,11 @@ il est possible d’installer SimGen de manière automatisée en écrivant simpl
 il est possible d’installer manuellement SimGen en complétant les étapes suivantes:</p>
 <ol class="arabic simple">
 <li><p>Allez sur le site internet <a class="reference external" href="https://pypi.org/">Pypi</a> et faites une recherche du package « simgen-creei ».</p></li>
-<li><p>Cliquez sur l’onglet « simgen-x.x.x », où « x.x.x » correspond au numéro de version.</p></li>
-<li><p>Ensuite, cliquez sur « Download files » dans le menu à gauche et puis cliquez sur le nom du fichier « simgen-x.x.x.tar.gz » pour télécharger le fichier compressé.</p></li>
-<li><p>Une fois le fichier téléchargé, décompressez le fichier « simgen-x.x.x.tar.gz » une première fois.</p></li>
-<li><p>Ouvrez le dossier créé par l’extraction (ex. simgen-x.x.x.tar), continuez ensuite en ouvrant le dossier « dist » et décompressez le fichier « simgen-x.x.x.tar ».</p></li>
-<li><p>Une fois le fichier décompressé, transférez le dossier « simgen-x.x.x » qui en résulte dans le dossier où vous entreposez vos packages (si vous n’en avez pas, créez-en un à l’endroit qui vous convient le mieux).</p></li>
+<li><p>Cliquez sur l’onglet « simgen-creei x.x.x », où « x.x.x » correspond au numéro de version.</p></li>
+<li><p>Ensuite, cliquez sur « Download files » dans le menu à gauche et puis cliquez sur le nom du fichier « simgen-creei x.x.x.tar.gz » pour télécharger le fichier compressé.</p></li>
+<li><p>Une fois le fichier téléchargé, décompressez le fichier « simgen-creei x.x.x.tar.gz » une première fois.</p></li>
+<li><p>Ouvrez le dossier créé par l’extraction (ex. simgen-creei x.x.x.tar), continuez ensuite en ouvrant le dossier « dist » et décompressez le fichier « simgen-creei x.x.x.tar ».</p></li>
+<li><p>Une fois le fichier décompressé, transférez le dossier « simgen-creei x.x.x » qui en résulte dans le dossier où vous entreposez vos packages (si vous n’en avez pas, créez-en un à l’endroit qui vous convient le mieux).</p></li>
 <li><p>Enfin, ajoutez dans votre notebook ou votre script le chemin d’accès de votre dossier de packages et vous pourrez invoquer SimGen en tant que module de la manière suivante:</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>

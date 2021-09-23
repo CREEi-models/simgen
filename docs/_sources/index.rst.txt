@@ -56,5 +56,5 @@ Index
 Documentation en PDF
 ======================
 
-Ficher :download:`pdf <https://github.com/CREEi-models/simgen/raw/master/docs/_build/latex/simgen.pdf>`
+Fichier :download:`pdf <https://github.com/CREEi-models/simgen/raw/master/docs/_build/latex/simgen.pdf>`
 

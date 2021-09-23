@@ -144,7 +144,7 @@ SimGen utilise certains packages Python standards, qu'il est nécessaire d'impor
 Il est ensuite nécessaire d'importer SimGen en tant que tel: ::
 
  import simgen
- from simgen import model, formating
+ from simgen import model, formating, replicate
 
 **Formatage données de départ**
 
@@ -232,30 +232,49 @@ Pour l'immigration, SimGen fixe par défaut le taux d'immigration internationnal
 
 |
 
+La dernière étape avant le lancement de la simulation est de créer un gabarit permettant la parallélisation 
+du calcul des différentes réplications. Cette étape s'effectue à l'aide des commandes suivantes: ::
+ 
+ exp = replicate(nreps=nb_rep,ncpus=6)
+ exp.set_model(base)
 
-3. Lancement de la simulation
+où *nb_rep* correspond au nombre de réplications de la simulation (ex.: nb_rep = 50). Si l'argument *nreps* n'est pas spécifié, SimGen fixe par défaut le nombre de réplications à 1. 
+L'argument *ncpus* correspond au nombre de processeurs utilisés pour le calcul en parallèle (ex.: ncpus = 6). 
+Il est suggéré d'utiliser seulement une partie du nombre total de processeurs possédés par l'appareil. 
+Si l'argument *ncpus* n'est pas spécifié, SimGen fixe par défaut le nombre de processeurs utilisés à 1.
+Le calcul des réplications n'est donc pas parallélisé dans cette situation. Si vous souhaitez effectuer une seule réplication, vous n'avez pas à spécifier l'argument *ncpus*.
+
+.. toggle-header::
+     :header: **Détails: replicate()**
+
+     .. autoclass:: replicate
+
+
+|
+
+
+1. Lancement de la simulation
 *********************************
 
 Le lancement de la simulation s'effectue à l'aide de la fonction suivante: ::
 
- base.simulate(rep=nb_rep)
-
-où *nb_rep* correspond au nombre de réplications de la simulation (ex.: nb_rep = 50). Si l'argument *rep* n'est pas spécifié, SimGen fixe par défaut le nombre de réplications à 1.
+ exp.simulate()
 
 Il est à noter que cette commande a un temps d'exécution plus élevé que les commandes présentées précédemment.
-Le temps de simulation croît de manière substantielle avec l'année de fin et le nombre de réplications.
+Le temps de simulation croît de manière substantielle avec l'année de fin et le nombre de réplications. 
+Il diminue toutefois plus le nombre de processeurs utilisés est élevé. 
 
 .. toggle-header::
     :header: **Détails: fonction simulate()**
 
-    .. autoclass:: model
+    .. autoclass:: replicate
         :members: simulate
 
 
 |
 
 
-4. Production des résultats
+1. Production des résultats
 ******************************************
 
 Tout d'abord, le tableau ci-dessous présente la liste des variables pouvant servir lors de l'affichage des résultats de SimGen:
@@ -287,32 +306,32 @@ Il est possible de produire deux types de résultats: 1) des fréquences et 2) d
 
 **Fréquences**
 
-La fonction *stats.freq()* calcule le nombre d'individus selon le sous-groupe spécifié. Par exemple: ::
+La fonction *freq()* de la classe *replicate* calcule le nombre d'individus selon le sous-groupe spécifié. Par exemple: ::
 
- population_hommes=base.stats.freq(sub='male==True')
+ population_hommes=exp.freq(sub='male==True')
 
 Si l'argument *sub* n'est pas spécifié, la fonction renvoie le nombre de personnes dans l'ensemble de la population.
 
 .. toggle-header::
-    :header: **Détails: fonction stats.freq()**
+    :header: **Détails: fonction freq()**
 
-    .. autoclass:: statistics
+    .. autoclass:: replicate
          :members: freq
 
 |
 
 **Proportion**
 
-La fonction *stats.prop()* calcule pour sa part la proportion de la population respectant les caractéristiques spécifiées. Par exemple:  ::
+La fonction *prop()* de la classe *replicate* calcule pour sa part la proportion de la population respectant les caractéristiques spécifiées. Par exemple:  ::
 
- proportion_niveau_scolarite = base.stats.prop('educ', sub="age>=25 and age<=64 and insch==False")
+ proportion_niveau_scolarite = exp.prop('educ', sub="age>=25 and age<=64 and insch==False")
 
 Si l'argument *sub* n'est pas spécifié, la fonction renvoie la proportion de personnes selon les catégories de la variable spécifiée dans l'ensemble de la population.
 
 .. toggle-header::
-    :header: **Détails: fonction stats.prop()**
+    :header: **Détails: fonction prop()**
 
-    .. autoclass:: statistics
+    .. autoclass:: replicate
          :members: prop
 
 |
@@ -322,12 +341,12 @@ Si l'argument *sub* n'est pas spécifié, la fonction renvoie la proportion de p
 
 Enfin, il est possible de sauvegarder les résultats de la simulation dans un fichier .pkl à l'aide de la commande suivante: ::
 
- base.stats.save('.../resultats_simgen')
+ exp.save('./resultats_simgen')
 
 .. toggle-header::
     :header: **Détails: fonction save()**
 
-    .. autoclass:: statistics
+    .. autoclass:: replicate
          :members: save
 
 |
