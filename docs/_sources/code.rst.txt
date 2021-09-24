@@ -33,19 +33,10 @@ La classe permettant de réaliser les simulations est *model*. Voici sa descript
 .. autoclass:: model
     :members: startpop, immig_assumptions, birth_assumptions, dead_assumptions, set_statistics, reset, next, simulate
 
-La classe permettant de paralléliser le calcul des réplications est *replicate*. Voici sa description.
-
-.. autoclass:: replicate
-    :members: simulate
 
 Statistiques
 ------------
-La classe *replicate* permet également de produire des statistiques dans le cadre d'une simulation, lorsque cette classe est utilisée pour la simulation.
-
-.. autoclass:: replicate
-    :members: freq, prop, save
-
-La classe *statistics* peut  être utilisée pour produire des statistiques, si la classe *model* est utilisée plutôt que *replicate* pour produire la simulation. Voici sa description. 
+Cette classe permet de produire des statistiques dans le cadre d'une simulation.
 
 .. autoclass:: statistics
-    :members: start, add, add_to_mean, freq, prop, save
+    :members: start, add, freq, prop, save

@@ -10,7 +10,7 @@ Installation
 SimGen est programmé en langage Python. Il est ainsi nécessaire de posséder la version 3.7 de Python ou une version supérieure pour faire fonctionner SimGen sur votre ordinateur. 
 Malgré tout, si vous n'avez pas accès au logiciel Python mais que vous disposez d'un compte Google, il vous sera possible d'utiliser SimGen en accès à distance via *Google Colab*. 
 Ainsi, il est possible d'avoir accès à SimGen selon trois méthodes présentées ci-dessous. 
-Dans tous les cas, veillez lire les `conditions d'utilisation <https://pypi.org/policy/terms-of-use/>`_ du site internet *pypi* qui héberge le package.
+Dans tous les cas, veillez lire les `condition d'utilisation <https://pypi.org/policy/terms-of-use/>`_ du site internet *pypi* qui héberge le package.
 
 
 .. admonition:: Important
@@ -45,11 +45,11 @@ Si Python est installé sur votre ordinateur, mais que vous ne pouvez utiliser l
 il est possible d'installer manuellement SimGen en complétant les étapes suivantes:
 
 #. Allez sur le site internet `Pypi <https://pypi.org/>`_ et faites une recherche du package "simgen-creei".
-#. Cliquez sur l'onglet "simgen-creei x.x.x", où "x.x.x" correspond au numéro de version.
-#. Ensuite, cliquez sur "Download files" dans le menu à gauche et puis cliquez sur le nom du fichier "simgen-creei x.x.x.tar.gz" pour télécharger le fichier compressé.
-#. Une fois le fichier téléchargé, décompressez le fichier "simgen-creei x.x.x.tar.gz" une première fois.
-#. Ouvrez le dossier créé par l'extraction (ex. simgen-creei x.x.x.tar), continuez ensuite en ouvrant le dossier "dist" et décompressez le fichier "simgen-creei x.x.x.tar".
-#. Une fois le fichier décompressé, transférez le dossier "simgen-creei x.x.x" qui en résulte dans le dossier où vous entreposez vos packages (si vous n'en avez pas, créez-en un à l'endroit qui vous convient le mieux).
+#. Cliquez sur l'onglet "simgen-x.x.x", où "x.x.x" correspond au numéro de version.
+#. Ensuite, cliquez sur "Download files" dans le menu à gauche et puis cliquez sur le nom du fichier "simgen-x.x.x.tar.gz" pour télécharger le fichier compressé.
+#. Une fois le fichier téléchargé, décompressez le fichier "simgen-x.x.x.tar.gz" une première fois.
+#. Ouvrez le dossier créé par l'extraction (ex. simgen-x.x.x.tar), continuez ensuite en ouvrant le dossier "dist" et décompressez le fichier "simgen-x.x.x.tar".
+#. Une fois le fichier décompressé, transférez le dossier "simgen-x.x.x" qui en résulte dans le dossier où vous entreposez vos packages (si vous n'en avez pas, créez-en un à l'endroit qui vous convient le mieux).
 #. Enfin, ajoutez dans votre notebook ou votre script le chemin d'accès de votre dossier de packages et vous pourrez invoquer SimGen en tant que module de la manière suivante:
 
 ::

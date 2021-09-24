@@ -68,7 +68,7 @@ class replicate:
 		"""
 		Fonction pour sauvegarder les fichiers de fréquences.
 
-		Sauvegarde de 3 fichiers : 1) *.pkl* avec les fréquences de l'ensemble des réplications 2) *_mean.pkl* avec les fréquences moyennes des réplications 3) *_sd.pkl* avec l'écart-type des fréquences des réplications
+		Sauvegarde de 3 fichiers : 1) *.pkl* avec les fréquences de l'ensemble des réplications 2) *_mean.pkl* avec les fréquences moyennes des fréquences des réplications 3) *_sd.pkl* avec l'écart-type des fréquences des réplications
 
 		Parameters
 		----------
