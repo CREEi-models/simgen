@@ -9,25 +9,23 @@ from inspect import currentframe, getframeinfo
 from pandas.core.common import SettingWithCopyError
 params_dir = path.join(path.dirname(__file__), 'params/')
 
-def bdsps(file,year=2017,iprint=False, file_format='.dta'):
-
+def slice_bdsps(raw_file,output_file,year=2017):
     """
-    Nettoyage de la BDSPS.
+    Nettoyage de la BDSPS et création d'une base de données restreinte (slice).
 
-    Fonction qui permet de mettre en forme la BDSPS.
+    Fonction qui permet de mettre en forme la BDSPS et d'en faire une extraction.
 
     Parameters
     ----------
+    raw_file: str
+        nom du fichier de la BDSPS brutte
+    output_file: str
+        nom du fichier pour fichier BDSPS extrait et nettoyé
     year: int
-        année de la base de départ (défaut=2017)
-    iprint: boolean
-        switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)
+        année de la BDSPS (défaut=2017)
     """
-    if file_format=='.dta':
-        df = pd.read_stata(file,convert_categoricals=False)
-    if file_format==".csv":
-        df = pd.read_csv(file)
-    """
+ 
+    df = pd.read_stata(raw_file,convert_categoricals=False)
     df = df[df.hdprov==4]
     df = df[['hdseqhh','hdwgthh','hdwgthhs','idefseq','idefrh','hhnef','idage','idspoflg',
         'idimmi','idedlev','idestat','idmarst','efnkids','imqndc','hdnkids','idsex']]
@@ -50,9 +48,10 @@ def bdsps(file,year=2017,iprint=False, file_format='.dta'):
     df['immig'] = df.idimmi!=99
     df['newimm'] = df.idimmi<10
     df['yrsimm'] = df.idimmi.replace(99,np.nan)
+    df['yrimm'] = year - df['yrsimm']
     keep.append('immig')
     keep.append('newimm')
-    keep.append('yrsimm')
+    keep.append('yrimm')
     educ = {0:'none',1:'none',2:'none',3:'none',4:'none',5:'none',6:'des',
             7:'des',8:'dec',9:'dec',10:'uni',11:'uni',12:'uni'}
     df['educ4'] = df.idedlev.replace(educ)
@@ -97,8 +96,26 @@ def bdsps(file,year=2017,iprint=False, file_format='.dta'):
     pop['wgt'] = pop['wgt'] * pop['adj']
     pop['wgt'] *= totpop/pop['wgt'].sum()
     pop = pop.drop(columns=['adj'])
-    pop.to_csv('/Users/ydecarie/Documents/GitHub/simgen/simgen/start_pop/bdsps2017_slice.csv')
+    pop.to_csv(output_file)
+    return
+
+def extract_bdsps(file):
+
     """
+    Nettoyage de la BDSPS.
+
+    Fonction qui permet de mettre en forme la BDSPS.
+
+    Parameters
+    ----------
+    year: int
+        année de la base de départ (défaut=2017)
+    print: boolean
+        switch pour imprimer ou non des outputs intermédiaires de cette fonction (défaut=False)
+    """
+
+    df = pd.read_csv(file)
+    
     # dominants
     hh = df.copy()
 
@@ -202,12 +219,18 @@ class parse:
 
     """
     def __init__(self):
+        #
         # Add iso_smaf if included in transitions
-        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married','risk_iso']
+        self.vars_hh = ['wgt','byr','male','educ','insch','nkids','married','risk_iso','immig','yrimm']
         self.map_hh = dict(zip(self.vars_hh,self.vars_hh))
+        #self.vars_sp = ['byr','male','educ','insch','immig','yrimm']
+
         self.vars_sp = ['byr','male','educ','insch']
+
         self.map_sp = dict(zip(self.vars_sp,self.vars_sp))
+        #self.vars_kd = ['byr','male','insch','immig','yrimm']
         self.vars_kd = ['byr','male','insch']
+
         self.map_kd = dict(zip(self.vars_kd,self.vars_kd))
         return
     def dominants(self,data):
@@ -231,8 +254,9 @@ class parse:
                 hh[m] = data[self.map_hh[m]]
         hh.index.name = 'nas'
         self.hh = hh
-        hh.wgt = hh.wgt.astype('Float64')
+        hh.wgt = hh.wgt.astype('float64')
         hh.nkids = hh.nkids.astype('Int64')
+        hh.yrimm = hh.yrimm.astype('float64')
         return hh
     def spouses(self,data):
         """
@@ -371,6 +395,12 @@ class population:
         self.sp['age'] = year - self.sp['byr']
         self.kd['age'] = year - self.kd['byr']
         return
+    def immig_status(self,year):
+        nonimm = self.hh['immig']==False 
+        newimm = (self.hh['immig']) & ((year-self.hh['yrimm'])<=5)
+        oldimm = (self.hh['immig']) & ((year-self.hh['yrimm'])>5)
+        self.hh['immig_status'] = np.where(nonimm,'native',np.where(newimm,'recent','older'))
+        return 
     def kagemin(self):
         am = self.kd.groupby('nas').min()['age']
         am.name = 'agemin'
@@ -386,7 +416,7 @@ class formating:
     """
     Organisation de la base de données.
 
-    Cette classe permet de créer les fichiers nécessaires à la 
+    Cette classe permet de créer les fichiers nécessaires à la
     simulation avec la base de départ BDSPS_ 2017.
 
     """
@@ -394,7 +424,7 @@ class formating:
     def __init__(self):
         return
     def bdsps_format(self, data):
-        hh,sp,kd = bdsps(data, file_format='.csv')
+        hh,sp,kd = extract_bdsps(data)
         imm = hh[hh.newimm]
         imm_nas = imm.index
         sp_imm = sp.loc[sp.index.isin(imm_nas),:]

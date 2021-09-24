@@ -4,11 +4,13 @@ from multiprocessing import Pool as pool
 from multiprocessing import cpu_count
 from functools import partial
 from simgen import update, population, statistics
-import pandas as pd
+import pandas as pd 
 from copy import deepcopy
 from random import choices
 from os import path
 params_dir = path.join(path.dirname(__file__), 'params/')
+
+
 
 class model:
     """
@@ -108,7 +110,7 @@ class model:
     def risk_iso_assumtions(self,params_set=1):
         self.trans.params_risk_iso(params_set)
         return
-    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','risk_iso']):
+    def set_statistics(self,stratas=['age','male','insch','educ','married','nkids','risk_iso','immig_status']):
         """
         Fonction déterminant les variables de sortie.
 
@@ -123,6 +125,7 @@ class model:
         self.pop = deepcopy(self.ipop)
         self.year = self.start_yr
         self.pop.ages(self.year)
+        self.pop.immig_status(self.year)
         self.pop.nkids()
         self.pop.kagemin()
         self.stats.start(self.pop,self.year)
@@ -149,12 +152,15 @@ class model:
                 newimm.hh.byr += (yr - self.start_yr)
                 newimm.sp.byr += (yr - self.start_yr)
                 newimm.kd.byr += (yr - self.start_yr)
+                newimm.hh.yrimm = yr 
+                newimm.sp.yrimm = yr 
+                newimm.kd.yrimm = yr 
                 pop.enter(newimm,self.year,self.immig_total)
                 pop.ages(yr)
                 pop.nkids()
                 pop.kagemin()
+                pop.immig_status(yr)
             pop = trans.emig(pop,yr)
-
             self.pop = pop
         return
 

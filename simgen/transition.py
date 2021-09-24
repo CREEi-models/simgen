@@ -169,6 +169,7 @@ class update:
         """
         # make sure ages have been updated
         pop.ages(year)
+        pop.immig_status(year)
         # define who is eligible
         elig = pop.hh[(pop.hh['married']) & (pop.hh['age']>=18)].index.to_list()
         # find number of kids and age of youngest kid
@@ -229,7 +230,8 @@ class update:
         newdoms['age'] = 0
         newdoms['agemin'] = 0
         newdoms['risk_iso'] = False
-        #newdoms['iso_smaf'] = -1
+        newdoms['immig'] = False
+        newdoms['yrimm'] = np.nan
         pop.hh = pop.hh.append(newdoms)
         return pop
 
@@ -269,6 +271,7 @@ class update:
             instance de la classe population
         """
         pop.ages(year)
+        pop.immig_status(year)
         cond = (pop.hh.married==False) & (pop.hh.age<=65) & (pop.hh.age>=18)
         work = pop.hh.loc[cond,['male','age','educ','insch','byr']]
         work['age1619'] = (work['age']>=16) & (work['age']<=19)
@@ -346,16 +349,17 @@ class update:
             instance de la classe population
         """
         pop.ages(year)
+        pop.immig_status(year)
         pop.nkids()
         cond = (pop.hh.married==True) & (pop.hh.age<=65) & (pop.hh.age>=18)
         work = pop.hh.loc[cond,['male','age','educ','byr','insch','nkids']]
         work['dmale'] = np.where(work['male'],1,0)
-        work['mage']  = work['dmale']*work['age']
-        work['mage2'] = work['dmale']*(work['age'].astype('float64')**2)
-        work['mage3'] = work['dmale']*(work['age'].astype('float64')**3)
-        work['wage']  = (1-work['dmale'])*work['age']
-        work['wage2'] = (1-work['dmale'])*(work['age'].astype('float64')**2)
-        work['wage3'] = (1-work['dmale'])*(work['age'].astype('float64')**3)
+        work['mage']  = (work['dmale']*work['age']).astype('float64')
+        work['mage2'] = work['mage']**2
+        work['mage3'] = work['mage']**3
+        work['wage']  = ((1-work['dmale'])*work['age']).astype('float64')
+        work['wage2'] = work['wage']**2
+        work['wage3'] = work['wage']**3
         work['des'] = work['educ']=='des'
         work['dec'] = work['educ']=='dec'
         work['uni'] = work['educ']=='uni'
@@ -376,6 +380,7 @@ class update:
 
     def risk_iso(self,pop,year):
         pop.ages(year)
+        pop.immig_status(year)
         cond = pop.hh.age>=65
         pop.hh.loc[cond,'risk_iso']=False
         work = pop.hh.loc[cond,['male','age','risk_iso']]
@@ -417,6 +422,7 @@ class update:
         """
         # make sure year up to date
         pop.ages(year)
+        pop.immig_status(year)
         work = pop.hh.loc[:,['male','age']]
         work['year'] = year
         #work = work.merge(self.par_ajust_chsld,on=['age'],how='left')
@@ -435,6 +441,7 @@ class update:
         return pop
     def sp_dead(self,pop,year):
         pop.ages(year)
+        pop.immig_status(year)
         work = pop.sp.loc[:,['male','age']]
         work['year'] = year
         work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
@@ -445,6 +452,7 @@ class update:
         return pop
     def kids_dead(self,pop,year):
         pop.ages(year)
+        pop.immig_status(year)
         work = pop.kd.loc[:,['male','age']]
         work['year'] = year
         work = work.merge(self.mx,left_on=['year','male','age'],right_index=True,how='left')
@@ -456,6 +464,7 @@ class update:
         return pop
     def moveout(self,pop,year):
         pop.ages(year)
+        pop.immig_status(year)
         pop.kd = pop.kd[pop.kd.age<18]
         pop.nkids()
         pop.kagemin()
@@ -477,6 +486,7 @@ class update:
             instance de la classe population
         """
         pop.ages(year)
+        pop.immig_status(year)
         work = pop.hh.loc[:,['age','male']]
         ages = [(0,4),(5,9),(10,14),(15,19),(20,24),(25,29),(30,34),
             (35,39),(40,44),(45,49),(50,54),(55,59),(60,64),(65,69),
@@ -512,6 +522,7 @@ class update:
             instance de la classe population
         """
         pop.ages(year)
+        pop.immig_status(year)
         pop.nkids()
         # deal first with those entering school
         pop.hh.loc[pop.hh.age==5,'insch'] = True
